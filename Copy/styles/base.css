@@ -1,0 +1,13 @@
+/**
+ * Base Copy
+ */
+
+#Main.copy {
+    padding: 12px;
+    margin: 0 auto;
+    max-width: 960px;
+}
+
+#Main.copy > *:not(.card-copy) {
+    display: none !important;
+}

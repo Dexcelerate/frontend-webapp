@@ -1,0 +1,604 @@
+/**
+ * Modal Profile
+ */
+
+#ModalProfile {
+	padding: 0;
+}
+
+#ModalProfile > .container {
+	height: 100%;
+	border: 0;
+	border-radius: 0;
+}
+
+#ModalProfile > .container > .body {
+	padding: 0;
+}
+
+#ModalProfile > .container > .body .border-red {
+	border-color: #e90000 !important;
+}
+
+@media (min-width: 512px) {
+	#ModalProfile {
+		padding: 12px;
+	}
+
+	#ModalProfile > .container {
+		height: auto;
+		border-radius: 16px;
+		border: 2px solid var(--c3);
+	}
+}
+
+/*** Modal Profile Body ***/
+
+#ModalProfile__Body {
+	padding: 0;
+	background-color: var(--c2);
+}
+
+#ModalProfile__Body .btn {
+	padding: 0;
+	min-height: 0;
+}
+
+#ModalProfile__Body .text-style-1 {
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 12px;
+	border-top: 2px solid var(--c5);
+	width: fit-content;
+	margin: 0 auto;
+	padding-top: 4px;
+	color: #fff;
+}
+
+#ModalProfile__Body .text-style-2 {
+	color: #fff;
+	font-size: 32px;
+	font-weight: 200;
+	line-height: 38px;
+}
+
+/* boxes */
+
+#ModalProfile__Body .boxes {
+	display: flex;
+}
+
+#ModalProfile__Body .boxes .box {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	border-radius: 14px;
+	border: 2px solid var(--c4);
+	background-color: var(--c3);
+}
+
+#ModalProfile__Body .row-2 .boxes,
+#ModalProfile__Body .row-3 .boxes,
+#ModalProfile__Body .row-4 .boxes {
+	overscroll-behavior-y: auto;
+}
+
+#ModalProfile__Body .boxes .box .body {
+	width: 100%;
+}
+
+#ModalProfile__Body .boxes .box .body .item {
+	position: relative;
+	min-width: 0;
+	width: 100%;
+}
+
+/* row is section */
+
+/* #ModalProfile__Body .row-is-section {
+	background-color: var(--c2);
+} */
+
+#ModalProfile__Body .row-is-section > .header {
+	display: flex;
+	padding: 0 12px;
+	background-color: var(--c2);
+	border-top: 2px solid var(--c3);
+}
+
+#ModalProfile__Body .row-is-section > .header .btn {
+	padding: 0;
+	min-height: 0;
+	transition: all 200ms ease-in-out;
+}
+
+#ModalProfile__Body .row-is-section > .header .btn:hover {
+	color: #fff;
+}
+
+#ModalProfile__Body .row-is-section > .body {
+	position: sticky; /* Fix chrome bug where scrollbar is under elements */
+}
+
+/* #ModalProfile__Body .row-is-section > .body .item {
+	position: sticky;
+	padding: 12px;
+	padding-top: 2px;
+} */
+
+#ModalProfile__Body .panel.panel-2 > .cards > .item,
+#ModalProfile__Body .row-5.row-is-section > .body > .item,
+#ModalProfile__Body .row-6.row-is-section > .body > .feed > .item,
+#ModalProfile__Body .row-6.row-is-section > .body > .item {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	padding: 12px;
+	border-radius: 14px;
+	border: 2px solid var(--c4);
+	background-color: var(--c1);
+}
+
+#ModalProfile__Body .row-is-section .boxes {
+	display: flex;
+	padding: 12px;
+	padding-top: 2px;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+}
+
+#ModalProfile__Body > .row-is-section .boxes .box {
+	flex-shrink: 0;
+	width: 192px;
+	height: 128px;
+	overflow: hidden;
+	position: relative;
+	border-radius: 14px;
+	border: 2px solid var(--c4);
+	background-color: var(--c3);
+}
+
+#ModalProfile__Body > .row-is-section .boxes .box + .box {
+	margin-left: 12px;
+}
+
+/* row 1 */
+
+#ModalProfile__Body > .row-1 {
+	padding: 12px;
+}
+
+#ModalProfile__Body .row-1 .box .bg {
+	position: absolute;
+	left: 12px;
+	width: 256px;
+	height: 256px;
+	fill: var(--c2);
+}
+
+#ModalProfile__Body .row-1 .box:not(.box-has-nft) {
+	display: flex;
+	flex-flow: column;
+	text-align: center;
+	justify-content: center;
+}
+
+#ModalProfile__Body .row-1 .box-has-nft .text-name {
+	color: #fff;
+	text-align: center;
+	border-top: 2px solid var(--c4);
+}
+
+/* row 2 */
+
+#ModalProfile__Body .row-2 .box:not(:first-of-type) {
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+}
+
+#ModalProfile__Body .row-2 .box:not(:first-of-type) .bg {
+	position: absolute;
+	left: 12px;
+	width: 256px;
+	height: 256px;
+	fill: var(--c2);
+}
+
+#ModalProfile__Body .row-2 .box:first-of-type .body .item {
+	background-color: var(--c1);
+	overflow: hidden;
+}
+
+#ModalProfile__Body .row-2 .box:first-of-type .body .item canvas {
+	margin: -1px;
+}
+
+#ModalProfile__Body .row-2 .box:first-of-type .body .item .meta {
+	position: absolute;
+	display: flex;
+	flex-flow: column;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 6px;
+	background: linear-gradient(135deg, var(--c1) 10%, transparent 100%);
+}
+
+#ModalProfile__Body .row-2 .box:first-of-type .body .item .meta .btn {
+	position: absolute;
+	top: 4px;
+	right: 5px;
+}
+
+#ModalProfile__Body .row-2 .box:first-of-type .body .item .meta .text-network {
+	color: #fff;
+	display: flex;
+	font-size: 14px;
+	line-height: 16px;
+	margin-top: 4px;
+	margin-left: 3px;
+}
+
+#ModalProfile__Body .row-2 .box:first-of-type .footer {
+	border-top: 2px solid var(--c4);
+	background-color: var(--c3);
+	padding: 0 6px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#ModalProfile__Body .row-2 .box:first-of-type .footer .btn {
+	font-size: 14px;
+	line-height: 20px;
+	background-color: var(--c2);
+	box-shadow: inset 0 0 0 2px var(--c4);
+}
+
+/* row 3 */
+
+#ModalProfile__Body .row-3 .box .body {
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+#ModalProfile__Body .row-3 .box .item:first-of-type {
+	flex-shrink: 0;
+	padding: 0 6px;
+	width: auto;
+}
+
+#ModalProfile__Body .row-3 .box .item:last-of-type {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	padding-left: 12px;
+	background-color: var(--c2);
+	border-left: 2px solid var(--c4);
+	background: repeating-linear-gradient(135deg, var(--c1), var(--c1) 6px, var(--c2) 6px, var(--c2) 12px);
+}
+
+/* row 4 */
+
+#ModalProfile__Body .row-4 .box {
+	background-size: 4px 4px;
+	background-image: radial-gradient(var(--c2) 1px, var(--c3) 1px);
+}
+
+#ModalProfile__Body .row-4 .box:not(.box-podium) {
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+}
+
+#ModalProfile__Body .row-4 .box-podium {
+	background-image: radial-gradient(var(--c2) 1px, var(--c1) 1px) !important;
+}
+
+/* row 5 */
+
+#ModalProfile__Body .row-5 .body > input[type='radio']:not(:checked) + .panel {
+	display: none;
+}
+
+#ModalProfile__Body .row-5 .panel-1 {
+	margin: 0 12px 12px 12px;
+	padding: 12px;
+	min-height: 150px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#ModalProfile__Body .row-5 .panel-3 {
+	margin: 12px;
+	padding: 12px;
+	border-radius: 16px;
+	border: 2px solid var(--c4);
+	background-color: var(--c1);
+}
+
+#ModalProfile__Body .row-5 .panel-3 .btn {
+	padding: 12px;
+	min-height: 56px;
+}
+
+#ModalProfile__Body .row-5 .cards {
+	display: flex;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	padding: 0 12px 12px 12px;
+}
+
+#ModalProfile__Body .row-5 .cards .card {
+	flex-shrink: 0;
+	width: 128px;
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	justify-content: flex-start;
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;
+	border-radius: 16px;
+	border: 2px solid var(--c4);
+	background-color: var(--c2);
+}
+
+#ModalProfile__Body .row-5 .cards .card + .card {
+	margin-left: 12px;
+}
+
+#ModalProfile__Body .row-5 .cards .card .footer {
+	border-top: 2px solid var(--c4);
+	background-color: var(--c2);
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+#ModalProfile__Body .row-5 .cards .card.active .footer {
+	color: #fff;
+	border-color: #2daa4b;
+	background-color: #2daa4b;
+}
+
+#ModalProfile__Body .row-5 .cards .card img:last-of-type {
+	position: absolute;
+	top: 6px;
+	left: 6px;
+}
+
+/* row 6 */
+
+#ModalProfile__Body .row-6 .box {
+	width: 50% !important;
+	flex-shrink: 1 !important;
+	background-image: repeating-radial-gradient(circle at 0 0, transparent 0, var(--c2) 10px),
+		repeating-linear-gradient(var(--c1), var(--c4));
+}
+
+#ModalProfile__Body .row-6 .box:not(.box-podium) {
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+}
+
+#ModalProfile__Body .row-6 .box-podium {
+	background-image: repeating-radial-gradient(circle at 0 0, transparent 0, var(--c1) 10px),
+		repeating-linear-gradient(#000, var(--c2));
+}
+
+#ModalProfile__Body .row-6 .feed {
+	padding: 0 12px 12px 12px;
+}
+
+#ModalProfile__Body .row-6 .feed > .item {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	padding: 12px;
+	border-radius: 14px;
+	border: 2px solid var(--c4);
+	background-color: var(--c1);
+}
+
+#ModalProfile__Body .row-6 .feed > .item + .item {
+	margin-top: 12px;
+}
+
+#ModalProfile__Body .row-6 .feed > .item > .d-flex {
+	justify-content: space-between;
+}
+
+#ModalProfile__Body .row-6 .feed > .item .text-red svg {
+	fill: #e90000;
+}
+
+#ModalProfile__Body .row-6 .feed > .item .text-green svg {
+	fill: #2daa4b;
+}
+
+#ModalProfile__Body .row-6 .feed > .item .text-white svg {
+	fill: #fff;
+}
+
+/* currency selector */
+
+#ModalProfile__Body .row-6 .selector {
+	margin-top: 12px;
+}
+
+#ModalProfile__Body .row-6 .selector > label {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: var(--c2);
+	border-radius: 16px;
+	padding: 0px 16px;
+}
+
+#ModalProfile__Body .row-6 .selector .list .item {
+	display: flex;
+	cursor: pointer;
+	padding: 4px 14px;
+	transition: color 200ms ease-in-out;
+	max-height: max-content;
+}
+
+#ModalProfile__Body .row-6 .selector .list .item.active,
+#ModalProfile__Body .row-6 .selector .list .item:hover,
+#ModalProfile__Body .row-6 .selector .list .item:focus {
+	color: #fff;
+}
+
+#ModalProfile__Body .row-6 .selector .list input[type='radio']:checked + .item {
+	color: #fff;
+}
+
+#ModalProfile__Body .row-6 .selector .list .item:not(:first-of-type) {
+	border-top: 2px solid var(--c2);
+}
+
+#ModalProfile__Body .row-6 .selector > input:checked ~ .list {
+	display: flex !important;
+	flex-flow: column;
+	position: relative;
+	background-color: var(--c1);
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+	border: 2px solid var(--c4);
+	border-color: var(--c5);
+	max-height: 128px;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	height: 100%;
+	width: 100%;
+	margin-top: -2px;
+}
+
+#ModalProfile__Body .row-6 .selector > input:checked + label {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	box-shadow: inset 0 0 0 2px var(--c5);
+}
+
+/* olympics podium top 3 box */
+
+#ModalProfile__Body .box-podium img {
+	width: 40px;
+	height: 40px;
+	margin: auto;
+	margin-bottom: 4px;
+	border-radius: 8px;
+	border: 2px solid var(--c6);
+}
+
+#ModalProfile__Body .box-podium .body {
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+	margin-top: 10px;
+	width: 100%;
+}
+
+#ModalProfile__Body .box-podium .body .item {
+	width: auto !important;
+}
+
+#ModalProfile__Body .box-podium .body .item:nth-of-type(2) {
+	margin-left: -2px;
+	margin-right: -2px;
+}
+
+#ModalProfile__Body .box-podium .body .item::after {
+	display: block;
+	content: '';
+	width: 48px;
+	height: 48px;
+	background-color: var(--c3);
+	border: 2px solid var(--c4);
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+}
+
+#ModalProfile__Body .box-podium .body .item:nth-of-type(1)::after {
+	border-top-right-radius: 0;
+	height: 56px;
+	width: 50px;
+}
+
+#ModalProfile__Body .box-podium .body .item:nth-of-type(2)::after {
+	height: 72px;
+}
+
+#ModalProfile__Body .box-podium .body .item:nth-of-type(3)::after {
+	border-top-left-radius: 0;
+	height: 40px;
+	width: 50px;
+}
+
+#ModalProfile__Body .box-podium .body .item::before {
+	content: '';
+	display: block;
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	border: 2px solid var(--c5);
+	background-color: var(--c4);
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 20px;
+	text-align: center;
+}
+
+#ModalProfile__Body .box-podium .body .item:nth-of-type(1)::before {
+	content: '2';
+	bottom: 24px;
+	left: 13px;
+}
+
+#ModalProfile__Body .box-podium .body .item:nth-of-type(2)::before {
+	content: '1';
+	bottom: 40px;
+	left: 12px;
+}
+
+#ModalProfile__Body .box-podium .body .item:nth-of-type(3)::before {
+	content: '3';
+	bottom: 8px;
+	left: 13px;
+}
+
+/* scrollbar fix */
+
+@supports(overflow: overlay) {
+
+    #ModalProfile__Body .row-is-section .boxes,
+	#ModalProfile__Body .row-5 .cards,
+	#ModalProfile__Body .row-6 .selector > input:checked ~ .list {
+        overflow: overlay;
+    }
+
+}

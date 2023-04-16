@@ -1,0 +1,158 @@
+/**
+ * Base
+ */
+
+/*** Root ***/
+
+:root {
+	--c1: #191919;
+	--c2: #262626;
+	--c3: #333333;
+	--c4: #404040;
+	--c5: #666666;
+	--c6: #999999;
+}
+
+/*** Reset ***/
+
+* {
+	margin: 0;
+	outline: none;
+	overscroll-behavior: contain;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
+html,
+body,
+#Root {
+	height: 100%;
+}
+
+#Root {
+	-webkit-overflow-scrolling: touch;
+	overscroll-behavior: none;
+	background-image: url('https://jewbot.trade/img/bg.png');
+	background-position: top left;
+	background-repeat: repeat;
+}
+
+@media screen and (max-width: 970px) {
+	#Root {
+		background-image: none;
+	}
+}
+
+img,
+video,
+canvas,
+picture {
+	width: 100%;
+	display: block;
+}
+
+svg {
+	display: block;
+}
+
+input,
+button,
+select,
+textarea {
+	font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+}
+
+/*** Typography ***/
+
+body {
+	color: var(--c6);
+	font-size: 20px;
+	font-weight: 400;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Arial", sans-serif;
+	line-height: 32px;
+	text-decoration: none;
+}
+
+a {
+	color: inherit;
+	text-decoration: inherit;
+}
+
+/*** Layout ***/
+
+body {
+	background-color: var(--c1);
+}
+
+/*** SVG ***/
+
+svg {
+	fill: var(--c6);
+}
+
+/* Scrollbar */
+
+#Root *::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+	background-color: transparent;
+}
+
+#Root *::-webkit-scrollbar-thumb {
+	border-radius: 3px;
+	background-color: rgba(255, 255, 255, 0.25);
+}
+
+#Root *::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+#Root *::-webkit-scrollbar-track-piece {
+	background: transparent;
+}
+
+#Root *::-webkit-scrollbar-corner {
+	background: transparent;
+}
+
+/* scrollbar fix */
+/* BREAKS IPHONE SAFARI MIN-UI */
+/* @supports(overflow: overlay) {
+
+	html, body {
+		overflow: overlay;
+	}
+
+} */
+
+#WEB3_CONNECT_MODAL_ID>div {
+	z-index: 999 !important;
+}
+
+[data-action] {
+	cursor: pointer;
+}
+
+@media screen and (min-width: 970px) {
+	* {
+		overscroll-behavior: auto;
+	}
+}

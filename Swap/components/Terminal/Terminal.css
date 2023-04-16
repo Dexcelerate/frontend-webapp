@@ -1,0 +1,80 @@
+/**
+ * Terminal
+ */
+
+#Terminal {
+	height: 320px;
+	padding: 12px;
+	background-color: var(--c2);
+	display: none;
+}
+
+#SwapFeed,
+#Chart {
+	display: none;
+}
+
+#Terminal > .container {
+	color: var(--c6);
+	font-size: 14px;
+	line-height: 20px;
+	font-family: monospace;
+	background-color: var(--c1);
+	border: 2px solid var(--c3);
+	border-radius: 16px;
+	padding: 12px 16px;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	height: 100%;
+}
+
+#Root.has-connection #Chart,
+#Root.has-connection #SwapFeed,
+#Root.has-connection #Terminal {
+	display: none;
+}
+
+#Root.has-connection.has-token #Chart,
+#Root.has-connection.has-token #SwapFeed,
+#Root.has-connection.has-token #Terminal {
+	display: block;
+}
+
+@media (min-width: 960px) {
+	#Root.has-connection #Terminal {
+		position: fixed;
+		top: 382px;
+		right: 0;
+		bottom: 12px;
+		left: 0;
+		display: flex;
+		flex-flow: column;
+		margin: 0 auto;
+		min-height: 256px;
+		width: 480px;
+		height: auto;
+		border: 2px solid var(--c3);
+		border-radius: 24px;
+		overflow: hidden;
+	}
+
+	#Root.has-connection.has-token #Terminal {
+		left: auto;
+		right: 12px;
+	}
+
+	#Chat:not(.d-none) + #Main #Terminal {
+		right: calc(256px + 12px);
+	}
+}
+
+/* scrollbar fix */
+
+@supports(overflow: overlay) {
+
+	#Terminal > .container {
+        overflow: overlay;
+    }
+
+}

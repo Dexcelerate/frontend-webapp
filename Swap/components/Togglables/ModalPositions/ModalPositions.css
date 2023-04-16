@@ -1,0 +1,133 @@
+/**
+ * Modal Position
+ */
+
+/**
+ * Modal Positions Header
+ */
+
+#ModalPositions .header {
+    padding: 0;
+    flex-direction: column;
+}
+
+#ModalPositions .header-top {
+    display: flex;
+    padding: 12px;
+} 
+
+
+#ModalPositions .header-bottom {
+    display: flex;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--c2);
+    border-top: 2px solid var(--c3);
+}
+
+#ModalPositions .header-bottom label {
+    width: 100%;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 14px;
+    box-shadow: inset 0 0 0 2px var(--c4);
+    background-color: var(--c3);
+    color: var(--c6);
+    transition: 
+        background-color 200ms ease-in-out,
+        box-shadow 200ms ease-in-out,
+        color 200ms ease-in-out;
+}
+
+#ModalPositions__Header label:hover,
+#ModalPositions__Tab1:checked ~ #ModalPositions__Header label[for="ModalPositions__Tab1"],
+#ModalPositions__Tab2:checked ~ #ModalPositions__Header label[for="ModalPositions__Tab2"] {
+    box-shadow: inset 0 0 0 2px var(--c5);
+    background-color: var(--c4);
+    color: #fff;
+}
+
+#ModalPositions__Tab1:not(:checked) ~ #ModalPositions__Body > #ModalPositions__Panel1,
+#ModalPositions__Tab2:not(:checked) ~ #ModalPositions__Body > #ModalPositions__Panel2 {
+    display: none;
+}
+
+/**
+ * Modal Positions Body
+ */
+
+#ModalPositions__Body {
+    padding: 0;
+}
+
+/*** Panel 1 ***/
+
+#ModalPositions__Panel1 {
+    padding: 12px;
+}
+
+#ModalPositions__Panel1 .item {
+    box-shadow: inset 0 0 0 2px var(--c3);
+    background-color: var(--c2);
+    border-radius: 16px;
+    padding: 12px;
+}
+
+#ModalPositions__Panel1 .item + .item {
+    margin-top: 12px;
+}
+
+#ModalPositions__Panel1 .item .row {
+    display: flex;
+    justify-content: space-between;
+}
+
+#ModalPositions__Panel1 .item .row > * {
+    min-width: 0;
+    max-width: 50%;
+    transition: all 200ms ease-in-out;
+}
+
+#ModalPositions__Panel1 .item .row > a:hover {
+    color: #fff;
+}
+
+#ModalPositions__Panel1 .item .row .price {
+    font-family: monospace;
+}
+
+#ModalPositions__Panel1 .item > .btn {
+    min-height: 0;
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 0 12px;
+}
+
+
+/*** Panel 2 ***/
+
+#ModalPositions__Panel2 {
+    padding: 12px;
+}
+
+#ModalPositions__Panel2 .item {
+    box-shadow: inset 0 0 0 2px var(--c3);
+    background-color: var(--c2);
+    border-radius: 16px;
+    padding: 12px;
+}
+
+#ModalPositions__Panel2 .item + .item {
+    margin-top: 12px;
+}
+
+#ModalPositions__Panel2 .item > .btn {
+    min-height: 0;
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 0 12px;
+}

@@ -1,0 +1,429 @@
+/**
+ * Copy
+ */
+
+#Copy > .container {
+	border: 2px solid var(--c3);
+	background-color: var(--c2);
+	border-radius: 12px;
+	overflow: hidden;
+	position: relative; /* fix chromium bug where slots are overflow scroll but still make space on right side */
+}
+
+/* wallets */
+
+#Copy {
+	cursor: default;
+}
+
+#Copy .wallets .wallet + .wallet {
+	border-top: 2px solid var(--c3);
+}
+
+#Copy .wallets .wallet:last-of-type {
+	border-bottom: 2px solid var(--c3);
+}
+
+#Copy .wallets .wallet .header {
+	display: flex;
+	padding: 6px;
+}
+
+#Copy .wallets .wallet .header .actions {
+	display: flex;
+}
+
+#Copy .wallets .wallet:first-of-type .header .btn-toggle path:first-of-type,
+#Copy .wallets .wallet:not(:first-of-type) .header .btn-toggle path:last-of-type {
+	display: none;
+}
+
+#Copy .wallets .wallet.collapsed .header .btn-toggle path:last-of-type {
+	display: none;
+}
+#Copy .wallets .wallet.collapsed .header .btn-toggle path:first-of-type {
+	display: block;
+}
+
+#Copy .wallets .wallet .body {
+	max-height: 320px;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	padding: 6px;
+	background-color: var(--c1);
+	border-top: 2px solid var(--c3);
+}
+
+#Copy .wallets .wallet.collapsed .body,
+#Copy .wallets .wallet:not(:first-of-type) .body {
+	display: none;
+}
+
+#Copy .wallets .wallet .body .transaction {
+	display: flex;
+	flex-direction: column;
+	padding: 6px;
+	border-radius: 16px;
+	border: 2px solid var(--c3);
+	background-color: var(--c2);
+}
+
+#Copy .wallets .wallet .body .transaction + .transaction {
+	margin-top: 6px;
+}
+
+#Copy .wallets .wallet .body .transaction .action {
+	display: flex;
+}
+
+#Copy .wallets .wallet .body .transaction .amounts {
+	display: flex;
+	flex-direction: column;
+}
+
+#Copy .wallets .wallet .body .transaction .amounts > div {
+	display: flex;
+	margin-top: 6px;
+}
+
+#Copy .wallets .wallet .body .transaction .amounts .amount-2 > svg {
+	display: none;
+}
+
+#Copy .wallets .wallet .body .transaction .actions .btn {
+	padding: 0 12px;
+	min-width: 32px;
+	min-height: 32px;
+	font-size: 16px;
+	font-weight: 700;
+	border-radius: 8px;
+}
+
+@media (min-width: 960px) {
+	#Copy .wallets .wallet .body {
+		max-height: 160px;
+		padding: 0;
+	}
+
+	#Copy .wallets .wallet .body .transaction {
+		flex-direction: row;
+		padding: 6px;
+		border-width: 0;
+		border-radius: 0;
+		background-color: var(--c1);
+	}
+
+	#Copy .wallets .wallet .body .transaction + .transaction {
+		margin-top: 0;
+		border-top: 2px solid var(--c3);
+	}
+
+	#Copy .wallets .wallet .body .transaction .amounts {
+		flex-direction: row;
+	}
+
+	#Copy .wallets .wallet .body .transaction .amounts > div {
+		margin-top: 0;
+		min-width: 0;
+	}
+
+	#Copy .wallets .wallet .body .transaction .amounts .amount-2 > svg {
+		display: block;
+	}
+
+	#Copy .wallets .wallet .body .transaction > div:nth-of-type(1) {
+		width: 128px;
+	}
+
+	#Copy .wallets .wallet .body .transaction > div:nth-of-type(2) {
+		width: calc(100% - 128px - 72px);
+		padding-right: 12px;
+	}
+
+	#Copy .wallets .wallet .body .transaction > div:nth-of-type(3) {
+		width: 72px;
+	}
+}
+
+/* panelbox */
+
+.panelbox {
+	width: 100%;
+	height: 190px;
+	overflow: hidden;
+	border-radius: 14px;
+	scroll-margin: 12px;
+	border: 2px solid var(--c4);
+	background-color: var(--c3);
+}
+
+.panelbox .panel {
+	display: none; /* display flex only if radio checked */
+	flex-flow: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	color: #fff;
+	position: relative;
+}
+
+.panelbox > input[type='radio']:checked + .panel {
+	display: flex;
+}
+
+.panelbox .panel .head {
+	display: flex;
+	align-items: center;
+	border-bottom: 2px solid var(--c4);
+	min-width: 0;
+	width: 100%;
+}
+
+.panelbox .panel .head > div {
+	padding: 12px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.panelbox .panel .head > label {
+	padding: 12px;
+	border-right: 2px solid var(--c4);
+}
+
+.panelbox .panel .body {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
+	padding: 12px;
+	position: relative;
+}
+
+/* slots */
+
+#Copy .slots {
+	display: flex;
+	padding: 12px;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+}
+
+#Copy .slots .panelbox {
+	width: 260px;
+	flex-shrink: 0;
+}
+
+#Copy .slots .panelbox + .panelbox {
+	margin-left: 12px;
+}
+
+#Copy .slots .panelbox .panel-main .body {
+	padding: 0;
+	align-items: stretch;
+}
+
+#Copy .slots .panelbox .panel-main .chart {
+	width: 260px;
+	height: 130px;
+	background-color: var(--c1);
+	border-radius: 14px;
+}
+
+#Copy .slots .panelbox .panel-main .chart canvas {
+	margin: -2px;
+	border-radius: 14px 14px 0 0;
+}
+
+#Copy .slots .panelbox .panel-main .chart .meta {
+	position: absolute;
+	display: flex;
+	flex-flow: column;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 6px 12px;
+	background: linear-gradient(135deg, var(--c1) 10%, transparent 100%);
+	border-radius: 14px;
+}
+
+#Copy .slots .panelbox .panel-main .chart .meta .title {
+	color: #fff;
+	font-size: 40px;
+	font-weight: 200;
+	line-height: 46px;
+}
+
+#Copy .slots .panelbox .panel-main .chart .meta .balance {
+	color: #fff;
+	font-size: 24px;
+	line-height: 24px;
+}
+
+#Copy .slots .panelbox .panel-main .chart .meta .btn {
+	position: absolute;
+	top: 6px;
+	right: 5px;
+}
+
+#Copy .slots .panelbox .panel-main .actions {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	padding: 12px 0;
+	background-color: var(--c3);
+	border-top: 2px solid var(--c4);
+	border-radius: 0 0 14px 14px;
+}
+
+/*** FEED ***/
+
+@media (max-width: 959px) {
+	#Feed {
+		border: 2px solid var(--c3);
+		overflow: hidden;
+		border-radius: 16px;
+		margin-top: 12px;
+		cursor: default;
+		background-color: var(--c1);
+	}
+
+	#Feed .header {
+		padding: 6px;
+		color: #fff;
+		background-color: var(--c2);
+		border-bottom: 2px solid var(--c3);
+	}
+
+	#Feed .header .col:first-of-type {
+		display: flex;
+	}
+
+	#Feed .header .col:not(:first-of-type) {
+		display: none;
+	}
+
+	#Feed .body {
+		padding: 6px;
+		overflow: auto;
+		transform: translateZ(0);
+		-webkit-transform: translateZ(0);
+		max-height: 256px;
+	}
+
+	#Feed .body .row {
+		padding: 6px;
+		border-radius: 16px;
+		border: 2px solid var(--c3);
+		background-color: var(--c2);
+	}
+
+	#Feed .body .row + .row {
+		margin-top: 6px;
+	}
+
+	#Feed .body .col:nth-child(1),
+	#Feed .body .col:nth-child(2),
+	#Feed .body .col:nth-child(3) {
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	#Feed .body .col:nth-child(n + 4) {
+		margin-top: 6px;
+	}
+
+	#Feed .body .col:nth-child(3) {
+		color: #fff;
+	}
+
+	#Feed .body .col:nth-child(5),
+	#Feed .body .col:nth-child(6) {
+		display: flex;
+	}
+}
+
+@media (min-width: 960px) {
+	#Feed {
+		border: 2px solid var(--c3);
+		overflow: hidden;
+		border-radius: 16px;
+		margin-top: 12px;
+		cursor: default;
+		background-color: var(--c1);
+	}
+
+	#Feed .header {
+		color: #fff;
+		background-color: var(--c2);
+		border-bottom: 2px solid var(--c3);
+	}
+
+	#Feed .header .col:first-of-type .title {
+		display: none;
+	}
+
+	#Feed .body {
+		overflow: auto;
+		transform: translateZ(0);
+		-webkit-transform: translateZ(0);
+		max-height: 256px;
+	}
+
+	#Feed .body .item {
+		display: flex;
+		width: 100%;
+		padding: 3px 12px;
+		transition: all 200ms ease-in-out;
+		/* border-top: 2px solid var(--c4); */
+	}
+
+	#Feed .body .item:hover {
+		color: #fff;
+		background-color: var(--c2);
+	}
+
+	#Feed .row {
+		display: grid;
+		grid-template-columns: 46px 76px 164px 140px 1fr 1fr;
+	}
+
+	#Feed .row + .row {
+		border-top: 2px solid var(--c3);
+	}
+
+	#Feed .row .col {
+		padding: 6px;
+	}
+
+	#Feed .row .col:nth-child(2) {
+		min-width: 92px;
+	}
+
+	#Feed .row .col:nth-child(3) {
+		padding-left: 15px;
+	}
+
+	#Feed .row .col .image {
+		display: none;
+	}
+}
+
+/* scrollbar fix */
+
+@supports(overflow: overlay) {
+
+    #Copy .wallets .wallet .body,
+	#Copy .slots,
+	#Feed .body,
+	#Feed .body {
+        overflow: overlay;
+    }
+
+}

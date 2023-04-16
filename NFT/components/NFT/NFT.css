@@ -1,0 +1,165 @@
+/**
+ * NFT
+ */
+
+/*** NFT Packs ***/
+
+#NFTPacks > .container {
+	border: 2px solid var(--c3);
+	background-color: var(--c2);
+	background: repeating-linear-gradient(135deg, var(--c1), var(--c1) 6px, var(--c2) 6px, var(--c2) 12px);
+	border-radius: 12px;
+	padding: 6px;
+	overflow: hidden;
+	display: flex;
+	flex-flow: row-reverse wrap-reverse;
+	align-items: center;
+	justify-content: center;
+}
+
+#NFTPacks > .container > .card {
+	flex-shrink: 0;
+	border-radius: 16px;
+	border: 2px solid var(--c4);
+	background-color: var(--c3);
+	width: 192px;
+	cursor: pointer;
+	overflow: hidden;
+	position: relative;
+	transition: all 200ms ease-in-out;
+	pointer-events: all !important;
+	margin: 6px;
+}
+
+/* #NFTPacks > .container > .card:nth-child(1),
+#NFTPacks > .container > .card:nth-child(2) {
+    width: 136px;
+} */
+
+@media (max-width: 467px) {
+	#NFTPacks > .container > .card:nth-child(1),
+	#NFTPacks > .container > .card:nth-child(2) {
+		width: 136px;
+	}
+}
+
+@media (max-width: 335px) {
+	#NFTPacks > .container > .card:nth-child(1),
+	#NFTPacks > .container > .card:nth-child(2) {
+		width: 128px;
+	}
+}
+
+#NFTPacks > .container > .card .footer {
+	padding: 6px;
+	border-top: 2px solid var(--c4);
+	background-size: 4px 4px;
+	background-image: radial-gradient(var(--c2) 1px, var(--c3) 1px);
+}
+
+#NFTPacks > .container > .card .footer .btn {
+	padding: 0;
+	min-height: auto;
+	box-shadow: inset 0 0 0 2px var(--c5);
+}
+
+#NFTPacks > .container > .card:hover .footer .btn {
+	background-color: var(--c4);
+}
+
+#NFTPacks > .container > .card .footer .stock {
+	font-size: 14px;
+	line-height: 26px;
+}
+
+/*** NFT Market Filter ***/
+
+#NFTMarketFilter {
+	top: 82px;
+	z-index: 9;
+	padding: 12px 0;
+	position: sticky;
+	background: linear-gradient(to bottom, var(--c1) -25%, transparent 100%);
+}
+
+#NFTMarketFilter__Selector {
+	max-width: 320px;
+	margin: 0 auto;
+}
+
+#NFTMarketFilter__Selector ul .wrapper {
+	max-height: 200px;
+	overflow: auto;
+	-webkit-transform: translateZ(0);
+}
+
+#NFTMarketFilter__Selector ul .btn {
+	width: 100%;
+	padding: 12px;
+	min-width: auto;
+	min-height: auto;
+	box-shadow: none;
+	border-radius: 0;
+	background-color: transparent;
+
+	display: flex;
+	align-items: flex-start;
+}
+
+#NFTMarketFilter__Selector li + li > .btn {
+	border-top: 2px solid var(--c3);
+}
+
+/*** NFT Market ***/
+
+#NFTMarket > .container {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: center;
+}
+
+#NFTMarket > .container > .card {
+	flex-shrink: 0;
+	border-radius: 16px;
+	border: 2px solid var(--c4);
+	background-color: var(--c3);
+	width: 136px;
+	cursor: pointer;
+	overflow: hidden;
+	position: relative;
+	transition: all 200ms ease-in-out;
+	margin: 6px;
+}
+
+#NFTMarket > .container > .card .footer {
+	padding: 6px;
+	border-top: 2px solid var(--c4);
+	background-size: 4px 4px;
+	background-image: radial-gradient(var(--c2) 1px, var(--c3) 1px);
+}
+
+#NFTMarket > .container > .card .footer .btn {
+	padding: 0;
+	min-height: auto;
+	box-shadow: inset 0 0 0 2px var(--c5);
+}
+
+#NFTMarket > .container > .card:hover .footer .btn {
+	background-color: var(--c4);
+}
+
+#NFTMarket > .container > .card .footer .stock {
+	font-size: 14px;
+	line-height: 26px;
+}
+
+/* scrollbar fix */
+
+@supports(overflow: overlay) {
+
+    #NFTMarketFilter__Selector ul .wrapper {
+        overflow: overlay;
+    }
+
+}

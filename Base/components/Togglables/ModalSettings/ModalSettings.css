@@ -1,0 +1,59 @@
+/**
+ * Modal Settings
+ */
+
+#ModalSettings {
+	padding: 0;
+}
+
+#ModalSettings > .container {
+	height: 100%;
+	border: 0;
+	border-radius: 0;
+}
+
+@media (min-width: 512px) {
+	#ModalSettings {
+		padding: 12px;
+	}
+
+	#ModalSettings > .container {
+		height: auto;
+		border-radius: 16px;
+		border: 2px solid var(--c3);
+	}
+}
+
+#ModalSettings .selector ul .wrapper {
+	max-height: 200px;
+	overflow: auto;
+	-webkit-transform: translateZ(0);
+}
+
+#ModalSettings .selector ul .btn {
+	width: 100%;
+	padding: 12px;
+	min-width: auto;
+	min-height: auto;
+	box-shadow: none;
+	border-radius: 0;
+	background-color: transparent;
+
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+}
+
+#ModalSettings .selector li + li > .btn {
+	border-top: 2px solid var(--c3);
+}
+
+/* scrollbar fix */
+
+@supports(overflow: overlay) {
+
+    #ModalSettings .selector ul .wrapper {
+        overflow: overlay;
+    }
+
+}

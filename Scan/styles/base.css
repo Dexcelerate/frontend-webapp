@@ -1,0 +1,11 @@
+/**
+ * Base Scan
+ */
+
+#Main.scan {
+    padding: 12px;
+}
+
+#Main.scan > *:not(.card-scan) {
+    display: none !important;
+}

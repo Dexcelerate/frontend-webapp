@@ -1,0 +1,98 @@
+/**
+ * Modal NFT Pack
+ */
+
+#ModalNFTPack {
+	max-width: 640px;
+}
+
+#ModalNFTPack__Body .box {
+	padding: 12px;
+	border-radius: 12px;
+	border: 2px solid var(--c4);
+	background-color: var(--c3);
+}
+
+#ModalNFTPack__Body .box-nft {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--c1);
+	background-image: repeating-radial-gradient(circle at 0 0, transparent 0, var(--c2) 10px),
+		repeating-linear-gradient(var(--c1), var(--c4));
+}
+
+#ModalNFTPack__Body .box-nft img {
+	border: 2px solid var(--c4);
+	border-radius: 16px;
+	overflow: hidden;
+}
+
+#ModalNFTPack__Body .box-buy .selector > label {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: var(--c2);
+	border-radius: 16px;
+	padding: 0px 16px;
+}
+
+#ModalNFTPack__Body .box-buy .selector .list .item {
+	display: flex;
+	cursor: pointer;
+	padding: 4px 14px;
+	transition: color 200ms ease-in-out;
+	min-height: max-content;
+}
+
+#ModalNFTPack__Body .box-buy .selector .list .item.active,
+#ModalNFTPack__Body .box-buy .selector .list .item:hover,
+#ModalNFTPack__Body .box-buy .selector .list .item:focus {
+	color: #fff;
+}
+
+#ModalNFTPack__Body .box-buy .selector .list input[type='radio']:checked + .item {
+	color: #fff;
+}
+
+#ModalNFTPack__Body .box-buy .selector .list .item:not(:first-of-type) {
+	border-top: 2px solid var(--c2);
+}
+
+#ModalNFTPack__Body .box-buy .selector > input:checked ~ .list {
+	display: flex !important;
+	flex-flow: column;
+	position: relative;
+	background-color: var(--c1);
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+	border: 2px solid var(--c4);
+	border-color: var(--c5);
+	max-height: 128px;
+	overflow: auto;
+	-webkit-transform: translateZ(0);
+	height: 100%;
+	width: 100%;
+	margin-top: -2px;
+}
+
+#ModalNFTPack__Body .box-buy .selector > input:checked + label {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	box-shadow: inset 0 0 0 2px var(--c5);
+}
+
+#ModalNFTPack__Body .box-buy .btn {
+	background-color: var(--c2);
+}
+
+/* scrollbar fix */
+
+@supports(overflow: overlay) {
+
+    #ModalNFTPack__Body .box-buy .selector > input:checked ~ .list {
+        overflow: overlay;
+    }
+
+}

@@ -1,0 +1,278 @@
+/**
+ * Modal Affiliates
+ */
+
+#ModalAffiliates {
+	padding: 0;
+}
+
+#ModalAffiliates > .container {
+	height: 100%;
+	border: 0;
+	border-radius: 0;
+}
+
+#ModalAffiliates > .container > .body {
+	padding: 0;
+}
+
+@media (min-width: 512px) {
+	#ModalAffiliates {
+		padding: 12px;
+	}
+
+	#ModalAffiliates > .container {
+		height: auto;
+		border-radius: 16px;
+		border: 2px solid var(--c3);
+	}
+}
+
+/* row 1 */
+
+#ModalAffiliates .row-1 {
+	padding: 12px 12px 0 12px;
+}
+
+#ModalAffiliates__Selector ul .wrapper {
+	max-height: 200px;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+}
+
+#ModalAffiliates__Selector ul .btn {
+	width: 100%;
+	padding: 12px;
+	min-width: auto;
+	min-height: auto;
+	box-shadow: none;
+	border-radius: 0;
+	background-color: transparent;
+
+	display: flex;
+	align-items: flex-start;
+}
+
+#ModalAffiliates__Selector li + li > .btn {
+	border-top: 2px solid var(--c3);
+}
+
+/* row 2 */
+
+/*
+#ModalAffiliates .row-2 {
+}
+ */
+
+ #ModalAffiliates .row-2 .boxes {
+	display: flex;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	padding: 12px;
+	overscroll-behavior-y: auto;
+}
+
+#ModalAffiliates .row-2 .boxes .box {
+	flex-shrink: 0;
+	cursor: pointer;
+	height: 96px;
+	width: 176px;
+	display: flex;
+	flex-flow: column;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--c2);
+	border: 2px solid var(--c4);
+	border-radius: 16px;
+	transition: all 200ms ease-in-out;
+	color: #fff;
+}
+
+#ModalAffiliates .row-2 .boxes .box.active,
+#ModalAffiliates .row-2 .boxes .box:not(.box-users):hover {
+	background-color: var(--c3);
+	border: 2px solid var(--c5);
+}
+
+#ModalAffiliates .row-2 .boxes .box + .box {
+	margin-left: 12px;
+}
+
+#ModalAffiliates .row-2 .boxes .box .amount {
+	margin: 0 auto;
+	width: fit-content;
+	padding-top: 2px;
+	line-height: 24px;
+	border-top: 2px solid var(--c5);
+}
+
+#ModalAffiliates .row-2 .box-users {
+	overflow: hidden;
+	position: relative;
+	justify-content: flex-start !important;
+}
+
+#ModalAffiliates .row-2 .box-users .header {
+	width: 100%;
+	background-color: var(--c3);
+	border-bottom: 2px solid var(--c4);
+}
+
+#ModalAffiliates .row-2 .box-users .body {
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	width: 100%;
+}
+
+#ModalAffiliates .row-2 .box-users .body .item {
+	display: flex;
+	justify-content: flex-start;
+	padding: 3px 6px;
+	font-size: 14px;
+	line-height: 16px;
+	transition: background-color 200ms ease-in-out;
+}
+
+#ModalAffiliates .row-2 .box-users .body .item:hover,
+#ModalAffiliates .row-2 .box-users .body .item.active {
+	cursor: pointer;
+	background-color: var(--c3);
+}
+
+#ModalAffiliates .row-2 .box-users .body .item + .item {
+	border-top: 2px solid var(--c4);
+}
+
+#ModalAffiliates .row-2 .box-users .body .item div:first-of-type {
+	flex: 1;
+	max-width: 30%;
+	text-align: left;
+}
+
+#ModalAffiliates .row-2 .box-users .body .item div:last-of-type {
+	flex: 1;
+	text-align: right;
+}
+
+/* row 3 */
+
+#ModalAffiliates .row-3 {
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	border-top: 2px solid var(--c3);
+	box-shadow: 0px 2px 0px 0px var(--c3);
+	overscroll-behavior: none;
+}
+
+#ModalAffiliates .row-3 table {
+	border-collapse: collapse;
+	white-space: nowrap;
+	cursor: default;
+	width: 100%;
+	box-shadow: 0px 2px 0px 0px var(--c3);
+}
+
+#ModalAffiliates .row-3 table thead tr th {
+	position: sticky;
+	z-index: 1;
+	top: 0;
+	color: #fff;
+	font: inherit;
+	text-align: left;
+	padding: 0 12px 2px;
+	background-color: var(--c2);
+	box-shadow: inset 0 -2px 0 0 var(--c3);
+}
+
+#ModalAffiliates .row-3 table thead tr th + th {
+	box-shadow: inset 2px -2px 0 0 var(--c3);
+}
+
+#ModalAffiliates .row-3 table tbody tr {
+	background-color: var(--c1);
+
+	/* safari bug where it cannot display box shadows on table rows so instead we do border bottom */
+	/* box-shadow: inset 0 -2px 0 0 var(--c3); */
+	border-bottom: 2px solid var(--c3);
+}
+
+#ModalAffiliates .row-3 table tbody:last-of-type tr {
+	/* box-shadow: none; */
+	border-bottom: 0;
+}
+
+#ModalAffiliates .row-3 table tbody tr td {
+	padding: 0 12px 2px;
+}
+
+#ModalAffiliates .row-3 table tbody:last-of-type tr td {
+	padding: 0 12px;
+}
+
+/* hide all tbody if tbody.loading is present */
+#ModalAffiliates .row-3 table.loading {
+	box-shadow: none !important;
+}
+#ModalAffiliates .row-3 table tbody.loader {
+	padding: 0 !important;
+}
+#ModalAffiliates .row-3 table tbody.loader tr {
+	border: none;
+	box-shadow: none !important;
+}
+#ModalAffiliates .row-3 table tbody.loader ~ tbody {
+	display: none !important;
+}
+
+/* row 4 */
+
+#ModalAffiliates .row-4 {
+	padding: 12px;
+	background-color: var(--c2);
+	border-top: 2px solid var(--c3);
+}
+
+#user-chains-stats,
+#user-chain-stats {
+	overscroll-behavior-y: auto;
+}
+
+/* fix loader and pagination bug */
+
+#ModalAffiliates .row-3 {
+	height: calc(100% - 68px - 38px - 82px)
+	/* height: calc(100% - 68px - 120px - 82px); */
+}
+
+#affiliates-fee-container .item {
+	display: flex;
+	width: 100%;
+	padding: 3px 12px;
+	text-align: center;
+	vertical-align: middle;
+	transition: all 200ms ease-in-out;
+	/* border-top: 2px solid var(--c4); */
+}
+
+#affiliates-fee-container .item:hover {
+	color: #fff;
+	background-color: var(--c2);
+}
+
+/* scrollbar fix */
+
+@supports(overflow: overlay) {
+
+    #ModalAffiliates__Selector ul .wrapper,
+	#ModalAffiliates .row-2 .boxes,
+	#ModalAffiliates .row-2 .box-users .body,
+	#ModalAffiliates .row-3 {
+        overflow: overlay;
+    }
+
+}

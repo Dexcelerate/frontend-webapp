@@ -1,0 +1,91 @@
+/**
+ * Modal Token Output
+ */
+
+#ModalTokenOutput .input-group {
+	position: relative;
+}
+
+#ModalTokenOutput .input-group .btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	opacity: 1;
+	padding: 12px;
+	transition: opacity 200ms ease-in-out;
+}
+
+#ModalTokenOutput .input-group input:placeholder-shown + .btn {
+	opacity: 0;
+}
+
+#ModalTokenOutput .list {
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	max-height: 128px;
+	margin-top: 12px;
+	border-radius: 16px;
+	padding: 6px;
+	border: 2px solid var(--c4);
+	background-color: var(--c2);
+}
+
+#ModalTokenOutput .list .item {
+	border-radius: 10px;
+	padding: 6px;
+	width: 100%;
+	display: flex;
+	text-align: left;
+	overflow: hidden;
+	border: 2px solid transparent;
+	transition: background-color 200ms ease-in-out, outline 200ms ease-in-out;
+}
+
+#ModalTokenOutput .list .item:hover,
+#ModalTokenOutput .list .item.active {
+	background-color: var(--c4);
+	border: 2px solid var(--c5);
+}
+
+#ModalTokenOutput .list .item + .item {
+	margin-top: 6px;
+}
+
+#ModalTokenOutput .list .item img {
+	margin-right: 6px;
+	height: 32px;
+	width: 32px;
+}
+
+#ModalTokenOutput .list .item .meta {
+	display: flex;
+	flex-flow: column;
+	min-width: 0;
+}
+
+#ModalTokenOutput .list .item .meta .name {
+	line-height: 16px;
+	font-size: 14px;
+}
+
+#ModalTokenOutput .list .item .meta .symbol {
+	line-height: 16px;
+	font-weight: 600;
+	font-size: 14px;
+	color: #fff;
+}
+
+#ModalTokenOutput .form-control {
+	padding: 10px 50px 10px 16px;
+}
+
+/* scrollbar fix */
+
+@supports(overflow: overlay) {
+
+	#ModalTokenOutput .list {
+        overflow: overlay;
+    }
+
+}

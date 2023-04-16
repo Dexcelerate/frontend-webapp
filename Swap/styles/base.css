@@ -1,0 +1,29 @@
+/**
+ * Base Swap
+ */
+
+body,
+#Root {
+    background-color: var(--c2);
+}
+
+#Main.swap {
+    padding: 0;
+}
+
+#Main.swap > *:not(.card-swap) {
+    display: none !important;
+}
+
+@media (min-width: 960px) {
+
+    body,
+    #Root {
+        background-color: var(--c1);
+    }
+
+    #Main.swap {
+        padding: 12px;
+    }
+
+}

@@ -1,0 +1,247 @@
+/**
+ * Modal Statistics
+ */
+
+#ModalStatistics {
+	padding: 0;
+}
+
+#ModalStatistics > .container {
+	height: 100%;
+	border: 0;
+	border-radius: 0;
+}
+
+#ModalStatistics > .container > .body {
+	padding: 0;
+
+	/* fix */
+	/*display: flex;
+	flex-direction: column;*/
+}
+
+@media (min-width: 512px) {
+	#ModalStatistics {
+		padding: 12px;
+	}
+
+	#ModalStatistics > .container {
+		height: auto;
+		border-radius: 16px;
+		border: 2px solid var(--c3);
+	}
+}
+
+/* row 1 */
+
+#ModalStatistics .row-1 {
+	padding: 12px 12px 0 12px;
+}
+
+#ModalStatistics__Selector ul .wrapper {
+	max-height: 200px;
+	overflow: auto;
+	/*-webkit-transform: translateZ(0); */
+}
+
+#ModalStatistics__Selector ul .btn {
+	width: 100%;
+	padding: 12px;
+	min-width: auto;
+	min-height: auto;
+	box-shadow: none;
+	border-radius: 0;
+	background-color: transparent;
+
+	display: flex;
+	align-items: flex-start;
+}
+
+#ModalStatistics__Selector li + li > .btn {
+	border-top: 2px solid var(--c3);
+}
+
+/* row 2 */
+
+#ModalStatistics .row-2 {
+	padding: 12px 12px 0 12px;
+}
+
+#ModalStatistics .row-2 .user {
+	border-radius: 14px;
+	border: 2px solid var(--c4);
+	background-color: var(--c2);
+	display: flex;
+	align-items: center;
+	padding: 12px;
+	background: repeating-linear-gradient(135deg, var(--c1), var(--c1) 6px, var(--c2) 6px, var(--c2) 12px);
+}
+
+#ModalStatistics .row-2 .user img {
+	width: 72px;
+	height: 72px;
+	border-radius: 14px;
+	border: 2px solid var(--c4);
+	background-color: var(--c1);
+}
+
+#ModalStatistics .row-2 .user .meta {
+	margin-left: 12px;
+	font-size: 14px;
+	line-height: 20px;
+	display: flex;
+	width: 100%;
+}
+
+#ModalStatistics .row-2 .meta .item {
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	justify-content: center;
+	margin: auto;
+	border: 2px solid var(--c4);
+	background-color: var(--c3);
+	border-radius: 14px;
+	height: 72px;
+	width: 100%;
+}
+
+#ModalStatistics .row-2 .meta .item + .item {
+	margin-left: 12px;
+}
+
+/* row 3 */
+
+#ModalStatistics .row-3 {
+	padding: 12px 12px 0 12px;
+}
+
+#ModalStatistics .row-3 .chart {
+	overflow: hidden;
+	position: relative;
+	border-radius: 14px;
+	border: 2px solid var(--c4);
+	background-color: var(--c1);
+}
+
+#ModalStatistics .row-3 .chart canvas {
+	margin: -1px;
+}
+
+#ModalStatistics .row-3 .chart .meta {
+	display: flex;
+	flex-flow: column;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 6px 12px;
+	background: linear-gradient(135deg, var(--c1) 10%, transparent 100%);
+}
+
+#ModalStatistics .row-3 .chart .meta .title {
+	color: #fff;
+	font-size: 40px;
+	font-weight: 200;
+	line-height: 40px;
+	display: flex;
+	align-items: center;
+}
+
+#ModalStatistics .row-3 .chart .meta .btn-has-icon {
+	position: absolute;
+	top: 6px;
+	right: 5px;
+}
+
+/* row 4 */
+
+#ModalStatistics .row-4 {
+	margin-top: 12px;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	box-shadow: 0px 2px 0px 0px var(--c3);
+	/* fix */
+	flex: 1;
+}
+
+#ModalStatistics .row-4 table {
+	border-top: 2px solid var(--c3);
+	border-collapse: collapse;
+	white-space: nowrap;
+	cursor: default;
+	width: 100%;
+}
+
+#ModalStatistics .row-4 table thead tr th {
+	position: sticky;
+	z-index: 1;
+	top: 0;
+	color: #fff;
+	font: inherit;
+	text-align: left;
+	padding: 0 12px 2px;
+	background-color: var(--c2);
+	box-shadow: inset 0 -2px 0 0 var(--c3);
+}
+
+#ModalStatistics .row-4 table thead tr th + th {
+	box-shadow: inset 2px -2px 0 0 var(--c3);
+}
+
+#ModalStatistics .row-4 table tbody tr {
+	background-color: var(--c1);
+
+	/* safari bug where it cannot display box shadows on table rows so instead we do border bottom */
+	/* box-shadow: inset 0 -2px 0 0 var(--c3); */
+	border-bottom: 2px solid var(--c3);
+}
+
+#ModalStatistics .row-4 table tbody:last-of-type tr {
+	/* box-shadow: none; */
+	border-bottom: 0;
+}
+
+#ModalStatistics .row-4 table tbody tr td {
+	padding: 0 12px 2px;
+}
+
+#ModalStatistics .row-4 table tbody:last-of-type tr td {
+	padding: 0 12px;
+}
+
+#ModalStatistics .row-4 .item {
+	display: flex;
+	width: 100%;
+	padding: 3px 12px;
+	text-align: center;
+	vertical-align: middle;
+	transition: all 200ms ease-in-out;
+	/* border-top: 2px solid var(--c4); */
+}
+
+#ModalStatistics .row-4 .item:hover {
+	color: #fff;
+	background-color: var(--c2);
+}
+
+/* row 5 */
+
+#ModalStatistics .row-5 {
+	padding: 12px;
+	background-color: var(--c2);
+	border-top: 2px solid var(--c3);
+}
+
+/* scrollbar fix */
+
+/*@supports(overflow: overlay) {
+
+    #ModalStatistics__Selector ul .wrapper,
+	#ModalStatistics .row-4 {
+        overflow: overlay;
+    }
+
+}

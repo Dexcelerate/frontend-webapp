@@ -1,0 +1,23 @@
+/**
+ * Navigation
+ */
+
+#Navigation {
+	top: 0;
+	right: 0;
+	bottom: 82px;
+	bottom: calc(82px + env(safe-area-inset-bottom));
+	left: 0;
+}
+
+@media (min-width: 960px) {
+	#Navigation {
+		display: none;
+	}
+}
+
+/*** Navigation Body ***/
+
+#Navigation__Body {
+	padding: 12px;
+}

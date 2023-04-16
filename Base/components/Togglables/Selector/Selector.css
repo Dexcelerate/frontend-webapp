@@ -1,0 +1,143 @@
+/**
+ * Selector
+ */
+
+#Selector::before {
+	content: '';
+	position: absolute;
+	display: block;
+	height: 32px;
+	width: 32px;
+	top: -2px;
+	right: calc(50% - 16px);
+	transform: rotate(-45deg);
+	clip-path: polygon(100% 100%, 0% 0%, 100% 0%);
+	-webkit-clip-path: polygon(100% 100%, 0% 0%, 100% 0%);
+	background-color: var(--c2);
+	border: 2px solid var(--c4);
+	border-radius: 0 6px 0 0;
+}
+
+#Selector {
+	max-width: 400px;
+	margin: 0 auto;
+	padding: 12px;
+	z-index: 999;
+}
+
+#Selector > .lightbox {
+	background-color: transparent;
+	bottom: 0;
+}
+
+#Selector > .container {
+	height: auto;
+	border-radius: 16px;
+	border: 2px solid var(--c4);
+	background-color: var(--c2);
+}
+
+@media (min-width: 960px) {
+	#Selector {
+		margin-right: 204px; /* desktop right offset */
+	}
+}
+
+/*** Selector Header ***/
+
+#Selector__Header {
+	display: flex;
+	padding: 12px;
+	background-color: var(--c2);
+	border-bottom: 2px solid var(--c4);
+	min-height: max-content;
+}
+
+#Selector__Header .btn {
+	padding: 0;
+	line-height: 56px;
+}
+
+#Selector__Tab1:checked ~ #Selector__Header > label[for='Selector__Tab1'],
+#Selector__Tab2:checked ~ #Selector__Header > label[for='Selector__Tab2'] {
+	box-shadow: inset 0 0 0 2px var(--c5);
+	background-color: var(--c4);
+	color: #fff;
+}
+
+/*** Selector Body ***/
+
+#Selector__Body > .panel {
+	display: none;
+}
+
+#Selector__Tab1:checked ~ #Selector__Body > #Selector__Panel1,
+#Selector__Tab2:checked ~ #Selector__Body > #Selector__Panel2 {
+	display: block;
+}
+
+/*** Selector Footer ***/
+
+#Selector__Footer {
+	padding: 12px;
+	background-color: var(--c2);
+	border-top: 2px solid var(--c4);
+}
+
+/*** Selector Panel 1 ***/
+
+#Selector__Panel1 .btn {
+	display: flex;
+	justify-content: flex-start;
+	text-align: left;
+	color: #fff;
+	width: 100%;
+	padding: 6px 12px;
+	background-color: var(--c1);
+	transition: background-color 200ms ease-in-out;
+}
+
+#Selector__Panel1 .btn:hover,
+#Selector__Panel1 .btn:focus,
+#Selector__Panel1 .btn.active {
+	background-color: var(--c3);
+}
+
+#Selector__Panel1 .btn + .btn {
+	border-top: 2px solid var(--c4);
+}
+
+#Selector__Panel1 .btn div:first-of-type {
+	flex-shrink: 0;
+	width: 60%;
+}
+
+/*** Selector Panel 2 ***/
+
+#Selector__Panel2 .slot {
+	display: flex;
+	cursor: pointer;
+	padding: 6px 12px;
+	background-color: var(--c1);
+	transition: background-color 200ms ease-in-out;
+}
+
+#Selector__Panel2 .slot:hover {
+	background-color: var(--c3);
+}
+
+#Selector__Panel2 .slot + .slot {
+	border-top: 2px solid var(--c4);
+}
+
+#Selector__Panel2 .slot .btn {
+	display: flex;
+	width: 100%;
+	min-width: 0;
+	text-align: left;
+}
+
+#Selector__Panel2 .slot .btn div {
+	color: #fff;
+	width: 50%;
+}

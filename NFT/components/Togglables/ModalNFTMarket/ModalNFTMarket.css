@@ -1,0 +1,171 @@
+/**
+ * Modal NFT Market
+ */
+
+#ModalNFTMarket {
+	padding: 0;
+	max-width: 640px;
+}
+
+#ModalNFTMarket > .container {
+	height: 100%;
+	border: 0;
+	border-radius: 0;
+}
+
+@media (min-width: 512px) {
+	#ModalNFTMarket {
+		padding: 12px;
+	}
+
+	#ModalNFTMarket > .container {
+		height: auto;
+		border-radius: 16px;
+		border: 2px solid var(--c3);
+	}
+}
+
+#ModalNFTMarket__Body .box {
+	padding: 12px;
+	border-radius: 12px;
+	border: 2px solid var(--c4);
+	background-color: var(--c3);
+}
+
+#ModalNFTMarket__Body .box-nft {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--c1);
+	background-image: repeating-radial-gradient(circle at 0 0, transparent 0, var(--c2) 10px),
+		repeating-linear-gradient(var(--c1), var(--c4));
+}
+
+#ModalNFTMarket__Body .box-nft img {
+	border: 2px solid var(--c4);
+	border-radius: 16px;
+	overflow: hidden;
+}
+
+#ModalNFTMarket__Body .box-buy-selection {
+	background-color: var(--c2);
+}
+
+input[id='boxBuyEnabled']:checked ~ .box-buy-selection,
+input[id='boxBuyEnabled']:not(:checked) ~ .box-buy {
+	display: none;
+}
+
+#ModalNFTMarket__Body .box-buy .selector > label {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: var(--c2);
+	border-radius: 16px;
+	padding: 0px 16px;
+}
+
+#ModalNFTMarket__Body .box-buy .selector .list .item {
+	display: flex;
+	cursor: pointer;
+	padding: 4px 14px;
+	transition: color 200ms ease-in-out;
+	min-height: max-content;
+}
+
+#ModalNFTMarket__Body .box-buy .selector .list .item.active,
+#ModalNFTMarket__Body .box-buy .selector .list .item:hover,
+#ModalNFTMarket__Body .box-buy .selector .list .item:focus {
+	color: #fff;
+}
+
+#ModalNFTMarket__Body .box-buy .selector .list input[type='radio']:checked + .item {
+	color: #fff;
+}
+
+#ModalNFTMarket__Body .box-buy .selector .list .item:not(:first-of-type) {
+	border-top: 2px solid var(--c2);
+}
+
+#ModalNFTMarket__Body .box-buy .selector > input:checked ~ .list {
+	display: flex !important;
+	flex-flow: column;
+	position: relative;
+	background-color: var(--c1);
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+	border: 2px solid var(--c4);
+	border-color: var(--c5);
+	max-height: 128px;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	height: 100%;
+	width: 100%;
+	margin-top: -2px;
+}
+
+#ModalNFTMarket__Body .box-buy .selector > input:checked + label {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	box-shadow: inset 0 0 0 2px var(--c5);
+}
+
+#ModalNFTMarket__Body .box-buy .btn {
+	background-color: var(--c2);
+}
+
+/* offer swap selection */
+
+#ModalNFTMarket__Body .offer-swap-selection ~ * {
+	display: none;
+}
+
+#ModalNFTMarket__Body .offer-swap-selection {
+	margin: 0 -12px;
+}
+
+#ModalNFTMarket__Body .offer-swap-selection .cards {
+	display: flex;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	padding: 12px;
+	position: sticky;
+}
+
+#ModalNFTMarket__Body .offer-swap-selection .cards .card {
+	flex-shrink: 0;
+	cursor: pointer;
+}
+
+#ModalNFTMarket__Body .offer-swap-selection .cards .card img {
+	width: 192px;
+	height: 192px;
+	overflow: hidden;
+	border-radius: 16px;
+	border: 2px solid var(--c4);
+	background-color: var(--c3);
+	transition: animation 200ms ease-in-out;
+}
+
+#ModalNFTMarket__Body .offer-swap-selection .cards .card input[type='checkbox']:checked + img {
+	border-color: #fff;
+	animation: glow 2s infinite alternate;
+}
+
+#ModalNFTMarket__Body .offer-swap-selection .cards .card:not(:first-of-type) {
+	margin-left: 12px;
+}
+
+/* scrollbar fix */
+
+@supports(overflow: overlay) {
+
+    #ModalNFTMarket__Body .box-buy .selector > input:checked ~ .list,
+	#ModalNFTMarket__Body .offer-swap-selection .cards {
+        overflow: overlay;
+    }
+
+}

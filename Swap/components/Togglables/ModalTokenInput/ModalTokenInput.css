@@ -1,0 +1,86 @@
+/**
+ * Modal Token Input
+ */
+
+#ModalTokenInput .input-group {
+	position: relative;
+}
+
+#ModalTokenInput .input-group .btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	opacity: 1;
+	padding: 12px;
+	transition: opacity 200ms ease-in-out;
+}
+
+#ModalTokenInput .input-group input:placeholder-shown + .btn {
+	opacity: 0;
+}
+
+#ModalTokenInput .list {
+	overflow: auto;
+	-webkit-transform: translateZ(0);
+	max-height: 128px;
+	margin-top: 12px;
+	border-radius: 16px;
+	padding: 6px;
+	border: 2px solid var(--c4);
+	background-color: var(--c2);
+}
+
+#ModalTokenInput .list .item {
+	border-radius: 10px;
+	padding: 6px;
+	width: 100%;
+	display: flex;
+	text-align: left;
+	overflow: hidden;
+	border: 2px solid transparent;
+	transition: background-color 200ms ease-in-out, outline 200ms ease-in-out;
+}
+
+#ModalTokenInput .list .item:hover,
+#ModalTokenInput .list .item.active {
+	background-color: var(--c4);
+	border: 2px solid var(--c5);
+}
+
+#ModalTokenInput .list .item + .item {
+	margin-top: 6px;
+}
+
+#ModalTokenInput .list .item img {
+	margin-right: 6px;
+	height: 32px;
+	width: 32px;
+}
+
+#ModalTokenInput .list .item .meta {
+	display: flex;
+	flex-flow: column;
+	min-width: 0;
+}
+
+#ModalTokenInput .list .item .meta .name {
+	line-height: 16px;
+	font-size: 14px;
+}
+
+#ModalTokenInput .list .item .meta .symbol {
+	line-height: 16px;
+	font-weight: 600;
+	font-size: 14px;
+	color: #fff;
+}
+
+/* scrollbar fix */
+
+@supports(overflow: overlay) {
+
+	#ModalTokenInput .list {
+        overflow: overlay;
+    }
+
+}

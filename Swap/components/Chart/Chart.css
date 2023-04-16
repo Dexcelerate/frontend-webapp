@@ -1,0 +1,207 @@
+/**
+ * Chart
+ */
+
+#Chart .header {
+	padding: 12px;
+	display: flex;
+	align-items: center;
+	background-color: var(--c2);
+}
+
+#Chart .header .info {
+	display: flex;
+}
+
+/*** Chart currency selector ***/
+
+#Chart__Currency {
+    min-width: 0;
+}
+
+#Chart__Currency label {
+	min-width: 64px;
+	min-height: 0;
+	padding: 6px 0;
+	cursor: pointer;
+
+	color: inherit !important;
+	box-shadow: none !important;
+	background-color: transparent !important;
+}
+
+#Chart__Currency ul {
+	/* min-width: 256px; */
+	left: 0 !important;
+	transform: none !important;
+}
+
+#Chart__Currency ul .wrapper {
+	max-height: 192px;
+	overflow: auto;
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	padding: 6px;
+}
+
+#Chart__Currency ul li + li {
+	margin-top: 6px;
+}
+
+#Chart__Currency ul::before {
+	right: calc(75% - 16px);
+}
+
+#Chart__Currency ul .btn {
+	padding: 0;
+	width: 100%;
+	min-width: auto;
+	min-height: auto;
+	box-shadow: none;
+	border-radius: 16px;
+	background-color: transparent;
+	padding: 0 10px;
+	text-align: left;
+
+	align-items: center;
+	border: 2px solid transparent;
+	display: flex;
+	padding: 6px;
+	transition: outline 200ms ease-in-out, background-color 200ms ease-in-out;
+
+	font-size: 12px;
+	line-height: 16px;
+}
+
+#Chart__Currency ul .btn:hover,
+#Chart__Currency ul .btn.active {
+	background-color: var(--c3);
+	border: 2px solid var(--c4);
+}
+
+#Chart__Currency ul .btn .liquidity,
+#Chart__Currency ul .btn .volume {
+	font-size: 12px;
+	line-height: 16px;
+}
+
+#Chart__Currency .col-1 {
+	position: relative;
+}
+
+#Chart__Currency .col-1 img:first-of-type {
+	width: 48px;
+	height: 48px;
+}
+
+#Chart__Currency > label {
+	position: relative;
+}
+
+#Chart__Currency > label img.main-token-icon {
+	margin-right: 35px !important;
+}
+
+#Chart__Currency > label img.dex-icon {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	left: 21px;
+	top: 27px;
+}
+
+#Chart__Currency > label img.secondary-token-icon {
+	position: absolute;
+	left: 27px;
+	top: 6px;
+}
+
+/* this is for the lq dex image */
+#Chart__Currency .col-1 img + img {
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+/*** Chart interval filter ***/
+
+#Chart__Filters__Intervals label {
+	min-width: 64px;
+	min-height: 0;
+	padding: 6px 12px;
+}
+
+#Chart__Filters__Intervals ul .btn {
+	padding: 0;
+	width: 100%;
+	min-width: auto;
+	min-height: auto;
+	box-shadow: none;
+	border-radius: 0;
+	background-color: transparent;
+}
+
+#Chart__Filters__Intervals li + li > .btn {
+	border-top: 2px solid var(--c3);
+}
+
+/*** Chart cointainer ***/
+
+#Chart__Container {
+	height: calc(320px - 68px);
+	border-top: 2px solid var(--c3);
+}
+
+@media (min-width: 960px) {
+	#Chart {
+		display: none;
+	}
+
+	#Chart > .container {
+		height: 100%;
+	}
+
+	#Chart .header {
+		border: 2px solid var(--c3);
+		border-radius: 24px 24px 0 0;
+		background-color: var(--c2);
+	}
+
+	#Root.has-connection.has-token #Chart {
+		display: block;
+		position: fixed;
+		width: calc(100% - 12px - 12px - 12px - 480px);
+		/* height: calc(67% - 84px); */
+		top: calc(82px + 12px);
+		bottom: calc(12px + 116px);
+		z-index: 2;
+	}
+
+	#Root.has-connection.has-token.has-expanded-feed #Chart {
+		bottom: calc(12px + 278px + 12px);
+	}
+
+	#Chat:not(.d-none) + #Main #Chart {
+		width: calc(100% - 12px - 12px - 12px - 480px - 256px);
+	}
+
+	#Chart__Container {
+		height: calc(100% - 68px);
+		overflow: hidden;
+		border-top: 0 !important;
+		border: 2px solid var(--c3);
+		border-radius: 0 0 24px 24px;
+	}
+}
+
+/* scrollbar fix */
+
+@supports(overflow: overlay) {
+
+    #Chart__Currency ul .wrapper {
+        overflow: overlay;
+    }
+
+}

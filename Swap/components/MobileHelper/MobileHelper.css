@@ -1,0 +1,57 @@
+/**
+ * MobileHelper
+ */
+
+#MobileHelper {
+    display: none;
+}
+
+@media (max-width: 959px) {
+
+    #Root.has-connection.has-token #MobileHelper {
+        display: flex;
+        padding: 12px;
+        background-color: var(--c2);
+        border-top: 2px solid var(--c3);
+        border-bottom: 2px solid var(--c3);
+    }
+
+    #MobileHelper label {
+        width: 100%;
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-align: center;
+        cursor: pointer;
+        padding: 6px 8px;
+        border-radius: 14px;
+        box-shadow: inset 0 0 0 2px var(--c4);
+        background-color: var(--c3);
+        color: var(--c6);
+        transition:
+            background-color 200ms ease-in-out,
+            box-shadow 200ms ease-in-out,
+            color 200ms ease-in-out;
+    }
+
+    #Root:not(.has-token) #MobileHelper > label[for="MobileHelper__Tab2"],
+    #Root:not(.has-token) #MobileHelper > label[for="MobileHelper__Tab3"] {
+        pointer-events: none;
+        cursor: default;
+    }
+
+    #MobileHelper__Tab1:checked ~ #MobileHelper > label[for="MobileHelper__Tab1"],
+    #MobileHelper__Tab2:checked ~ #MobileHelper > label[for="MobileHelper__Tab2"],
+    #MobileHelper__Tab3:checked ~ #MobileHelper > label[for="MobileHelper__Tab3"] {
+        box-shadow: inset 0 0 0 2px var(--c5);
+        background-color: var(--c4);
+        color: #fff;
+    }
+
+    #MobileHelper__Tab1:not(:checked) ~ #Terminal,
+    #MobileHelper__Tab2:not(:checked) ~ #Chart,
+    #MobileHelper__Tab3:not(:checked) ~ #SwapFeed {
+        display: none !important;
+    }
+
+}

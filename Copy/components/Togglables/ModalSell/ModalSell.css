@@ -1,0 +1,8 @@
+/**
+ * Modal Sell
+ */
+
+#ModalSell__Body .shortcuts .btn {
+    min-width: 0;
+    font-size: 14px;
+}

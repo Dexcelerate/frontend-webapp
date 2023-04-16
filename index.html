@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="robots" content="index,follow,cache">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+		<meta charset="utf-8">
+		<title>JewBot</title>
+		<link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
+		<link rel="manifest" href="./site.webmanifest">
+		<link rel="mask-icon" href="./img/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="apple-mobile-web-app-title" content="JewBot">
+		<meta name="application-name" content="JewBot">
+		<meta name="msapplication-TileColor" content="#b91d47">
+		<meta name="theme-color" content="#ffffff">
+		<link rel="canonical" href="https://jewbot.trade/" />
+		<meta property="og:url" content="https://jewbot.trade/">
+		<meta property="og:type" content="website">
+		<meta property="og:site_name" content="jewbot.trade">
+		<meta property="og:title" content="JewBot">
+		<meta property="og:description" content="For the traders!">
+		<meta property="og:image" content="https://jewbot.trade/img/android-chrome-512x512.png">
+		<meta property="og:image:url" content="https://jewbot.trade/img/android-chrome-512x512.png">
+		<meta property="og:image:type" content="image/jpeg">
+		<meta property="og:image:width" content="512">
+		<meta property="og:image:height" content="512">
+		<meta name="description" content="For the traders!">
+		<meta name="author" content="JewBot">
+		<meta name="Copyright" content="Copyright (c) (k) 2021 JewBot">
+
+		<link rel="stylesheet" href="Base/styles/base.css">
+		<link rel="stylesheet" href="Base/styles/inputs.css">
+		<link rel="stylesheet" href="Base/styles/loaders.css">
+		<link rel="stylesheet" href="Base/styles/overlays.css">
+		<link rel="stylesheet" href="Base/components/Header/Header.css">
+		<link rel="stylesheet" href="Base/components/Footer/Footer.css">
+		<link rel="stylesheet" href="Base/components/Togglables/Togglables.css">
+		<link rel="stylesheet" href="Base/components/Togglables/ModalAffiliates/ModalAffiliates.css">
+		<link rel="stylesheet" href="Base/components/Togglables/ModalStatistics/ModalStatistics.css">
+		<link rel="stylesheet" href="Base/components/Togglables/ModalSettings/ModalSettings.css">
+		<link rel="stylesheet" href="Base/components/Togglables/ModalProfile/ModalProfile.css">
+		<link rel="stylesheet" href="Base/components/Togglables/Navigation/Navigation.css">
+		<link rel="stylesheet" href="Base/components/Togglables/Selector/Selector.css">
+		<link rel="stylesheet" href="Base/components/Togglables/Search/Search.css">
+		<link rel="stylesheet" href="Base/components/Togglables/Wallet/Wallet.css">
+		<link rel="stylesheet" href="Base/components/Togglables/Menu/Menu.css">
+		<link rel="stylesheet" href="Base/components/Togglables/Chat/Chat.css">
+
+		<link rel="stylesheet" href="Swap/styles/base.css">
+		<link rel="stylesheet" href="Swap/components/Swap/Swap.css">
+		<link rel="stylesheet" href="Swap/components/MobileHelper/MobileHelper.css">
+		<link rel="stylesheet" href="Swap/components/Terminal/Terminal.css">
+		<link rel="stylesheet" href="Swap/components/Chart/Chart.css">
+		<link rel="stylesheet" href="Swap/components/SwapFeed/SwapFeed.css">
+		<link rel="stylesheet" href="Swap/components/Togglables/ModalPositions/ModalPositions.css">
+		<link rel="stylesheet" href="Swap/components/Togglables/ModalPositionSettings/ModalPositionSettings.css">
+		<link rel="stylesheet" href="Swap/components/Togglables/ModalTokenInput/ModalTokenInput.css">
+		<link rel="stylesheet" href="Swap/components/Togglables/ModalTokenOutput/ModalTokenOutput.css">
+		<link rel="stylesheet" href="Copy/styles/base.css">
+		<link rel="stylesheet" href="Copy/components/Copy/Copy.css">
+		<link rel="stylesheet" href="Copy/components/Togglables/ModalCopyPositionSettings/ModalCopyPositionSettings.css">
+		<link rel="stylesheet" href="Copy/components/Togglables/ModalSell/ModalSell.css">
+		<link rel="stylesheet" href="Scan/styles/base.css">
+		<link rel="stylesheet" href="Scan/components/Scan/Scan.css">
+		<link rel="stylesheet" href="NFT/styles/base.css">
+		<link rel="stylesheet" href="NFT/components/NFT/NFT.css">
+		<link rel="stylesheet" href="NFT/components/Togglables/ModalNFTPack/ModalNFTPack.css">
+		<link rel="stylesheet" href="NFT/components/Togglables/ModalNFTMarket/ModalNFTMarket.css">
+
+		<link rel="stylesheet" href="Base/styles/overrides.css">
+	</head>
+
+	<body>
+		<div id="Root" class="">
+			<div id="Header"></div>
+			<div id="Content">
+				<div id="Chat"></div>
+				<div id="Main"></div>
+			</div>
+			<div id="Footer"></div>
+			<div id="Menu"></div>
+			<div id="Wallet"></div>
+			<div id="Search"></div>
+			<div id="Selector"></div>
+			<div id="Navigation"></div>
+			<div id="Loader" class="d-none"></div>
+		</div>
+
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.6.9/ethers.umd.min.js"></script> -->
+		<!-- <script src="https://unpkg.com/web3modal"></script> -->
+		<!-- <script src="https://unpkg.com/@walletconnect/web3-provider"></script> -->
+		<!-- <script src="https://unpkg.com/big.js@6.1.1/big.js"></script> -->
+		<!-- <script src="https://www.unpkg.com/pako@2.0.4/dist/pako_inflate.es5.min.js"></script> -->
+		<!-- <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script> -->
+
+		<script src="Base/scripts/vendor/ethers.umd.min.js"></script>
+		<script src="Base/scripts/vendor/web3modal.js"></script>
+		<script src="Base/scripts/vendor/big.js"></script>
+		<script src="Base/scripts/vendor/web3-provider.js"></script>
+		<script src="Base/scripts/vendor/pako_inflate.es5.min.js"></script>
+		<script src="Base/scripts/vendor/socket.io.min.js"></script>
+		<script src="Base/scripts/vendor/chart.js@3.7.1/script.js"></script>
+		<script src="Swap/scripts/vendor/lightweight-charts@3.8.0/script.js"></script>
+
+		<script src="Base/scripts/store.js"></script>
+		<script src="Base/scripts/helpers.js"></script>
+		<script src="Base/scripts/abi.js"></script>
+		<script src="Base/scripts/tokens.js"></script>
+		<script src="Base/scripts/data.js"></script>
+		<script src="Base/scripts/chart_tick_handler.js"></script>
+		<script src="Base/scripts/populators.js"></script>
+		<script src="Base/scripts/chain.js"></script>
+		<script src="Base/scripts/sockets_handle_pre_action.js"></script>
+		<script src="Base/scripts/sockets_handle_action.js"></script>
+		<script src="Base/scripts/sockets_handle_message.js"></script>
+		<script src="Base/scripts/sockets.js"></script>
+
+		<script src="Base/components/Header/Header.js"></script>
+		<script src="Base/components/Footer/Footer.js"></script>
+		<script src="Base/components/Togglables/ModalHelp/ModalHelp.js"></script>
+		<script src="Base/components/Togglables/ModalAffiliates/ModalAffiliates.js"></script>
+		<script src="Base/components/Togglables/ModalStatistics/ModalStatistics.js"></script>
+		<script src="Base/components/Togglables/ModalSettings/ModalSettings.js"></script>
+		<script src="Base/components/Togglables/ModalProfile/ModalProfile.js"></script>
+		<script src="Base/components/Togglables/Navigation/Navigation.js"></script>
+		<script src="Base/components/Togglables/Selector/Selector.js"></script>
+		<script src="Base/components/Togglables/Search/Search.js"></script>
+		<script src="Base/components/Togglables/Wallet/Wallet.js"></script>
+		<script src="Base/components/Togglables/Menu/Menu.js"></script>
+		<script src="Base/components/Togglables/Chat/Chat.js"></script>
+		<script src="Base/components/Togglables/ModalChangeUser/ModalChangeUser.js"></script>
+		<script src="Copy/components/Togglables/ModalCopyPositionSettings/ModalCopyPositionSettings.js"></script>
+		<script src="Copy/components/Togglables/ModalDeleteWallet/ModalDeleteWallet.js"></script>
+		<script src="Copy/components/Togglables/ModalAddWallet/ModalAddWallet.js"></script>
+		<script src="Copy/components/Togglables/ModalSell/ModalSell.js"></script>
+		<script src="Swap/components/Togglables/ModalPositions/ModalPositions.js"></script>
+		<script src="Swap/components/Togglables/ModalPositionSettings/ModalPositionSettings.js"></script>
+		<script src="Swap/components/Togglables/ModalTokenInput/ModalTokenInput.js"></script>
+		<script src="Swap/components/Togglables/ModalTokenOutput/ModalTokenOutput.js"></script>
+		<script src="NFT/components/Togglables/ModalNFTPack/ModalNFTPack.js"></script>
+		<script src="NFT/components/Togglables/ModalNFTMarket/ModalNFTMarket.js"></script>
+
+		<script src="Copy/components/Copy/Copy.js"></script>
+
+		<script src="Swap/components/Swap/Swap.js"></script>
+		<script src="Swap/components/MobileHelper/MobileHelper.js"></script>
+		<script src="Swap/components/Terminal/Terminal.js"></script>
+		<script src="Swap/components/Chart/Chart.js"></script>
+		<script src="Swap/components/SwapFeed/SwapFeed.js"></script>
+
+		<script src="NFT/components/NFT/NFT.js"></script>
+
+		<script src="Scan/components/Scan/Scan.js"></script>
+
+		<script src="bootstrap.js"></script>
+
+		<script src="Base/components/Togglables/Togglables.js"></script>
+		<script src="Base/scripts/inputs.js"></script>
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-W8KH3K8NGZ"></script>
+		<script>
+			try {
+				window.dataLayer = window.dataLayer || [];
+				function gtag() { dataLayer.push(arguments); }
+				gtag('js', new Date());
+				gtag('config', 'G-W8KH3K8NGZ');
+			} catch (e) {
+				console.error(e);
+			}
+		</script>
+	</body>
+</html>

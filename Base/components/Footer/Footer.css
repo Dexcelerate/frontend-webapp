@@ -1,0 +1,44 @@
+/**
+ * Footer
+ */
+
+#Footer {
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    bottom: env(safe-area-inset-bottom);
+    height: 82px;
+    z-index: 10;
+}
+
+#Content {
+    padding-bottom: 82px;
+    padding-bottom: calc(82px + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 960px) {
+
+    #Footer {
+        display: none;
+    }
+
+    #Content {
+        padding-bottom: 0;
+    }
+
+}
+
+/*** Footer Toggles ***/
+
+#Footer__Toggles {
+    display: flex;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    bottom: env(safe-area-inset-bottom);
+    padding: 12px;
+    background-color: var(--c2);
+    border-top: 2px solid var(--c3);
+}

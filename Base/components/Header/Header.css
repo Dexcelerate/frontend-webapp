@@ -1,0 +1,110 @@
+/**
+ * Header
+ */
+
+#Header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    height: 82px;
+    z-index: 10;
+}
+
+#Content {
+    padding-top: 82px;
+}
+
+@media (min-width: 960px) {
+
+    #Header {
+        background-color: var(--c2);
+        border-bottom: 2px solid var(--c3);
+    }
+
+    #Header > .container {
+        display: flex;
+        padding: 12px;
+    }
+
+}
+
+/*** Header Navigation ***/
+
+#Header__Navigation {
+    display: none;
+}
+
+@media (min-width: 960px) {
+
+    #Header__Navigation {
+        display: flex;
+    }
+
+    #Header__Navigation .btn {
+        font-weight: 500;
+    }
+
+}
+
+/*** Header Toggles Top ***/
+
+#Header__TogglesTop {
+    display: flex;
+    padding: 12px;
+    overflow: hidden;
+    background-color: var(--c2);
+    border-bottom: 2px solid var(--c3);
+}
+
+@media (min-width: 960px) {
+
+    #Header__TogglesTop {
+        position: relative;
+        margin-left: auto;
+        border-bottom: 0;
+        padding: 0;
+    }
+
+}
+
+#Header__TogglesTop .multitoggle {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    margin: 0 auto;
+    border-radius: 14px;
+    background-color: var(--c1);
+    box-shadow: inset 0 0 0 2px var(--c4);
+}
+
+#Header__TogglesTop .multitoggle .btn[data-togglable="Wallet"] {
+    flex-shrink: 0;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 4px 12px;
+    margin-right: 8px;
+    border-radius: 8px;
+    min-height: auto;
+}
+
+#Header__TogglesTop .multitoggle .btn[data-togglable="Selector"] {
+    box-shadow: none;
+    padding-right: 6px;
+    background-color: transparent;
+}
+
+/*** Header Toggles Bottom ***/
+
+#Header__TogglesBottom {
+    display: none;
+}
+
+@media (min-width: 960px) {
+
+    #Header__TogglesBottom {
+        display: flex;
+    }
+
+}
