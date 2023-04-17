@@ -28,7 +28,15 @@
 		<meta name="description" content="For the traders!">
 		<meta name="author" content="JewBot">
 		<meta name="Copyright" content="Copyright (c) (k) 2021 JewBot">
-
+		<meta http-equiv="Content-Security-Policy" 
+		content="
+		   connect-src * https://api.stripe.com;
+		   frame-src https://js.stripe.com https://hooks.stripe.com;
+		   script-src * 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com;
+		   object-src 'none';
+		"
+	       />
+	       
 		<link rel="stylesheet" href="Base/styles/base.css">
 		<link rel="stylesheet" href="Base/styles/inputs.css">
 		<link rel="stylesheet" href="Base/styles/loaders.css">
