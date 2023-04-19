@@ -422,6 +422,7 @@ console.log("fetch_account_data 1");
 		elementify('zero-pool-price').innerHTML = `$${formatFiat(DATA.server_price = await contract(DATA.SUBSCRIPTION).PLAN(DATA.ZERO))}`;
 	}, 0);
 	console.log("fetch_account_data 6");
+	console.log("DATA", DATA);
 	if (DATA.account_changed) {
 		store.del('auth');
 		DATA.conf = { connected: true, wallet: DATA.conf.wallet };
