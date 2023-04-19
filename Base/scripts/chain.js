@@ -1,6 +1,7 @@
 var provider = {};
 
 DATA.iface = new ethers.utils.Interface(DATA.ABI);
+console.log("test");
 
 const _hex = (num) => {
 	try {
