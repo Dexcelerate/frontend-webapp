@@ -15,7 +15,7 @@ const sha3 = (text) => ethers.utils.keccak256(ethers.utils.toUtf8Bytes(text));
 
 const init = async function () {
 	Big.NE = -32;
-
+console.log("test init");
 	DATA.web3Modal = new window.Web3Modal.default({
 		cacheProvider: true,
 		providerOptions: {
