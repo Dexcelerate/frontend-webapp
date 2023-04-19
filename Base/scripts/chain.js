@@ -76,6 +76,7 @@ const change_network = async function (chain) {
 	if (chain === DATA.CHAIN) {
 		return true;
 	}
+	
 
 	if (!DATA.allowed_chains.includes(chain)) {
 		help_err('Comming soon...');
@@ -383,7 +384,7 @@ const fetch_account_data = async function (last_operation) {
 	let tmp_provider = new ethers.providers.Web3Provider(DATA.provider);
 	DATA.CHAIN_ID = (await tmp_provider.getNetwork()).chainId;
 	provider[DATA.CHAIN_ID] = tmp_provider;
-
+console.log("test");
 	set_chain();
 
 	if (DATA.INIT_CHAIN && DATA.INIT_CHAIN !== DATA.CHAIN) {
