@@ -385,16 +385,16 @@ const fetch_account_data = async function (last_operation) {
 	let tmp_provider = new ethers.providers.Web3Provider(DATA.provider);
 	DATA.CHAIN_ID = (await tmp_provider.getNetwork()).chainId;
 	provider[DATA.CHAIN_ID] = tmp_provider;
-console.log("test");
+console.log("fetch_account_data 1");
 	set_chain();
-
+	console.log("fetch_account_data 2");
 	if (DATA.INIT_CHAIN && DATA.INIT_CHAIN !== DATA.CHAIN) {
 		delete DATA.INIT_CHAIN;
 		if (!(await change_network(DATA.INIT_CHAIN))) {
 			return;
 		}
 	}
-
+	console.log("fetch_account_data 3");
 	update_price();
 
 	try {
@@ -403,6 +403,7 @@ console.log("test");
 	} catch (e) {
 		DATA.accounts = await ethereum.enable();
 	}
+	console.log("fetch_account_data 4");
 	DATA.conf.wallet = toChecksumAddress(DATA.accounts[0]);
 
 	document.querySelectorAll('[data-peg-text]').forEach(el => { el.dataset.pegText = DATA.PEG });
@@ -414,13 +415,13 @@ console.log("test");
 			el.classList.remove('active');
 		}
 	});
-
+	console.log("fetch_account_data 5");
 	set_terminal_message();
 
 	setTimeout(async () => {
 		elementify('zero-pool-price').innerHTML = `$${formatFiat(DATA.server_price = await contract(DATA.SUBSCRIPTION).PLAN(DATA.ZERO))}`;
 	}, 0);
-
+	console.log("fetch_account_data 6");
 	if (DATA.account_changed) {
 		store.del('auth');
 		DATA.conf = { connected: true, wallet: DATA.conf.wallet };
