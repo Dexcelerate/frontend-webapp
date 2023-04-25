@@ -1795,7 +1795,7 @@ const set_original_wallet_assets = async () => {
 	elementify('boost-value-currencies-container').innerHTML = section_1;
 	/* elementify('main-wallet-currencies-container').innerHTML = section_2; */
 	document.querySelectorAll('.slot-currencies-container').forEach(el => { el.innerHTML = section_2.replaceAll('SLOT_PLACEHOLDER', el.dataset.slot).replaceAll('SLOT_IDX_PLACEHOLDER', el.dataset.slotIdx).replaceAll('LABEL_PLACEHOLDER', el.dataset.isCopySlot && `Copy__Slot${el.dataset.slotIdx}__Tab2` || `Wallet__Slot${el.dataset.slotIdx}__Tab2`) });
-	elementify('wallet-assets-for-nft-packs').innerHTML = section_3;
+	//elementify('wallet-assets-for-nft-packs').innerHTML = section_3;
 
 	for (i = 0; i < synagogues.length; ++i) {
 		if (section_4[i]) {
