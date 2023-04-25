@@ -1,6 +1,7 @@
 
 const MESSAGES = {
 	'ver': async (data) => {
+		console.log('ver', data)
 		if (!data || !data.d) {
 			return; /* Wrong chain */
 		}
@@ -33,6 +34,7 @@ const MESSAGES = {
 		handleAction('sub');
 	},
 	'sub': async (data) => {
+		console.log("sub", data);
 		if (!data || !data.d) {
 			return; /* Wrong chain */
 		}
@@ -49,6 +51,7 @@ const MESSAGES = {
 		handleAction('chats');
 	},
 	'nonce': async (data) => {
+		console.log("data", data);
 		if (!data || !data.d) {
 			return; /* Wrong chain */
 		}
@@ -58,6 +61,8 @@ const MESSAGES = {
 		await handleAction('auth');
 	},
 	'auth': async (data) => {
+
+		console.log("auth", data);
 		if (!data || !data.d) {
 			return; /* Wrong chain */
 		}
@@ -721,6 +726,7 @@ const MESSAGES = {
 		save_settings('consts', false, true);
 	},
 	'synagogues': async (data) => {
+		console.log("synagogues", data);
 		if (!data || !data.d) {
 			return; /* Wrong chain */
 		}
@@ -1053,12 +1059,14 @@ const MESSAGES = {
 };
 
 const handle_message = async (data) => {
+	console.log("handle_message", data);
 	if (!!data && typeof data !== 'string' && data.length) {
 		try {
 			/* https://stackoverflow.com/a/22675494/2124529 */
 			data = JSON.parse(data.map(_data => String.fromCharCode.apply(null, new Uint16Array(pako.inflate(new Uint8Array(atob(_data).split('').map(v => v.charCodeAt(0))))))).join(''));
 		} catch (err) { }
 	} else if (data.length) {
+		console.log("handle_message -> return");
 		return data.map(handle_message);
 	}
 
@@ -1096,6 +1104,6 @@ const handle_message = async (data) => {
 	if (data.reload) {
 		return (document.location = document.location.href);
 	}
-
+	console.log("MESSAGES[`${data.a}`]", MESSAGES[`${data.a}`])
 	return await (MESSAGES[`${data.a}`] || handle_error)(data);
 };
