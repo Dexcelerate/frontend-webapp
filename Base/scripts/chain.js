@@ -16,7 +16,7 @@ const sha3 = (text) => ethers.utils.keccak256(ethers.utils.toUtf8Bytes(text));
 
 const init = async function () {
 	Big.NE = -32;
-console.log("test init");
+
 	DATA.web3Modal = new window.Web3Modal.default({
 		cacheProvider: true,
 		providerOptions: {
@@ -39,6 +39,7 @@ console.log("test init");
 	});
 
 	if (store.get('logged')) {
+		console.log("store.get('logged')", store.get('logged'))
 		try {
 			on_connect();
 		} catch (e) {
@@ -46,6 +47,7 @@ console.log("test init");
 			set_chain();
 			set_terminal_message('Please connect your wallet');
 			provider[DATA.CHAIN_ID] = new ethers.providers.JsonRpcProvider(DATA.RPC);
+			console.log("DATA.RPC", DATA.RPC)
 
 			if (DATA.token) {
 				(await set_token())(true);
@@ -56,6 +58,7 @@ console.log("test init");
 			}, 0);
 		}
 	} else {
+		console.log("!!!store.get('logged')", store.get('logged'))
 		DATA.CHAIN_ID = 56;
 		set_chain();
 		set_terminal_message('Please connect your wallet');
@@ -455,8 +458,11 @@ console.log("fetch_account_data 1");
 		DATA.account_changed = false;
 	}
 
+	console.log("helo");
 	setTimeout(() => {
+		console.log("handleAction nonce");
 		handleAction('nonce');
+		console.log("handleAction nonce done");
 	}, 0);
 
 	DATA.last_operation = last_operation;
