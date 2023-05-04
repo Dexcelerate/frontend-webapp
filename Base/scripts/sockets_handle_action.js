@@ -4,7 +4,6 @@ const ACTIONS = {
 		DATA.conf.signed = await provider[DATA.CHAIN_ID].getSigner().signMessage(`By signing this transaction you agree to have an account stored on the Jewbot servers under your wallet address which will customize your experience. You will be able to sign in to this account from any device using the same wallet signature. ${DATA.conf.nonce}`).catch(chain_error);
 	},
 	'auth': async (action) => {
-		console.log('auth', action)
 		if (DATA.conf.signed && DATA.conf.wallet) {
 			let jbu = get_url_var('jbu'),
 				affiliate = Number(jbu || get_url_var('affiliate')) || 0;
@@ -18,17 +17,10 @@ const ACTIONS = {
 		}
 	},
 	'nonce': async (action) => {
-		console.log("action",action)
-		console.log("DATA.conf.auth", DATA.conf.auth)
-		console.log("store.get('auth')", store.get('auth'))
 
 		if (!(DATA.conf.auth = store.get('auth'))) {
-			console.log("emit")
-			console.log("await emit({ a: action, d: { w: DATA.conf.wallet } })", await emit({ a: action, d: { w: DATA.conf.wallet } }))
-			console.log("DATA.conf.wallet", DATA.conf.wallet)
 			await emit({ a: action, d: { w: DATA.conf.wallet } });
 		} else if (DATA.token) {
-			console.log("DATA.token", DATA.token)
 			await Promise.all([
 				connect_ui(),
 				get_chain_user(),
@@ -153,7 +145,7 @@ const ACTIONS = {
 
 			let settings = check_fields();
 
-			/* console.log('???', action, 'settings', settings); */
+			//console.log('???', action, 'settings', settings); 
 
 			if (settings) {
 				settings.kosher_strainer = settings.kosher_strainer.filter(v => v);
@@ -188,7 +180,7 @@ const ACTIONS = {
 
 			let settings = check_fields();
 
-			/* console.log('???', action, 'settings', settings); */
+			//console.log('???', action, 'settings', settings); 
 
 			if (settings) {
 				settings.kosher_strainer = settings.kosher_strainer.filter(v => v);
