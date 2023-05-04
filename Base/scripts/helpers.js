@@ -259,7 +259,7 @@ const save_settings = async (mode, is_rec, is_local) => {
 		store.set(`rooms`, JSON.stringify(DATA.rooms));
 		store.set(`room`, JSON.stringify(DATA.room));
 	} else if (mode === 'swap') {
-		store.set(`${DATA.CHAIN}_settings`, JSON.stringify(DATA.settings));
+		store.set(`${DATA.CHAIN}_${DATA.selected_slot}_settings`, JSON.stringify(DATA.settings));
 		store.set('amounts', JSON.stringify(DATA.amounts));
 	}
 
