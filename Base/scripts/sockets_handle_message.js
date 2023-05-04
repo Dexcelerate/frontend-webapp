@@ -1,7 +1,7 @@
 
 const MESSAGES = {
 	'ver': async (data) => {
-		console.log('ver', data)
+		//console.log('ver', data)
 		if (!data || !data.d) {
 			return; /* Wrong chain */
 		}
@@ -34,7 +34,7 @@ const MESSAGES = {
 		handleAction('sub');
 	},
 	'sub': async (data) => {
-		console.log("sub", data);
+		//console.log("sub", data);
 		if (!data || !data.d) {
 			return; /* Wrong chain */
 		}
@@ -51,7 +51,7 @@ const MESSAGES = {
 		handleAction('chats');
 	},
 	'nonce': async (data) => {
-		console.log("data", data);
+		//console.log("data", data);
 		if (!data || !data.d) {
 			return; /* Wrong chain */
 		}
@@ -62,7 +62,7 @@ const MESSAGES = {
 	},
 	'auth': async (data) => {
 
-		console.log("auth", data);
+		//console.log("auth", data);
 		if (!data || !data.d) {
 			return; /* Wrong chain */
 		}
@@ -370,6 +370,7 @@ const MESSAGES = {
 		save_settings('token');
 	},
 	'settings': async (data) => {
+		/* Received settings from server, check if it has any values or if it's empty. */
 		if (data.d && data.d.length) {
 			let i = 0, j, cid, cids = [], settings, idx;
 
@@ -430,8 +431,8 @@ const MESSAGES = {
 			}
 
 			DATA.cids = cids;
-		} else {
-			load_settings('ModalPositionSettings', DATA.settings = JSON.parse(store.get(`${DATA.CHAIN}_settings`) || 'false') || { ...DATA.default_settings, buy_method_ids: [], sell_method_ids: [], kosher_strainer: [], targets_percents: [], targets_triggers: [] });
+		} else { /* If message from server doesn't contain values then try to find settings to apply from client's localStorage. */
+			load_settings('ModalPositionSettings', DATA.settings = JSON.parse(store.get(`${DATA.CHAIN}_${DATA.selected_slot}_settings`) || 'false') || { ...DATA.default_settings, buy_method_ids: [], sell_method_ids: [], kosher_strainer: [], targets_percents: [], targets_triggers: [] });
 		}
 	},
 	'unsub': async (data) => {
@@ -726,7 +727,6 @@ const MESSAGES = {
 		save_settings('consts', false, true);
 	},
 	'synagogues': async (data) => {
-		console.log("synagogues", data);
 		if (!data || !data.d) {
 			return; /* Wrong chain */
 		}
@@ -1059,14 +1059,12 @@ const MESSAGES = {
 };
 
 const handle_message = async (data) => {
-	console.log("handle_message", data);
 	if (!!data && typeof data !== 'string' && data.length) {
 		try {
 			/* https://stackoverflow.com/a/22675494/2124529 */
 			data = JSON.parse(data.map(_data => String.fromCharCode.apply(null, new Uint16Array(pako.inflate(new Uint8Array(atob(_data).split('').map(v => v.charCodeAt(0))))))).join(''));
 		} catch (err) { }
 	} else if (data.length) {
-		console.log("handle_message -> return");
 		return data.map(handle_message);
 	}
 
@@ -1104,6 +1102,5 @@ const handle_message = async (data) => {
 	if (data.reload) {
 		return (document.location = document.location.href);
 	}
-	console.log("MESSAGES[`${data.a}`]", MESSAGES[`${data.a}`])
 	return await (MESSAGES[`${data.a}`] || handle_error)(data);
 };
