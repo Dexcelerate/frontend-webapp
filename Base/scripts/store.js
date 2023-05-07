@@ -1,17 +1,17 @@
 window.store = {
-	localStoreSupport: function () {
-		try {
-			if ('localStorage' in window && window['localStorage'] !== null) {
-				localStorage.setItem('test', 1);
-				localStorage.removeItem('test', 1);
-				return true;
-			}
-		} catch (e) {}
+    localStoreSupport: function () {
+        try {
+            if ('localStorage' in window && window['localStorage'] !== null) {
+                localStorage.setItem('test', 1);
+                localStorage.removeItem('test', 1);
+                return true;
+            }
+        } catch (e) {}
 
-		return false;
-	},
-	set: function (name, value/* , days */) {
-		/* if (days) {
+        return false;
+    },
+    set: function (name, value /* , days */) {
+        /* if (days) {
 			var date = new Date();
 			date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
 			var expires = "; expires=" + date.toGMTString();
@@ -19,16 +19,16 @@ window.store = {
 		else {
 			var expires = "";
 		} */
-		if (this.localStoreSupport()) {
-			localStorage.setItem(name, value);
-		} /* else {
+        if (this.localStoreSupport()) {
+            localStorage.setItem(name, value);
+        } /* else {
 			document.cookie = name + "=" + value + expires + "; path=/";
 		} */
-	},
-	get: function (name) {
-		if (this.localStoreSupport()) {
-			return localStorage.getItem(name);
-		} /* else {
+    },
+    get: function (name) {
+        if (this.localStoreSupport()) {
+            return localStorage.getItem(name);
+        } /* else {
 			var nameEQ = name + "=";
 			var ca = document.cookie.split(';');
 			for (var i = 0; i < ca.length; ++i) {
@@ -38,16 +38,16 @@ window.store = {
 			}
 			return null;
 		} */
-	},
-	del: function (name) {
-		if (this.localStoreSupport()) {
-			if (name) {
-				localStorage.removeItem(name);
-			} else {
-				localStorage.clear();
-			}
-		} /* else {
+    },
+    del: function (name) {
+        if (this.localStoreSupport()) {
+            if (name) {
+                localStorage.removeItem(name);
+            } else {
+                localStorage.clear();
+            }
+        } /* else {
 			this.set(name, "", -1);
 		} */
-	}
+    },
 };
