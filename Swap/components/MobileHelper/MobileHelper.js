@@ -5,7 +5,6 @@
 /*** Inject HTML ***/
 
 (() => {
-
     const html = `
         <input type="radio" name="mobilehelper_tab" id="MobileHelper__Tab1" class="visually-hidden card-swap" autocomplete="off" checked>
         <input type="radio" name="mobilehelper_tab" id="MobileHelper__Tab2" class="visually-hidden card-swap" autocomplete="off">
@@ -27,5 +26,4 @@
     `;
 
     elementify('Main').insertAdjacentHTML('beforeend', html);
-
 })();
