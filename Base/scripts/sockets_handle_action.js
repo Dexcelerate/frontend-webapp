@@ -93,12 +93,12 @@ const ACTIONS = {
         }
     },
     copies: async (action) => {
-        DATA.selected_copy_slot = DATA.selected_copy_slot || DATA.ZERO;
+        //DATA.selected_copy_slot = DATA.selected_copy_slot || DATA.ZERO;
 
         if (DATA.conf.auth && DATA.selected_copy_slot) {
             if (!DATA.copies_initialized) {
                 DATA.copies_initialized = true;
-                DATA.selected_copy_slot = DATA.ZERO;
+                //DATA.selected_copy_slot = DATA.ZERO;
             }
 
             await emit({
@@ -179,7 +179,7 @@ const ACTIONS = {
         }
     },
     slot_copies: async (action) => {
-        DATA.selected_copy_slot = DATA.selected_copy_slot || DATA.ZERO;
+        //DATA.selected_copy_slot = DATA.selected_copy_slot || DATA.ZERO;
 
         if (DATA.selected_copy_slot && ![DATA.WPEG].includes(DATA.selected_copy_slot)) {
             let addresses =

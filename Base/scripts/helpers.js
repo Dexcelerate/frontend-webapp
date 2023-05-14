@@ -234,13 +234,13 @@ const save_settings = async (mode, is_rec, is_local) => {
             DATA.copy_settings[DATA.ZERO] = DATA.copy_settings[DATA.selected_copy_slot];
         }
 
-        store.set(`${DATA.CHAIN}_copy_settings`, JSON.stringify(DATA.copy_settings));
-        store.set(`${DATA.CHAIN}_copy_wallet`, JSON.stringify(DATA.selected_copy_wallet || DATA.copy_wallet));
-        store.set(`${DATA.CHAIN}_copy_transactions`, JSON.stringify(DATA.copy_transactions));
-        store.set(`${DATA.CHAIN}_copy_address_transactions`, JSON.stringify(DATA.copy_address_transactions));
+        //store.set(`${DATA.CHAIN}_copy_settings`, JSON.stringify(DATA.copy_settings));
+        //store.set(`${DATA.CHAIN}_copy_wallet`, JSON.stringify(DATA.selected_copy_wallet || DATA.copy_wallet));
+        //store.set(`${DATA.CHAIN}_copy_transactions`, JSON.stringify(DATA.copy_transactions));
+        //store.set(`${DATA.CHAIN}_copy_address_transactions`, JSON.stringify(DATA.copy_address_transactions));
 
         if (DATA.selected_copy_wallet !== DATA.ZERO) {
-            DATA.copy_transactions[DATA.ZERO] = DATA.copy_transactions[DATA.selected_copy_wallet];
+          //  DATA.copy_transactions[DATA.ZERO] = DATA.copy_transactions[DATA.selected_copy_wallet];
         }
 
         if (!is_local && !is_rec) {

@@ -630,19 +630,42 @@ const PRE_ACTIONS = {
     },
     'list-copy-slot': async (element) => {
         document.querySelectorAll('button[data-action="list-copy-slot"]').forEach((el) => el.classList.remove('active'));
+        DATA.selected_copy_slot = element.dataset.slot;
+        document.querySelector(`button[data-action="list-copy-slot"][data-slot="${DATA.selected_copy_slot}"]`).classList.add('active');
 
+        //DATA.slot_copies_addresses = DATA.slots[DATA.CHAIN].map((v) => v.address).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v));
+
+        /*
+        console.log("element.dataset.slot;", element.dataset.slot)
         if (DATA.slot_copies_addresses && DATA.slot_copies_addresses.length === 1 && DATA.slot_copies_addresses.includes(DATA.selected_slot)) {
             DATA.slot_copies_addresses = DATA.slots[DATA.CHAIN].map((v) => v.address).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v));
             DATA.copy_settings_ordered[DATA.CHAIN] = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v));
-            DATA.selected_copy_slot = DATA.ZERO;
+            DATA.selected_copy_slot = element.dataset.slot; //DATA.ZERO;
         } else {
-            DATA.slot_copies_addresses = [(DATA.selected_copy_slot = DATA.selected_slot)];
-            document.querySelector(`button[data-action="list-copy-slot"][data-slot="${DATA.selected_slot}"]`).classList.add('active');
+            DATA.slot_copies_addresses = [(DATA.selected_copy_slot = element.dataset.slot)];
+            document.querySelector(`button[data-action="list-copy-slot"][data-slot="${DATA.selected_copy_slot}"]`).classList.add('active');
+        }*/
+
+        if (!DATA.copy_settings[DATA.selected_copy_slot]) {
+            DATA.copy_settings[DATA.selected_copy_slot] = {};
         }
+
+        await handleAction('user_slot_copies');
+        await handleAction('copies');
+
+        if(DATA.copy_settings[DATA.selected_copy_slot]) {
+            DATA.copy_wallet =  Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v))[0];
+            DATA.selected_copy_wallet = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v))[0]
+
+            DATA.copy_settings_ordered[DATA.CHAIN] = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v));
+        }
+        
 
         return 'copies';
     },
     'set-first-wallet': async (element) => {
+
+        /* Traverse up the elements parents until we get to the wallet element that contains the data attribute we need. */
         while (!element.classList.contains('wallet')) {
             element = element.parentNode;
         }
@@ -654,23 +677,36 @@ const PRE_ACTIONS = {
         handleAction('user_slot_copies');
         /* } */
 
+        /* If element is already first in list then just collapse the details, otherwise prepend it to the list. */
         if (element == wallets.firstElementChild) {
+            //console.log("already first, collapse");
             element.classList.toggle('collapsed');
         } else {
+            //console.log("not first, remove collapsed class and prepend to list");
             element.classList.remove('collapsed');
             wallets.prepend(element);
         }
+        //console.log("element", element);
+        //lement = document.querySelectorAll(`.wallets [data-wallet='${DATA.selected_copy_wallet}']`)
+       // console.log("element", element);
+
+       // console.log("DATA.selected_copy_wallet", DATA.selected_copy_wallet)
+       // console.log("element.dataset.wallet", element.dataset.wallet)
+        console.log("DATA.copy_settings_ordered[DATA.CHAIN]", DATA.copy_settings_ordered[DATA.CHAIN]);
+        await sleep(0.1);
 
         DATA.copy_settings_ordered[DATA.CHAIN].sort((a) => {
+           //console.log("a", a);
             if (a === element.dataset.wallet) {
                 return -1;
             }
-
+            //console.log("a return 0");
             return 0;
         });
+       console.log("DATA.copy_settings_ordered[DATA.CHAIN]", DATA.copy_settings_ordered[DATA.CHAIN]);
 
+        
         load_slots();
-
         element.blur();
 
         return '-';

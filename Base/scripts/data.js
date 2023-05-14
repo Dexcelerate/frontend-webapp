@@ -685,7 +685,7 @@ const set_chain = async (is_init) => {
 
     DATA.JBNFTS = [DATA.DISCOUNTS, DATA.USERS_NFT, DATA.SERVERS_NFT, DATA.ARTIFACTS_NFT, DATA.ACTIONS_NFT, DATA.WHALES_NFT];
 
-    DATA.selected_copy_slot = DATA.selected_slot = DATA.ZERO;
+    DATA.selected_copy_slot = DATA.selected_slot; //= DATA.ZERO;
 
     let wallets = Object.keys(DATA.copy_settings[DATA.selected_copy_slot] || {});
 

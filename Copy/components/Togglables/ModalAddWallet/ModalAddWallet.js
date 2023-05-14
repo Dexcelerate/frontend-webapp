@@ -61,11 +61,11 @@
 		try {
 			address = toChecksumAddress(address);
 		} catch(e) {
-			return help_err('Bad address');
+			return help_err('Bad address (checksum check failed)');
 		}
 
 		if (!address || Number(address) < Number('0x10000')) {
-			return help_err('Bad address');
+			return help_err('Bad address (null, not a number, or 0x10000)');
 		}
 
 		if ((!DATA.selected_copy_slot || DATA.selected_copy_slot === DATA.ZERO) && DATA.conf.connected && DATA.slots[DATA.CHAIN].length) {
@@ -157,7 +157,7 @@
 				</div>
 
 				<div class="body">
-					<div class="transaction">Spectating...</div>
+					<div class="transaction">Spectating2...</div>
 				</div>
 			</div>
 		`));

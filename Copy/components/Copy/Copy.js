@@ -70,14 +70,13 @@ const load_slot = (slot, i) => {
 				<canvas id="Copy__Slot${i}__Chart"></canvas>
 
 				<div class="meta">
-					<div class="title text-truncated slot-title-${DATA.CHAIN}-${slot.address}">${slot.title ? slot.title : `Slot ${i + 1}`}</div>
-
+					<div class="title text-truncated slot-title-${DATA.CHAIN}-${slot.address}"><a href="https://bscscan.com/address/${slot.address}" target="_blank" title="${slot.address}">${slot.title ? slot.title : `Slot ${i + 1}`}</a></div>
 					<div class="balance text-truncated slot-total-balance-${DATA.CHAIN}-${slot.address}" data-balance="${Big(Number(old_balance) && old_balance || slot.total_balance)}">$${formatFiat(Big(Number(old_balance) && old_balance || slot.total_balance).mul(DATA.WPEG_PRICE))}</div>
 				</div>
 			</div>
 
 			<div class="actions">
-				<button class="btn btn-has-icon${slot.address === DATA.token && ' active' || ''}" data-tooltip="List wallets" data-tooltip-top data-action="list-copy-slot" data-slot="${slot.address}">
+				<button class="btn btn-has-icon${slot.address === DATA.selected_copy_slot && ' active' || ''}" data-tooltip="List wallets" data-tooltip-top data-action="list-copy-slot" data-slot="${slot.address}">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md" data-action="list-copy-slot" data-slot="${slot.address}">
 						<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM7 11.5A.5.5 0 017.5 11H8.5A.5.5 0 018.5 12H7.5A.5.5 0 017 11.5ZM5 8.5A.5.5 0 015.5 8H10.5A.5.5 0 0110.5 9H5.5A.5.5 0 015 8.5ZM3 5.5A.5.5 0 013.5 5H12.5A.5.5 0 0112.5 6H3.5A.5.5 0 013 5.5Z" data-action="list-copy-slot" data-slot="${slot.address}"></path>
 					</svg>
@@ -308,19 +307,29 @@ const load_slots = async () => {
 };
 
 (() => {
+	if(DATA.selected_copy_slot === "0x0000000000000000000000000000000000000000") {
+		DATA.selected_copy_slot = DATA.selected_slot;
+	}
 
 	load_slots();
 	load_wallet_slots();
 	set_wallet_assets();
 	set_wallet_chains_slots();
 	add_wallets();
-	set_address_transactions();
+
+	setTimeout(function() { 
+		handleAction('user_slot_copies');
+		set_address_transactions();
+
+	}, 500);
 
 	setInterval(() => {
+		if(DATA.selected_copy_slot === "0x0000000000000000000000000000000000000000") DATA.selected_copy_slot = DATA.selected_slot;
 		if (!DATA.blured && DATA.view === 'copy' && elementify('ModalCopyPositionSettings').classList.contains('d-none')) {
 			handleAction('copies');
 		}
 	}, 10000);
+
 
 })();
 

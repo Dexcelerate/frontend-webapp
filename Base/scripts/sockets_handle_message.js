@@ -1182,7 +1182,7 @@ const handle_message = async (data) => {
         return data.map(handle_message);
     }
 
-    console.debug('>>', JSON.parse(JSON.stringify(data)));
+    //console.debug('>>', JSON.parse(JSON.stringify(data)));
 
     /* let _data = JSON.stringify(data),
 		_key = sha3(`${data.e || data.a}`);

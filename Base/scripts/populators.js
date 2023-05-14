@@ -489,7 +489,7 @@ const get_user_token_balace_in_wpeg = async (tx) => {
                 await contract(tx.R)
                     .getAmountsOut(
                         await contract(tx.k)
-                            .balanceOf(DATA.selected_copy_slot || DATA.selected_slot)
+                            .balanceOf((DATA.selected_copy_slot != "0x0000000000000000000000000000000000000000" ? DATA.selected_copy_slot : DATA.selected_slot))
                             .catch((_) => 0),
                         (tx._b && [...tx.known_tokens_order].reverse()) || tx.known_tokens_order
                     )
@@ -558,11 +558,9 @@ const get_transaction = async (tx) => {
 
     await Promise.all([
         (async () => {
-            console.log('??', tx.orig || tx);
             tx.orig_symbol = /* tx.orig_symbol || */ await get_symbol(tx.orig);
         })(),
         (async () => {
-            console.log('??', tx.k || tx);
             tx.token_symbol = /* tx.token_symbol || */ await get_symbol(tx.k);
         })(),
         (async () => {
@@ -776,10 +774,9 @@ const add_wallets = async () => {
     for (; i >= 0; --i) {
         promises.push(get_transaction(DATA.copy_transactions[DATA.selected_slot][i]));
     }
-
-    if (!DATA.copy_settings_ordered[DATA.CHAIN]) {
+    if (!DATA.copy_settings_ordered[DATA.CHAIN] || DATA.copy_settings_ordered[DATA.CHAIN].length === 0) {
         DATA.copy_settings_ordered[DATA.CHAIN] = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v));
-    }
+   }
 
     for (i = 0; i < DATA.copy_settings_ordered[DATA.CHAIN].length; ++i) {
         setting = DATA.copy_settings[DATA.selected_copy_slot][DATA.copy_settings_ordered[DATA.CHAIN][i]];
@@ -813,7 +810,7 @@ const add_wallets = async () => {
 			</svg>
 		</button>
 
-		<div class="name text-white text-truncated">${`${setting.title}`.trim() || DATA.copy_settings_ordered[DATA.CHAIN][i]}</div>
+		<div class="name text-white text-truncated"><a href="https://bscscan.com/address/${DATA.copy_settings_ordered[DATA.CHAIN][i]}" target="_blank">${`${setting.title}`.trim() || DATA.copy_settings_ordered[DATA.CHAIN][i]}</a></div>
 
 		<div class="amount ml-6px mr-6px" data-balance="${slot_wallet_balance || 0}">$${formatFiat(Big(slot_wallet_balance || 0).mul(DATA.WPEG_PRICE))}</div>
 
@@ -1031,7 +1028,7 @@ const set_wallet_slot_transactions = async () => {
 
     if (container) {
         if (!DATA.copy_transactions || !DATA.copy_transactions[DATA.selected_copy_slot] || !DATA.copy_transactions[DATA.selected_copy_slot].length) {
-            container.innerHTML = '<div class="transaction">Spectating...</div>';
+            container.innerHTML = '<div class="transaction">Spectating3...</div>';
         } else {
             analyze_transactions(container, DATA.copy_transactions[DATA.selected_copy_slot], true);
         }

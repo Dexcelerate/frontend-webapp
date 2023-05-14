@@ -36,7 +36,7 @@ const init_sockets = async () => {
 };
 
 const handle_global_action = (data) => {
-  console.log('>>', data);
+  //console.log('>>', data);
 
   if (data.e) {
     if (data.a === 'pos') {
