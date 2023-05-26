@@ -1836,6 +1836,7 @@ const set_wallet_chains_slots = async () => {
 /*** Inject HTML - Panel 3 ***/
 
 const set_original_wallet_asset = async (data, i) => {
+    console.log("set_original_wallet_asset -> data", data)
     let bl = Big(data.bl).mul(data.p || 0),
         slot_deposit = `<div class="currency">
 	<div class="text-truncated" data-pay-slot="SLOT_PLACEHOLDER" data-pay-slot-idx="SLOT_IDX_PLACEHOLDER" data-action="prepare_deposit" data-pay-token="${data.k}">${await get_symbol(

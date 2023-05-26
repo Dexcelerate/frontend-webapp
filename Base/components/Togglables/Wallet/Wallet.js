@@ -180,7 +180,7 @@ const update_range = (el, id) => {
 		</button>
 
 		<button class="btn-count btn btn-style btn-has-icon">
-			<div class="number" data-servers-chain="${chain_id}" data-count-number="0">0</div>
+			<div class="number" data-servers-chain="${chain_id}" data-count-number="0">0 == 1</div>
 
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md">
 				<path d="M4.646 4.646A.5.5 0 015.354 4.646L8 7.293 10.646 4.646A.5.5 0 0111.354 5.354L8.707 8 11.354 10.646A.5.5 0 0110.646 11.354L8 8.707 5.354 11.354A.5.5 0 014.646 10.646L7.293 8 4.646 5.354A.5.5 0 014.646 4.646Z"></path>
