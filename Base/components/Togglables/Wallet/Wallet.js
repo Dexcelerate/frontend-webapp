@@ -89,7 +89,7 @@ const update_range = (el, id) => {
 
 					<div class="body">
 						<div class="title">
-							<div>Wallet</div>
+							<div><a href="https://bscscan.com/address/${DATA.conf.wallet}" target="_blank">Wallet</a></div>
 							<div>Balance</div>
 						</div>
 
@@ -511,9 +511,10 @@ const set_original_wallet_nft = async (type, nft_id, chain, order) => {
 
 					expiry = new Date(expiry).getTime();
 					return `<div class="card ${key}-${expiry}">
+					<a href="https://bscscan.com/token/${DATA.CHAINS[DATA.CHAIN_IDS_MAP[DATA.conf.pools[nft_id].chain]].SERVERS_NFT}?a=${nft_id}" target="_blank">
 	<img id="${lazy_get_nft_image(main_type, nft_id, undefined, `${key}-${expiry}`)}" onerror="error_img(this)">
 	<img id="${GetTokenImage(DATA.CHAINS[DATA.CHAIN_IDS_MAP[DATA.conf.pools[nft_id].chain]].CHAIN_ASSETS)}" src="${DATA.ERROR_IMG}" class="icon-md">
-
+</a>
 	<div class="footer" data-nft="${nft_id}">
 		<div class="text-white" data-reverse-timer="${expiry}">${timeDifference(expiry, Date.now())} left</div>
 		${(DATA.conf.wallet === await contract(DATA.CHAINS[DATA.CHAIN_IDS_MAP[DATA.conf.pools[nft_id].chain]].SERVERS_NFT).ownerOf(nft_id).catch(_ => 0)) && `<button id="boost-unsubscribe-${nft_id}" class="btn btn-style" data-action="reduce" data-nft="${nft_id}" data-pool="${DATA.conf.pools[nft_id].ip_hash}">Unsubscribe</button>` || '<button class="btn btn-style disabled">Unsubscribed</button>'}
@@ -877,7 +878,7 @@ function nft_click_in_description(event) {
 </label>
 
 <div class="box box-nft">
-	<img src="${footer.parentElement.querySelector('img').src}" onerror="error_img=(this)" class="icon-xxl">
+	<a href="https://bscscan.com/token/0xd1878a51d5b9ff76cb7c5527627b905db6f4287e?a=${footer.dataset.nft}" target="_blank"><img src="${footer.parentElement.querySelector('img').src}" onerror="error_img=(this)" class="icon-xxl"></a>
 </div>
 
 <div class="box box-name mt-12px text-white text-center">Name of the NFT</div>
@@ -942,7 +943,7 @@ function burn_action_nft(event) {
  */
 const set_user_name = async () => {
 	document.querySelectorAll('[data-username]').forEach(el => {
-		el.innerText = DATA.view_user.title || (DATA.view_user.uid && `User #${DATA.view_user.uid}`) || 'Guest';
+		el.innerText = DATA.view_user.title || ((DATA.view_user.uid || DATA.conf.N.JBU[0].id) && `User #${DATA.conf.N.JBU[0].id ?? DATA.view_user.uid}`) || 'Guest';
 	});
 
 	document.querySelectorAll('[data-user-image]').forEach(async (el) => {
