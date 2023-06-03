@@ -163,7 +163,7 @@ const get_global_top3 = () => {
 					<div class="box box-has-nft">
 						<div class="body">
 							<div class="item">
-								<img src="${DATA.ERROR_USER_IMG}" onerror="error_user_img(this)" data-user-image="true" data-action="mint">
+							<a href="https://bscscan.com/token/0xd1878a51d5b9ff76cb7c5527627b905db6f4287e?a=${DATA.conf.N.JBU[0].id ?? footer.dataset.nft}" target="_blank"><img src="${DATA.ERROR_USER_IMG}" onerror="error_user_img(this)" data-user-image="true" data-action="mint"></a>
 
 								<div class="text-truncated text-name" data-username="true">${DATA.view_user.title || (DATA.view_user.uid && ('User #' + DATA.view_user.uid)) || 'Guest'}</div>
 							</div>
