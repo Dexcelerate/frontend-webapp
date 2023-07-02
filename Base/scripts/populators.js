@@ -489,7 +489,7 @@ const get_user_token_balace_in_wpeg = async (tx) => {
                 await contract(tx.R)
                     .getAmountsOut(
                         await contract(tx.k)
-                            .balanceOf((DATA.selected_copy_slot != "0x0000000000000000000000000000000000000000" ? DATA.selected_copy_slot : DATA.selected_slot))
+                            .balanceOf(DATA.selected_copy_slot != '0x0000000000000000000000000000000000000000' ? DATA.selected_copy_slot : DATA.selected_slot)
                             .catch((_) => 0),
                         (tx._b && [...tx.known_tokens_order].reverse()) || tx.known_tokens_order
                     )
@@ -776,7 +776,7 @@ const add_wallets = async () => {
     }
     if (!DATA.copy_settings_ordered[DATA.CHAIN] || DATA.copy_settings_ordered[DATA.CHAIN].length === 0) {
         DATA.copy_settings_ordered[DATA.CHAIN] = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v));
-   }
+    }
 
     for (i = 0; i < DATA.copy_settings_ordered[DATA.CHAIN].length; ++i) {
         setting = DATA.copy_settings[DATA.selected_copy_slot][DATA.copy_settings_ordered[DATA.CHAIN][i]];
@@ -810,7 +810,9 @@ const add_wallets = async () => {
 			</svg>
 		</button>
 
-		<div class="name text-white text-truncated"><a href="https://bscscan.com/address/${DATA.copy_settings_ordered[DATA.CHAIN][i]}" target="_blank">${`${setting.title}`.trim() || DATA.copy_settings_ordered[DATA.CHAIN][i]}</a></div>
+		<div class="name text-white text-truncated"><a href="https://bscscan.com/address/${DATA.copy_settings_ordered[DATA.CHAIN][i]}" target="_blank">${
+            `${setting.title}`.trim() || DATA.copy_settings_ordered[DATA.CHAIN][i]
+        }</a></div>
 
 		<div class="amount ml-6px mr-6px" data-balance="${slot_wallet_balance || 0}">$${formatFiat(Big(slot_wallet_balance || 0).mul(DATA.WPEG_PRICE))}</div>
 
@@ -1882,7 +1884,7 @@ const set_original_wallet_asset = async (data, i) => {
 
 const set_original_wallet_assets = async () => {
     let synagogues = document.querySelectorAll('.synagogue-pay-token'),
-        iEnd = (DATA.conf.assets || (DATA.conf.assets = [])).length - 1,
+        iEnd = (DATA.conf.assets || (DATA.conf.assets = [])).length,
         i = 0,
         promises = [],
         section_0 = '',
