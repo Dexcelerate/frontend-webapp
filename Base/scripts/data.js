@@ -38,10 +38,52 @@ var DATA = {
             DECIMALS: 18,
             WPEG: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' /*	WBNB */,
             WPEG: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' /*	WBNB */,
-            ROUTER: '0xE592427A0AEce92De3Edee1F18E0157C05861564',
+            ROUTER: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
             RPC: 'https://eth.public-rpc.com',
-            STABLE: ['0xdAC17F958D2ee523a2206206994597C13D831ec7'],
-            ROUTER_NAMES: {},
+            BLUECHIPS: [],
+            STABLE: [
+                "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+                "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+                "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
+                "0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8",
+                "0x0000000000085d4780B73119b644AE5ecd22b376",
+                "0x956F47F50A910163D8BF957Cf5846D573E7f87CA"
+            ],
+            ROUTER_NAMES: {
+                "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D": "Uniswap V2",
+                "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F": "Sushiswap v2",
+                "0x03f7724180AA6b939894B5Ca4314783B0b36b329": "Shibaswap",
+                "0x9C578b573EdE001b95d51a55A3FAfb45f5608b1f": "Sakeswap",
+                "0xC14d550632db8592D1243Edc8B95b0Ad06703867": "Fraxswap V2",
+                "0xEfF92A263d31888d860bD50809A8D171709b7b1c": "Pancakeswap V2",
+                "0xCeB90E4C17d626BE0fACd78b79c9c87d7ca181b3": "CroDefiSwap",
+                "0x0c17e776CD218252ADFca8D4e761D3fe757e9778": "SaitaSwap",
+                "0x53e0e51b5Ed9202110D7Ecd637A4581db8b9879F": "StepnDOOAR"
+            },
+            ROUTER_FEES: {
+                buy: {
+                    '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D': Big(1 - 0.00300),
+                    '0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F': Big(1 - 0.00300),
+                    '0x03f7724180AA6b939894B5Ca4314783B0b36b329': Big(1 - 0.003),
+                    '0x9C578b573EdE001b95d51a55A3FAfb45f5608b1f': Big(1 - 0.003),
+                    '0xC14d550632db8592D1243Edc8B95b0Ad06703867': Big(1 - 0.003),
+                    '0xEfF92A263d31888d860bD50809A8D171709b7b1c': Big(1 - 0.0025),
+                    '0xCeB90E4C17d626BE0fACd78b79c9c87d7ca181b3': Big(1 - 0.003),
+                    '0x0c17e776CD218252ADFca8D4e761D3fe757e9778': Big(1 - 0.002),
+                    '0x53e0e51b5Ed9202110D7Ecd637A4581db8b9879F': Big(1 - 0.01),
+                },
+                sell: {
+                    '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D': Big(1 / (1 - 0.00300)),
+                    '0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F': Big(1 / (1 - 0.00300)),
+                    '0x03f7724180AA6b939894B5Ca4314783B0b36b329': Big(1 / (1 - 0.003)),
+                    '0x9C578b573EdE001b95d51a55A3FAfb45f5608b1f': Big(1 / (1 - 0.003)),
+                    '0xC14d550632db8592D1243Edc8B95b0Ad06703867': Big(1 / (1 - 0.003)),
+                    '0xEfF92A263d31888d860bD50809A8D171709b7b1c': Big(1 / (1 - 0.0025)),
+                    '0xCeB90E4C17d626BE0fACd78b79c9c87d7ca181b3': Big(1 / (1 - 0.003)),
+                    '0x0c17e776CD218252ADFca8D4e761D3fe757e9778': Big(1 / (1 - 0.002)),
+                    '0x53e0e51b5Ed9202110D7Ecd637A4581db8b9879F': Big(1 / (1 - 0.01)),
+                },
+            },
             TOKENS_MAP: {
                 ETH: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
                 WBNB: '0x418d75f65a02b3d53b2418fb8e1fe493759c7605',
@@ -54,6 +96,18 @@ var DATA = {
                 DOGE: '0x3832d2F059E55934220881F831bE501D180671A7',
                 USDT: '0xdac17f958d2ee523a2206206994597c13d831ec7',
                 BUSD: '0x4Fabb145d64652a948d72533023f6E7A623C7C53',
+            },
+            BASE_TOKENS_NAMES: {
+                WBNB: 'Wrapped BNB',
+                WMATIC: 'Wrapped Matic',
+                WFTM: 'Wrapped Fantom',
+                WAVAX: 'Wrapped Avalance',
+                WETH: 'Wrapped Ethereum',
+                XTZ: 'Tezos',
+                BTC: 'Bitcoin',
+                DOGE: 'Doge Coin',
+                USDT: 'Tether USD',
+                BUSD: 'Binance USD',
             },
         },
         56: {
@@ -392,8 +446,8 @@ var DATA = {
     ETHER: Big(10).pow(18),
     ETHER_BASE: 18,
     MAX_VAL: 2 ** 64,
-    allowed_chains: ['BSC', 'FANTOM', 'GANACHE'],
-    IP_API: 'https://redis-1.dexcelerate.com/',
+    allowed_chains: ['BSC', 'FANTOM', 'GANACHE', 'ETH'],
+    IP_API: 'https://eth-idx.dexcelerate.com:4443/',
     IPFS_IMG_CDN: 'https://ipfs.io/ipfs/',
     DEX_IMG_CDN: 'https://img-proxy.dexcelerate.com/img/vendor/exchanges/',
     TOKEN_IMG_CDN: 'https://img-proxy.dexcelerate.com/https://dexcelerate.com/img/vendor/',
@@ -591,7 +645,7 @@ var DATA = {
     NFT_CACHE: {},
     charts: {},
     synagogues: [],
-    CHAIN: store.get('last_chain') || 'BSC',
+    CHAIN: store.get('last_chain') || 'ETH',
     INIT_CHAIN: get_url_var('CHAIN'),
     wallet_slots_pagination_idx: -1,
     last_slot_token_balace_in_wpeg: {},
@@ -699,8 +753,8 @@ const set_chain = async (is_init) => {
 
     if (is_init) {
         /* if (!is_init) {
-		setTimeout(add_wallets, 0);
-	} else { */
+        setTimeout(add_wallets, 0);
+    } else { */
         setTimeout(_update_price, 0);
     }
 };
@@ -794,8 +848,8 @@ const set_token = async (item, stop_reload) => {
         GetTokenImage(DATA.token, undefined, document.querySelector('#Chart__Currency label img.main-token-icon').id);
         GetTokenImage(
             DATA.token_data.r &&
-                DATA.token_data.r.length &&
-                ((DATA.token === DATA.token_data.r[DATA.token_pair_idx].token0 && DATA.token_data.r[DATA.token_pair_idx].token1) || DATA.token_data.r[DATA.token_pair_idx].token0),
+            DATA.token_data.r.length &&
+            ((DATA.token === DATA.token_data.r[DATA.token_pair_idx].token0 && DATA.token_data.r[DATA.token_pair_idx].token1) || DATA.token_data.r[DATA.token_pair_idx].token0),
             undefined,
             document.querySelector('#Chart__Currency label img.secondary-token-icon').id
         );
