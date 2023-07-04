@@ -236,8 +236,8 @@ const MESSAGES = {
         elementify('swaps-feed').innerHTML = '';
         GetTokenImage(
             DATA.token_data.r &&
-                DATA.token_data.r.length &&
-                ((DATA.token === DATA.token_data.r[DATA.token_pair_idx].token0 && DATA.token_data.r[DATA.token_pair_idx].token1) || DATA.token_data.r[DATA.token_pair_idx].token0),
+            DATA.token_data.r.length &&
+            ((DATA.token === DATA.token_data.r[DATA.token_pair_idx].token0 && DATA.token_data.r[DATA.token_pair_idx].token1) || DATA.token_data.r[DATA.token_pair_idx].token0),
             undefined,
             document.querySelector('#Chart__Currency label img.secondary-token-icon').id
         );
@@ -248,7 +248,7 @@ const MESSAGES = {
 
         if (data.d.f === (DATA.chart_time_frames[DATA.chart_time_frame] || 60) / 60) {
             set_candles(data.d.s);
-            update_chart(true);
+            update_chart(true, data.d.S[0].t0, data.d.S[0].t1);
         }
 
         for (let i = 0; i < data.d.S.length; ++i) {
@@ -559,9 +559,9 @@ const MESSAGES = {
 
         //TODO: Depracated
         /*for (let i = 12; i > 0; --i) {
-			await handleAction('pos');
-			await sleep(1);
-		}*/
+            await handleAction('pos');
+            await sleep(1);
+        }*/
     },
     sell: async (data) => {
         set_current_positions((DATA.active_positions = []));
@@ -716,8 +716,8 @@ const MESSAGES = {
         DATA.slots[DATA.CHAIN] = data.d.s.map((slot) => {
             slot.balance = Big(
                 (Number((balances[slot.address] && balances[slot.address][DATA.WPEG] && balances[slot.address][DATA.WPEG].balance) || 0) && balances[slot.address][DATA.WPEG].balance) ||
-                    (old_total_balances[slot.address] && old_total_balances[slot.address].balance) ||
-                    0
+                (old_total_balances[slot.address] && old_total_balances[slot.address].balance) ||
+                0
             ).div(DATA.ETHER);
             slot.total_balance = Big(slot.balance);
             slot.balances = slot.balances || {};
@@ -1080,7 +1080,7 @@ const MESSAGES = {
         parse_copied_txs(data.d.scs, data.d.P);
 
         /* DATA.copy_transactions[DATA.selected_slot] = data.d.scs;
-		set_wallet_slot_transactions(); */
+        set_wallet_slot_transactions(); */
 
         save_settings('consts', false, true);
     },
@@ -1144,7 +1144,7 @@ const MESSAGES = {
                 ] = await contract(DATA.USERS).getUser(data.d.w);
 
                 jbu = chain_user_avatars[chain_user_avatar];
-            } catch (e) {}
+            } catch (e) { }
 
             DATA.view_chat_img.src = await get_user_image(jbu);
 
@@ -1177,7 +1177,7 @@ const handle_message = async (data) => {
                     )
                     .join('')
             );
-        } catch (err) {}
+        } catch (err) { }
     } else if (data.length) {
         return data.map(handle_message);
     }
@@ -1185,15 +1185,15 @@ const handle_message = async (data) => {
     //console.debug('>>', JSON.parse(JSON.stringify(data)));
 
     /* let _data = JSON.stringify(data),
-		_key = sha3(`${data.e || data.a}`);
+        _key = sha3(`${data.e || data.a}`);
 
-	console.debug('>>', JSON.parse(_data));
+    console.debug('>>', JSON.parse(_data));
 
-	if (DATA.responses_cache[_key] === _data) {
-		return;
-	}
+    if (DATA.responses_cache[_key] === _data) {
+        return;
+    }
 
-	DATA.responses_cache[_key] = _data; */
+    DATA.responses_cache[_key] = _data; */
 
     if (data.e) {
         if (data.e === 429) {

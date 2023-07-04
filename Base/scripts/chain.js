@@ -41,7 +41,7 @@ const init = async function () {
         try {
             on_connect();
         } catch (e) {
-            DATA.CHAIN_ID = 56;
+            DATA.CHAIN_ID = 1;
             set_chain();
             set_terminal_message('Please connect your wallet');
             provider[DATA.CHAIN_ID] = new ethers.providers.JsonRpcProvider(DATA.RPC);
@@ -55,7 +55,7 @@ const init = async function () {
             }, 0);
         }
     } else {
-        DATA.CHAIN_ID = 56;
+        DATA.CHAIN_ID = 1;
         set_chain();
         set_terminal_message('Please connect your wallet');
         provider[DATA.CHAIN_ID] = new ethers.providers.JsonRpcProvider(DATA.RPC);
@@ -227,7 +227,7 @@ const update_balances = async () => {
                         (await contract(DATA.WPEG)
                             .balanceOf(DATA.conf.wallet)
                             .catch((_) => 0))) ||
-                        0
+                    0
                 );
             } catch (e) {
                 console.debug(e);
@@ -256,7 +256,7 @@ const update_balances = async () => {
             DATA.elements.sub_wallet_balance.dataset.balance =
             DATA.elements.selector_sub_wallet_balance.dataset.balance =
             DATA.elements.wallet_sub_wallet_balance.dataset.balance =
-                tmp;
+            tmp;
     }
 
     if (!DATA.conf.assets) {
@@ -315,13 +315,18 @@ const update_balances = async () => {
 };
 
 const update_price = async (i) => {
-    let price = Big(
+    // calculating eth price wrong
+    let fetched_price = Big(
         (
             await contract(DATA.ROUTER, undefined, undefined, true)
                 .getAmountsOut(_hex(DATA.ETHER), [DATA.WPEG, DATA.STABLE[0]])
                 .catch((_) => [0, 0])
         )[1]
-    ).div(get_decimals_power(await get_decimals(DATA.STABLE[0])));
+    );
+    console.log("FETCHED PRICE: ", fetched_price.toString());
+    console.log("FETCHED DEC POWER: ", get_decimals_power(Number(await get_decimals(DATA.STABLE[0]))).toString());
+    let price = fetched_price.div(get_decimals_power(Number(await get_decimals(DATA.STABLE[0]))));
+    console.log("FINAL USD PRICE", price.toString());
 
     document.querySelectorAll('[data-balance]').forEach((el) => {
         let tmp;
@@ -356,7 +361,7 @@ const update_price = async (i) => {
         if (DATA.token && DATA.token !== DATA.ZERO && DATA.token_data && DATA.token_data.i && DATA.token_data.i.total_supply) {
             DATA.token_data.i.total_supply = Big(
                 (await contract(DATA.token, undefined, undefined, true)
-                    ['totalSupply()']()
+                ['totalSupply()']()
                     .catch((_) => 0)) || 0
             );
         }
@@ -370,12 +375,12 @@ const update_price = async (i) => {
         try {
             el.innerHTML = el.dataset.countNumber = Big(
                 (await contract(DATA.SERVERS_NFT, undefined, undefined, true)
-                    ['maxTotalSupply()']()
+                ['maxTotalSupply()']()
                     .catch((_) => 0)) || 0
             )
                 .sub(
                     (await contract(DATA.SERVERS_NFT, undefined, undefined, true)
-                        ['totalSupply()']()
+                    ['totalSupply()']()
                         .catch((_) => 0)) || 0
                 )
                 .sub(DATA.boost_quantity)
@@ -529,8 +534,8 @@ const chain_error = (e) => {
     DATA.conf = { connected: false, vault: Big(0), balance: Big(0) };
     /* elementify('Root').classList.remove('has-connection'); */
     /* if (typeof e === 'undefined') {
-	help_err('Your wallet is loged out!');
-	}  */
+    help_err('Your wallet is loged out!');
+    }  */
 
     elementify('login-logout-text').innerHTML = 'Login';
     elementify('ModalPositions__Panel1').innerHTML = '<div class="item">No active positions</div>';

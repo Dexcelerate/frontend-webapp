@@ -26,7 +26,7 @@ const init_sockets = async () => {
   DATA.socket.on('connect', handle_connect);
   DATA.socket.on('disconnect', handle_disconnect);
   DATA.socket.on('message', handle_message);
-  DATA.socket.on('tick', handle_tick);
+  DATA.socket.on('tick', handle_tick); // usd indexer sends this event
   DATA.socket.on('chat', handle_chat);
   DATA.socket.on('hold', handle_holder);
   DATA.socket.on('glob', handle_global_action);

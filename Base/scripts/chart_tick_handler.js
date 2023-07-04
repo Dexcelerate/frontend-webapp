@@ -72,17 +72,23 @@ const handle_tick = async (data) => {
     ++DATA.page_offset.token;
 
     await wait_for_chart_to_finish_drawing();
-
     _handle_tick(data, true);
     DATA.updating_history_chart = false;
 
     add_swap_event_to_feed(data);
-    update_chart_price(data.pu);
+    update_chart_price(data.pu, data.t0, data.t1);
     set_current_positions(DATA.active_positions || []);
 };
 
-const update_chart_price = (price) => {
-    DATA.token_price = Big(price);
+const update_chart_price = (price, t0, t1) => {
+
+    if ((t0 === DATA.WPEG || t1 === DATA.WPEG) && DATA.CHAIN === "ETH") {
+        // console.log("PRICE MANUALLY SHIFTED +12: ", Big(price).mul(Big(10).pow(12)).toString());
+        DATA.token_price = Big(price).mul(Big(10).pow(12));
+    } else {
+        // console.log("NOT SHIFTING PRICE T1:", t1, "T0: ", t0);
+        DATA.token_price = Big(price);
+    }
     document.querySelector('#Chart__Currency .price').innerHTML = `$${formatNumber(DATA.token_price)}`;
     elementify('token-price-usd').innerHTML = `$${formatNumber(DATA.token_price)}`;
 
@@ -98,13 +104,13 @@ const update_chart_price = (price) => {
     store.set(`${DATA.CHAIN}_token_price`, `${DATA.token_price}`);
 };
 
-const update_chart = (is_last) => {
+const update_chart = (is_last, t0, t1) => {
     DATA.candlestickSeries.setData(DATA.candleBuffer);
 
     if (is_last) {
         DATA.chart_time_scale.fitContent();
         DATA.chart.priceScale('right').applyOptions({ autoScale: true });
-        update_chart_price((DATA.candleBuffer.length && DATA.candleBuffer[DATA.candleBuffer.length - 1].close) || DATA.token_price);
+        update_chart_price((DATA.candleBuffer.length && DATA.candleBuffer[DATA.candleBuffer.length - 1].close) || DATA.token_price, t0, t1);
     }
 
     DATA.updating_history_chart = false;
