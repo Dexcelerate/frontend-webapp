@@ -920,7 +920,7 @@ const ACTIONS = {
                     c: DATA.selected_chain,
                     w: DATA.conf.wallet,
                     a: DATA.conf.auth,
-                    t: elementify('synagogue-name').value.trim() || `Synagogue #${DATA.conf.uid}`,
+                    t: elementify('synagogue-name').value.trim() || `Private Pool #${DATA.conf.uid}`,
                 },
             });
         }
