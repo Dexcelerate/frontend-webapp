@@ -85,7 +85,7 @@ const update_range = (el, id) => {
 
 					<div class="body">
 						<div class="title">
-							<div>Wallet</div>
+							<div><a href="https://bscscan.com/address/${DATA?.conf?.wallet}" target="_blank">Wallet</a></div>
 							<div>Balance</div>
 						</div>
 
