@@ -540,6 +540,7 @@ const PRE_ACTIONS = {
         return '-';
     },
     synagogize: async (element) => {
+        /* Create a synagogue */
         if (!DATA.conf.connected) {
             on_connect(() => {
                 _handleAction(element);
@@ -653,18 +654,16 @@ const PRE_ACTIONS = {
         await handleAction('user_slot_copies');
         await handleAction('copies');
 
-        if(DATA.copy_settings[DATA.selected_copy_slot]) {
-            DATA.copy_wallet =  Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v))[0];
-            DATA.selected_copy_wallet = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v))[0]
+        if (DATA.copy_settings[DATA.selected_copy_slot]) {
+            DATA.copy_wallet = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v))[0];
+            DATA.selected_copy_wallet = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v))[0];
 
             DATA.copy_settings_ordered[DATA.CHAIN] = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v));
         }
-        
 
         return 'copies';
     },
     'set-first-wallet': async (element) => {
-
         /* Traverse up the elements parents until we get to the wallet element that contains the data attribute we need. */
         while (!element.classList.contains('wallet')) {
             element = element.parentNode;
@@ -688,24 +687,23 @@ const PRE_ACTIONS = {
         }
         //console.log("element", element);
         //lement = document.querySelectorAll(`.wallets [data-wallet='${DATA.selected_copy_wallet}']`)
-       // console.log("element", element);
+        // console.log("element", element);
 
-       // console.log("DATA.selected_copy_wallet", DATA.selected_copy_wallet)
-       // console.log("element.dataset.wallet", element.dataset.wallet)
-        console.log("DATA.copy_settings_ordered[DATA.CHAIN]", DATA.copy_settings_ordered[DATA.CHAIN]);
+        // console.log("DATA.selected_copy_wallet", DATA.selected_copy_wallet)
+        // console.log("element.dataset.wallet", element.dataset.wallet)
+        console.log('DATA.copy_settings_ordered[DATA.CHAIN]', DATA.copy_settings_ordered[DATA.CHAIN]);
         await sleep(0.1);
 
         DATA.copy_settings_ordered[DATA.CHAIN].sort((a) => {
-           //console.log("a", a);
+            //console.log("a", a);
             if (a === element.dataset.wallet) {
                 return -1;
             }
             //console.log("a return 0");
             return 0;
         });
-       console.log("DATA.copy_settings_ordered[DATA.CHAIN]", DATA.copy_settings_ordered[DATA.CHAIN]);
+        console.log('DATA.copy_settings_ordered[DATA.CHAIN]', DATA.copy_settings_ordered[DATA.CHAIN]);
 
-        
         load_slots();
         element.blur();
 
