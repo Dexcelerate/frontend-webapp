@@ -1,21 +1,21 @@
 {
-    "editor.formatOnSave": true,
-    "printWidth": 220,
-    "tabWidth": 4,
-    "overrides": [
-      {
-        "files": "*.test.js",
-        "options": {
-          "semi": true
-        }
-      },
-      {
-        "files": ["*.js"],
-        "options": {
-          "tabWidth": 4,
-          "singleQuote": true,
-          "semi": true
-        }
+  "editor.formatOnSave": false,
+  "printWidth": 220,
+  "tabWidth": 4,
+  "overrides": [
+    {
+      "files": "*.test.js",
+      "options": {
+        "semi": true
       }
-    ]
-  }
+    },
+    {
+      "files": ["*.js"],
+      "options": {
+        "tabWidth": 4,
+        "singleQuote": true,
+        "semi": true
+      }
+    }
+  ]
+}
