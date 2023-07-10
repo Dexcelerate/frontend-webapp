@@ -137,7 +137,7 @@ const _update_price = async () => {
     let i = 0;
     while (true) {
         await Promise.all([update_price(i), update_balances(), update_slot_balances()]);
-        await sleep(2);
+        await sleep(4);
         ++i;
     }
 };
