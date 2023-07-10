@@ -1068,8 +1068,9 @@ const load_wallet_slot = (slot, i) => {
 				<canvas id="Wallet__Slot${i}__Chart"></canvas>
 
 				<div class="meta">
-					<div class="title text-truncated slot-title-${DATA.CHAIN}-${slot.address}">${slot.title ? slot.title : `Slot ${i + 1}`}</div>
-
+                <div class="title text-truncated slot-title-${DATA.CHAIN}-${slot.address}"><a href="https://bscscan.com/address/${slot?.address}" target="_blank" title="${slot?.address}">${
+        slot?.title ? slot?.title : `Slot ${i + 1}`
+    }</a></div>
 					<div class="balance text-truncated slot-total-balance-${DATA.CHAIN}-${slot.address}" data-balance="${Big((Number(old_balance) && old_balance) || slot.total_balance)}">$${formatFiat(
         Big((Number(old_balance) && old_balance) || slot.total_balance).mul(DATA.WPEG_PRICE)
     )}</div>
