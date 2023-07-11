@@ -1,5 +1,5 @@
 {
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "printWidth": 220,
   "tabWidth": 4,
   "overrides": [
@@ -12,6 +12,7 @@
     {
       "files": ["*.js"],
       "options": {
+        "formatOnSave": true,
         "tabWidth": 4,
         "singleQuote": true,
         "semi": true
