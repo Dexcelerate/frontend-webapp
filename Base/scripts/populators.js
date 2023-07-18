@@ -129,6 +129,8 @@ const set_current_position = async (pos, now) => {
         })(),
     ]);
 
+    await sleep(0.5);
+
     if (pos.token === DATA.token && DATA.slots[DATA.CHAIN].filter((v) => v.address === pos.slot && v.is_active && v.selected).length) {
         pos.enter_price = Big(pos.enter_price || 0);
         pos.peg = Big((Number(pos.peg) && pos.peg) || DATA.WPEG_PRICE);
@@ -141,6 +143,7 @@ const set_current_position = async (pos, now) => {
             term += `<br>BUY AT: $${formatFiatNumberNoSpaces(pos.buy_at)}`;
         }
         term += `<br>CURRENT PRICE: $${formatFiatNumberNoSpaces(DATA.token_price)}`;
+
         if (pos.enter_price.gt(0) && pos.status !== 'p') {
             term += `<br>ENTER PRICE:&nbsp;&nbsp;&nbsp;$${formatFiatNumberNoSpaces(pos.enter_price.mul(pos.peg))}`;
         }
@@ -311,6 +314,9 @@ const set_history_position = async (pos, now) => {
 };
 
 const set_current_positions = (positions) => {
+    console.log('=========================== set_current_positions =================================');
+    console.log('positions', positions);
+
     if (DATA.set_current_positions_timeout) {
         clearTimeout(DATA.set_current_positions_timeout);
     }
@@ -376,7 +382,7 @@ const set_current_positions = (positions) => {
         for (i in _positions) {
             _positions[i].have = _positions[i].balance.mul(_positions[i].price); /* .mul(DATA.WPEG_PRICE); */
 
-            /* console.log(JSON.stringify(_positions[i], null, 4)); */
+            console.log(JSON.stringify(_positions[i], null, 4));
 
             if (_positions[i].have.lt(0)) {
                 console.error('!! Negative balance:', i, ':', JSON.stringify(_positions[i], null, 4));
