@@ -5,7 +5,7 @@
 /*** Inject HTML ***/
 
 (() => {
-	const html = `
+    const html = `
         <div id="ModalNFTMarket" class="togglable modal d-none">
             <div class="lightbox" data-togglable="ModalNFTMarket"></div>
 
@@ -104,49 +104,49 @@
         </div>
     `;
 
-	elementify('Root').insertAdjacentHTML('beforeend', html);
+    elementify('Root').insertAdjacentHTML('beforeend', html);
 })();
 
 /* On click on card open modal */
 
 (() => {
-	const modalNFTMarket = elementify('ModalNFTMarket');
+    const modalNFTMarket = elementify('ModalNFTMarket');
 
-	document.querySelectorAll('#NFTMarket > .container > .card').forEach((marketCard) => {
-		marketCard.addEventListener('click', (event) => {
-			const name = marketCard.querySelector('.name').innerText;
-			const image = marketCard.querySelector('img').src;
-			const price = marketCard.querySelector('.footer .btn').innerText;
-			modalNFTMarket.querySelector('.header .title').innerText = name.toUpperCase();
-			modalNFTMarket.querySelector('.body .box-nft img').src = image;
-			modalNFTMarket.querySelector('.body .box-name').innerText = name;
-			modalNFTMarket.querySelector('.body .box-buy-selection label').innerText = 'Buy for ' + price;
-			modalNFTMarket.querySelector('.body .box-buy .actions button').innerText = 'Buy for ' + price;
-		});
-	});
+    document.querySelectorAll('#NFTMarket > .container > .card').forEach((marketCard) => {
+        marketCard.addEventListener('click', (event) => {
+            const name = marketCard.querySelector('.name').innerText;
+            const image = marketCard.querySelector('img').src;
+            const price = marketCard.querySelector('.footer .btn').innerText;
+            modalNFTMarket.querySelector('.header .title').innerText = name.toUpperCase();
+            modalNFTMarket.querySelector('.body .box-nft img').src = image;
+            modalNFTMarket.querySelector('.body .box-name').innerText = name;
+            modalNFTMarket.querySelector('.body .box-buy-selection label').innerText = 'Buy for ' + price;
+            modalNFTMarket.querySelector('.body .box-buy .actions button').innerText = 'Buy for ' + price;
+        });
+    });
 })();
 
 /*** Currency selector ***/
 
 (() => {
-	const selectorLabelDivElement = document.querySelector('label[for="NFTMarketCurrencySelector"]').firstElementChild;
+    const selectorLabelDivElement = document.querySelector('label[for="NFTMarketCurrencySelector"]').firstElementChild;
 
-	document.querySelectorAll('#ModalNFTMarket__Body .box-buy .selector input[type="radio"').forEach((radio) => {
-		radio.addEventListener('change', (event) => {
-			selectorLabelDivElement.classList.add('text-white');
-			selectorLabelDivElement.innerText = document.querySelector(`label[for="${radio.id}"] > div`).innerText;
-			elementify('NFTMarketCurrencySelector').checked = false;
-		});
-	});
+    document.querySelectorAll('#ModalNFTMarket__Body .box-buy .selector input[type="radio"').forEach((radio) => {
+        radio.addEventListener('change', (event) => {
+            selectorLabelDivElement.classList.add('text-white');
+            selectorLabelDivElement.innerText = document.querySelector(`label[for="${radio.id}"] > div`).innerText;
+            elementify('NFTMarketCurrencySelector').checked = false;
+        });
+    });
 })();
 
 /* On click of "offer swap" button open wallet nft section */
 
 (() => {
-	const modalNFTMarket = elementify('ModalNFTMarket');
+    const modalNFTMarket = elementify('ModalNFTMarket');
 
-	document.querySelector('#ModalNFTMarket .body .box-buy-selection button').addEventListener('click', (event) => {
-		const htmlOfferSwapBody = htmlToElement(`
+    document.querySelector('#ModalNFTMarket .body .box-buy-selection button').addEventListener('click', (event) => {
+        const htmlOfferSwapBody = htmlToElement(`
             <div class="offer-swap-selection">
                 <div class="row row-1">
                     <div class="title ml-12px">Users</div>
@@ -155,25 +155,25 @@
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb1.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb2.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb3.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb4.jpg">
+                            <img src="/img/favicon.png">
                         </label>
                     </div>
                 </div>
@@ -185,25 +185,25 @@
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb1.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb2.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb3.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb4.jpg">
+                            <img src="/img/favicon.png">
                         </label>
                     </div>
                 </div>
@@ -215,25 +215,25 @@
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb1.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb2.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb3.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb4.jpg">
+                            <img src="/img/favicon.png">
                         </label>
                     </div>
                 </div>
@@ -245,25 +245,25 @@
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb1.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb2.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb3.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb4.jpg">
+                            <img src="/img/favicon.png">
                         </label>
                     </div>
                 </div>
@@ -275,51 +275,51 @@
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb1.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb2.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb3.jpg">
+                            <img src="/img/favicon.png">
                         </label>
 
                         <label class="card">
                             <input type="checkbox" name="offer_swap_selection" class="visually-hidden">
 
-                            <img src="Base/graphics/raster/nfts/jb4.jpg">
+                            <img src="/img/favicon.png">
                         </label>
                     </div>
                 </div>
             </div>
         `);
-		const htmlOfferSwapFooter = htmlToElement(`
+        const htmlOfferSwapFooter = htmlToElement(`
             <div id="ModalNFTMarket__Footer" class="footer">
                 <button class="btn btn-style w-100 text-white lightbox">Confirm</button>
             </div>
         `);
-		document.querySelector('#ModalNFTMarket .body').prepend(htmlOfferSwapBody);
-		document.querySelector('#ModalNFTMarket .container').append(htmlOfferSwapFooter);
-		/* scroll to top */
-		document.querySelector('#ModalNFTMarket .body').scrollTo({ top: 0, behavior: 'smooth' });
-		/* change modal title */
-		modalNFTMarket.querySelector('.header .title').innerText = `${modalNFTMarket.querySelector('.header .title').innerText} (OFFER SWAP)`;
-		/* cleanup rests of offer swap section on exit or confirm */
-		document.querySelectorAll('#ModalNFTMarket .lightbox').forEach((lightboxToggle) => {
-			lightboxToggle.addEventListener('click', (event) => {
-				htmlOfferSwapBody.remove();
-				htmlOfferSwapFooter.remove();
-				/* change title back to original */
-				modalNFTMarket.querySelector('.header .title').innerText = `${modalNFTMarket.querySelector('.header .title').innerText.replace('(OFFER SWAP)', '')}`;
-				/* scroll to top */
-				document.querySelector('#ModalNFTMarket .body').scrollTo({ top: 0, behavior: 'smooth' });
-			});
-		});
-	});
+        document.querySelector('#ModalNFTMarket .body').prepend(htmlOfferSwapBody);
+        document.querySelector('#ModalNFTMarket .container').append(htmlOfferSwapFooter);
+        /* scroll to top */
+        document.querySelector('#ModalNFTMarket .body').scrollTo({ top: 0, behavior: 'smooth' });
+        /* change modal title */
+        modalNFTMarket.querySelector('.header .title').innerText = `${modalNFTMarket.querySelector('.header .title').innerText} (OFFER SWAP)`;
+        /* cleanup rests of offer swap section on exit or confirm */
+        document.querySelectorAll('#ModalNFTMarket .lightbox').forEach((lightboxToggle) => {
+            lightboxToggle.addEventListener('click', (event) => {
+                htmlOfferSwapBody.remove();
+                htmlOfferSwapFooter.remove();
+                /* change title back to original */
+                modalNFTMarket.querySelector('.header .title').innerText = `${modalNFTMarket.querySelector('.header .title').innerText.replace('(OFFER SWAP)', '')}`;
+                /* scroll to top */
+                document.querySelector('#ModalNFTMarket .body').scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    });
 })();

@@ -3,20 +3,19 @@
  */
 
 const update_range = (el, id) => {
-	el.value = el.value.replace(/[^0-9.]/g, '');
+    el.value = el.value.replace(/[^0-9.]/g, '');
 
-	if (el.value.endsWith('.') || !Number(el.value)) {
-		return;
-	}
+    if (el.value.endsWith('.') || !Number(el.value)) {
+        return;
+    }
 
-	let range = elementify(id),
-		val = Math.max(0, Math.min(Number(el.value), Number(range.max)));
+    let range = elementify(id),
+        val = Math.max(0, Math.min(Number(el.value), Number(range.max)));
 
-	range.value = val;
-	el.value = val;
+    range.value = val;
+    el.value = val;
 
-
-	/* document.querySelectorAll(`#${id}`).forEach(range => {
+    /* document.querySelectorAll(`#${id}`).forEach(range => {
 		let val = Math.max(0, Math.min(Number(el.value), Number(range.max)));
 
 		range.value = val;
@@ -27,8 +26,7 @@ const update_range = (el, id) => {
 /*** Inject HTML ***/
 
 (() => {
-
-	const html = `
+    const html = `
 		<div id="Wallet" class="togglable d-none">
 			<div class="lightbox" data-togglable="Wallet"></div>
 
@@ -69,15 +67,13 @@ const update_range = (el, id) => {
 		</div>
 	`;
 
-	document.getElementById('Wallet').outerHTML = html;
-
+    document.getElementById('Wallet').outerHTML = html;
 })();
 
 /*** Inject HTML - Panel 1 - Wallets ***/
 
 (() => {
-
-	const html = `
+    const html = `
 		<div class="wallets">
 			<div id="Wallet__Wallet1" class="panelbox">
 				<input type="radio" name="wallet_main_tab" id="Wallet__Wallet1__Tab1" class="visually-hidden" autocomplete="off" checked>
@@ -89,7 +85,7 @@ const update_range = (el, id) => {
 
 					<div class="body">
 						<div class="title">
-							<div><a href="https://bscscan.com/address/${DATA.conf.wallet}" target="_blank">Wallet</a></div>
+							<div><a href="https://bscscan.com/address/${DATA?.conf?.wallet}" target="_blank">Wallet</a></div>
 							<div>Balance</div>
 						</div>
 
@@ -132,13 +128,13 @@ const update_range = (el, id) => {
 		<div id="wallet-slot-assets-container"></div>
 	`;
 
-	elementify('Wallet__Panel1').insertAdjacentHTML('beforeend', html);
-
+    elementify('Wallet__Panel1').insertAdjacentHTML('beforeend', html);
 })();
 
 (async () => {
-
-	const boost = !store.get('closed_boost_wallet_popup') && `<div class="cta">
+    const boost =
+        (!store.get('closed_boost_wallet_popup') &&
+            `<div class="cta">
 	<div class="col col-1">
 		<ul class="circles">
 			<li></li>
@@ -168,13 +164,14 @@ const update_range = (el, id) => {
 			<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM4.646 4.646A.5.5 0 015.354 4.646L8 7.293 10.646 4.646A.5.5 0 0111.354 5.354L8.707 8 11.354 10.646A.5.5 0 0110.646 11.354L8 8.707 5.354 11.354A.5.5 0 014.646 10.646L7.293 8 4.646 5.354A.5.5 0 014.646 4.646Z"/>
 		</svg>
 	</button>
-</div>` || '';
+</div>`) ||
+        '';
 
-	let servers = '',
-		chain_id;
+    let servers = '',
+        chain_id;
 
-	for (chain_id of DATA.CHAINS_ORDER) {
-		servers = `${servers}<div class="boost">
+    for (chain_id of DATA.CHAINS_ORDER) {
+        servers = `${servers}<div class="boost">
 		<button class="btn-add btn btn-style btn-has-icon" data-pay-chain="${chain_id}">
 			<img id="${GetTokenImage(DATA.CHAINS[chain_id].WPEG)}" src="${DATA.ERROR_IMG}" class="icon-md" data-pay-chain="${chain_id}">
 		</button>
@@ -187,9 +184,9 @@ const update_range = (el, id) => {
 			</svg>
 		</button>
 	</div>`;
-	}
+    }
 
-	const html = `<input type="checkbox" name="boost_currency_selector" id="Boost__Intro" class="visually-hidden" autocomplete="off">
+    const html = `<input type="checkbox" name="boost_currency_selector" id="Boost__Intro" class="visually-hidden" autocomplete="off">
 
 <div class="intro d-none">
 	<div class="panels">
@@ -334,72 +331,64 @@ ${boost}
 	</div>
 </div>`;
 
-	elementify('Wallet__Panel3').insertAdjacentHTML('beforeend', html);
+    elementify('Wallet__Panel3').insertAdjacentHTML('beforeend', html);
 
-	setTimeout(set_original_wallet_assets, 0);
-
+    setTimeout(set_original_wallet_assets, 0);
 })();
 
 (() => {
-
-	handle_scroll('Wallet__Body', 'stop_wallet', () => {
-		if (elementify('Wallet__Tab1').checked) {
-			++DATA.pages.wallet;
-			handleAction('wallet_history');
-		}
-	});
-
+    handle_scroll('Wallet__Body', 'stop_wallet', () => {
+        if (elementify('Wallet__Tab1').checked) {
+            ++DATA.pages.wallet;
+            handleAction('wallet_history');
+        }
+    });
 })();
 
 /*** Panel 3 - Network selector ***/
 
 (() => {
+    /* decrease count on button click */
 
-	/* decrease count on button click */
+    document.querySelectorAll('#Wallet__Panel3 .market .row-1 .btn-add').forEach((addButton) => {
+        addButton.addEventListener('click', (event) => {
+            let countButtonElement = addButton.nextElementSibling;
+            let countButtonInteger = parseInt(countButtonElement.innerText);
+            if (countButtonInteger < 1) {
+                return;
+            }
+            ++DATA.boost_quantity;
+            countButtonElement.firstElementChild.innerText = --countButtonInteger;
+            addButton.classList.add('active');
+        });
+    });
 
-	document.querySelectorAll('#Wallet__Panel3 .market .row-1 .btn-add').forEach(addButton => {
-		addButton.addEventListener('click', event => {
-			let countButtonElement = addButton.nextElementSibling;
-			let countButtonInteger = parseInt(countButtonElement.innerText);
-			if (countButtonInteger < 1) {
-				return;
-			}
-			++DATA.boost_quantity;
-			countButtonElement.firstElementChild.innerText = --countButtonInteger;
-			addButton.classList.add('active');
-		});
-	});
+    /* reset count on click inside circle */
 
-	/* reset count on click inside circle */
-
-	document.querySelectorAll('#Wallet__Panel3 .market .row-1 .btn-count').forEach(countButton => {
-		countButton.addEventListener('click', event => {
-			DATA.boost_quantity = 0;
-			countButton.firstElementChild.innerText = countButton.firstElementChild.dataset.countNumber;
-			countButton.previousElementSibling.classList.remove('active');
-		});
-	});
-
+    document.querySelectorAll('#Wallet__Panel3 .market .row-1 .btn-count').forEach((countButton) => {
+        countButton.addEventListener('click', (event) => {
+            DATA.boost_quantity = 0;
+            countButton.firstElementChild.innerText = countButton.firstElementChild.dataset.countNumber;
+            countButton.previousElementSibling.classList.remove('active');
+        });
+    });
 })();
 
 /*** Panel 3 - Boost CTA box close button ***/
 
 (() => {
-
-	if (!store.get('closed_boost_wallet_popup')) {
-		elementify('Boost__CtaBoxClose').addEventListener('click', event => {
-			event.currentTarget.parentElement.remove();
-			store.set('closed_boost_wallet_popup', '1');
-		});
-	}
-
+    if (!store.get('closed_boost_wallet_popup')) {
+        elementify('Boost__CtaBoxClose').addEventListener('click', (event) => {
+            event.currentTarget.parentElement.remove();
+            store.set('closed_boost_wallet_popup', '1');
+        });
+    }
 })();
 
 /*** Inject HTML - Panel 4 ***/
 
 (() => {
-
-	const html = `
+    const html = `
 		<input type="checkbox" id="NFT__Panel2__Checkbox" class="visually-hidden">
 
 		<div class="panel panel-1">
@@ -441,31 +430,30 @@ ${boost}
 		<div class="panel panel-2"></div>
 	`;
 
-	elementify('Wallet__Panel4').insertAdjacentHTML('beforeend', html);
-
+    elementify('Wallet__Panel4').insertAdjacentHTML('beforeend', html);
 })();
 
 const set_original_wallet_nft = async (type, nft_id, chain, order) => {
-	let main_type = type === 'user-servers' && 'JBS' || (type === 'user-discounts' && 'JBD' || type),
-		key = `${type}-${nft_id}-${chain}-${order}`,
-		expiry = DATA.conf.N[main_type][order] && DATA.conf.N[main_type][order].expiry || 0;
+    let main_type = (type === 'user-servers' && 'JBS') || (type === 'user-discounts' && 'JBD') || type,
+        key = `${type}-${nft_id}-${chain}-${order}`,
+        expiry = (DATA.conf.N[main_type][order] && DATA.conf.N[main_type][order].expiry) || 0;
 
-	if (!['JBS', 'JBU'].includes(main_type) && DATA.nft_divs_cache[key] && DATA.nft_divs_cache[key].expiry === `${expiry}`) {
-		/* lazy_get_nft_image(main_type, nft_id, undefined, `${key}-${expiry}`); */
-		return [`${key}-${expiry}`, false];
-	}
+    if (!['JBS', 'JBU'].includes(main_type) && DATA.nft_divs_cache[key] && DATA.nft_divs_cache[key].expiry === `${expiry}`) {
+        /* lazy_get_nft_image(main_type, nft_id, undefined, `${key}-${expiry}`); */
+        return [`${key}-${expiry}`, false];
+    }
 
-	if (DATA.nft_divs_cache[key]) {
-		document.querySelectorAll(`.${key}-${DATA.nft_divs_cache[key].expiry}`).forEach(el => el.remove());
-	}
+    if (DATA.nft_divs_cache[key]) {
+        document.querySelectorAll(`.${key}-${DATA.nft_divs_cache[key].expiry}`).forEach((el) => el.remove());
+    }
 
-	DATA.nft_divs_cache[key] = {
-		expiry: `${expiry}`,
-		data: await (async () => {
-			switch (type) {
-				case 'JBU':
-					return `<div class="card ${key}-${expiry}">
-	<img id="${lazy_get_nft_image(type, nft_id, undefined, `${key}-${expiry}`)}" src="Base/graphics/raster/nfts/jb1.jpg">
+    DATA.nft_divs_cache[key] = {
+        expiry: `${expiry}`,
+        data: await (async () => {
+            switch (type) {
+                case 'JBU':
+                    return `<div class="card ${key}-${expiry}">
+	<img id="${lazy_get_nft_image(type, nft_id, undefined, `${key}-${expiry}`)}" src="/img/favicon.png">
 
 	<input type="checkbox" id="NFT__Users__User${nft_id}-${order}" class="visually-hidden">
 
@@ -504,46 +492,58 @@ const set_original_wallet_nft = async (type, nft_id, chain, order) => {
 	</div>
 </div>`;
 
-				case 'user-servers':
-					if (!DATA.conf.pools[nft_id]) {
-						return '';
-					}
+                case 'user-servers':
+                    if (!DATA.conf.pools[nft_id]) {
+                        return '';
+                    }
 
-					expiry = new Date(expiry).getTime();
-					return `<div class="card ${key}-${expiry}">
-					<a href="https://bscscan.com/token/${DATA.CHAINS[DATA.CHAIN_IDS_MAP[DATA.conf.pools[nft_id].chain]].SERVERS_NFT}?a=${nft_id}" target="_blank">
+                    expiry = new Date(expiry).getTime();
+                    return `<div class="card ${key}-${expiry}">
 	<img id="${lazy_get_nft_image(main_type, nft_id, undefined, `${key}-${expiry}`)}" onerror="error_img(this)">
 	<img id="${GetTokenImage(DATA.CHAINS[DATA.CHAIN_IDS_MAP[DATA.conf.pools[nft_id].chain]].CHAIN_ASSETS)}" src="${DATA.ERROR_IMG}" class="icon-md">
 </a>
 	<div class="footer" data-nft="${nft_id}">
 		<div class="text-white" data-reverse-timer="${expiry}">${timeDifference(expiry, Date.now())} left</div>
-		${(DATA.conf.wallet === await contract(DATA.CHAINS[DATA.CHAIN_IDS_MAP[DATA.conf.pools[nft_id].chain]].SERVERS_NFT).ownerOf(nft_id).catch(_ => 0)) && `<button id="boost-unsubscribe-${nft_id}" class="btn btn-style" data-action="reduce" data-nft="${nft_id}" data-pool="${DATA.conf.pools[nft_id].ip_hash}">Unsubscribe</button>` || '<button class="btn btn-style disabled">Unsubscribed</button>'}
+		${
+            (DATA.conf.wallet ===
+                (await contract(DATA.CHAINS[DATA.CHAIN_IDS_MAP[DATA.conf.pools[nft_id].chain]].SERVERS_NFT)
+                    .ownerOf(nft_id)
+                    .catch((_) => 0)) &&
+                `<button id="boost-unsubscribe-${nft_id}" class="btn btn-style" data-action="reduce" data-nft="${nft_id}" data-pool="${DATA.conf.pools[nft_id].ip_hash}">Unsubscribe</button>`) ||
+            '<button class="btn btn-style disabled">Unsubscribed</button>'
+        }
 	</div>
 </div>`;
 
-				case 'JBS':
-					if (!DATA.conf.pools[nft_id]) {
-						return '';
-					}
+                case 'JBS':
+                    if (!DATA.conf.pools[nft_id]) {
+                        return '';
+                    }
 
-					let is_staked = DATA.conf.pools && DATA.conf.pools[nft_id] && DATA.conf.pools[nft_id].staked,
-						is_synagogue = DATA.conf.pools && DATA.conf.pools[nft_id] && DATA.conf.pools[nft_id].is_synagogue;
+                    let is_staked = DATA.conf.pools && DATA.conf.pools[nft_id] && DATA.conf.pools[nft_id].staked,
+                        is_synagogue = DATA.conf.pools && DATA.conf.pools[nft_id] && DATA.conf.pools[nft_id].is_synagogue;
 
-					return `<div class="card ${key}-${expiry}">
+                    return `<div class="card ${key}-${expiry}">
 	<img id="${lazy_get_nft_image(type, nft_id, undefined, `${key}-${expiry}`)}" onerror="error_img(this)">
 
 	<input type="checkbox" id="NFT__Nodes__Node${nft_id}-${order}" class="visually-hidden">
 
 	<div class="footer" data-nft="${nft_id}">
-		${!is_synagogue && `<label class="checkbox-svg" data-tooltip="${is_staked && 'Unstake' || 'Stake'}" data-tooltip-alt="${is_staked && 'Stake' || 'Unstake'}" data-tooltip-top data-action="${is_staked && 'unstake' || 'stake'}" data-nft="${nft_id}">
-			<input type="checkbox" class="visually-hidden" autocomplete="off" ${is_staked && 'checked="checked"' || ''}>
+		${
+            (!is_synagogue &&
+                `<label class="checkbox-svg" data-tooltip="${(is_staked && 'Unstake') || 'Stake'}" data-tooltip-alt="${(is_staked && 'Stake') || 'Unstake'}" data-tooltip-top data-action="${
+                    (is_staked && 'unstake') || 'stake'
+                }" data-nft="${nft_id}">
+			<input type="checkbox" class="visually-hidden" autocomplete="off" ${(is_staked && 'checked="checked"') || ''}>
 
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md" data-action="${is_staked && 'unstake' || 'stake'}" data-nft="${nft_id}">
-				<circle fill="#292929" cx="8" cy="8" r="8" data-action="${is_staked && 'unstake' || 'stake'}" data-nft="${nft_id}"></circle>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md" data-action="${(is_staked && 'unstake') || 'stake'}" data-nft="${nft_id}">
+				<circle fill="#292929" cx="8" cy="8" r="8" data-action="${(is_staked && 'unstake') || 'stake'}" data-nft="${nft_id}"></circle>
 				<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM8 4A.5.5 0 018.5 4.5V7.5H11.5A.5.5 0 0111.5 8.5H8.5V11.5A.5.5 0 017.5 11.5V8.5H4.5A.5.5 0 014.5 7.5H7.5V4.5A.5.5 0 018 4Z" data-action="stake" data-nft="${nft_id}"/>
 				<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM4 8A.5.5 0 014.5 7.5H11.5A.5.5 0 0111.5 8.5H4.5A.5.5 0 014 8Z" data-action="unstake" data-nft="${nft_id}"></path>
 			</svg>
-		</label>` || ''}
+		</label>`) ||
+            ''
+        }
 
 		<label for="NFT__Nodes__Node${nft_id}-${order}" class="btn btn-has-icon" data-tooltip="Send" data-tooltip-top>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md">
@@ -572,23 +572,29 @@ const set_original_wallet_nft = async (type, nft_id, chain, order) => {
 	</div>
 </div>`;
 
-				case 'JBA':
-					return `<div class="card ${key}-${expiry}${(expiry) > 0 && ' active' || ''}">
+                case 'JBA':
+                    return `<div class="card ${key}-${expiry}${(expiry > 0 && ' active') || ''}">
 	<img id="${lazy_get_nft_image(type, nft_id, undefined, `${key}-${expiry}`)}" onerror="error_img(this)">
 
 	<input type="checkbox" id="NFT__ActionCards__ActionCard${nft_id}-${order}" class="visually-hidden">
 
 	<div class="footer" data-nft="${nft_id}">
-		 ${(expiry) > 0 && `<div class="clock">
+		 ${
+             (expiry > 0 &&
+                 `<div class="clock">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md fs-0 mr-2px">
 				<circle fill="#292929" cx="8" cy="8" r="8"></circle>
 				<path d="M8 3.5A.5.5 0 007 3.5V9A.5.5 0 007.252 9.434L10.752 11.434A.5.5 0 0011.248 10.566L8 8.71V3.5ZM8 16A8 8 0 108 0 8 8 0 008 16ZM15 8A7 7 0 111 8 7 7 0 0115 8Z"/>
 			</svg>
 
 			<div class="text-white text-truncated ml-6px" data-reverse-timer="${expiry}">${timeDifference(Number(expiry), Date.now())} left</div>
-		</div>` || ''}
+		</div>`) ||
+             ''
+         }
 
-		${Number(expiry) === 0 && `<button class="btn btn-has-icon" data-tooltip="Burn" data-tooltip-top data-action="activate-action-card" data-nft="${nft_id}" data-expity="${expiry}">
+		${
+            (Number(expiry) === 0 &&
+                `<button class="btn btn-has-icon" data-tooltip="Burn" data-tooltip-top data-action="activate-action-card" data-nft="${nft_id}" data-expity="${expiry}">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md pe-none" data-action="activate-action-card" data-nft="${nft_id}">
 				<circle fill="#292929" cx="8" cy="8" r="8" data-action="activate-action-card" data-nft="${nft_id}"></circle>
 				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM10.3321 3.2012C9.8469 3.6523 9.4063 4.1269 9.0171 4.6039 8.3773 3.7255 7.5828 2.832 6.6875 2 4.3848 4.1356 2.75 6.9219 2.75 8.6 2.75 11.5836 5.0985 14 8 14S13.25 11.5836 13.25 8.6C13.25 7.3531 12.0313 4.7773 10.3321 3.2012ZM9.8773 11.1852C9.3687 11.5391 8.7454 11.75 8.0679 11.75 6.3774 11.75 5 10.6313 5 8.8156 5 7.9102 5.5681 7.1131 6.7048 5.75 6.8689 5.9375 9.0223 8.689 9.0223 8.689L10.3965 7.1216C10.4931 7.2798 10.5809 7.4384 10.66 7.5879 11.3023 8.811 11.0328 10.3765 9.8773 11.1852Z" data-action="activate-action-card" data-nft="${nft_id}"/>
@@ -618,12 +624,14 @@ const set_original_wallet_nft = async (type, nft_id, chain, order) => {
 				<circle fill="#333333" cx="8" cy="8" r="8" data-action="send_nft" data-nft="${nft_id}" data-nft-type="${type}" data-nft-order="${order}"></circle>
 				<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM10.604 6.146A.5.5 0 0110.604 6.854L7.604 9.854A.5.5 0 016.896 9.854L5.396 8.354A.5.5 0 116.104 7.646L7.25 8.793 9.896 6.146A.5.5 0 0110.604 6.146Z" data-action="send_nft" data-nft="${nft_id}" data-nft-type="${type}" data-nft-order="${order}"/>
 			</svg>
-		</button>` || ''}
+		</button>`) ||
+            ''
+        }
 	</div>
 </div>`;
 
-				case 'JBR':
-					return `<div class="card ${key}-${expiry}">
+                case 'JBR':
+                    return `<div class="card ${key}-${expiry}">
 	<img id="${lazy_get_nft_image(type, nft_id, undefined, `${key}-${expiry}`)}" onerror="error_img(this)">
 
 	<input type="checkbox" id="NFT__Artifacts__Artifact${nft_id}-${order}" class="visually-hidden">
@@ -663,8 +671,8 @@ const set_original_wallet_nft = async (type, nft_id, chain, order) => {
 	</div>
 </div>`;
 
-				case 'JBD':
-					return `<div class="card ${key}-${expiry}">
+                case 'JBD':
+                    return `<div class="card ${key}-${expiry}">
 	<img id="${lazy_get_nft_image(type, nft_id, undefined, `${key}-${expiry}`)}" onerror="error_img(this)">
 
 	<input type="checkbox" id="NFT__Discounts__Discount${nft_id}-${order}" class="visually-hidden">
@@ -704,31 +712,35 @@ const set_original_wallet_nft = async (type, nft_id, chain, order) => {
 	</div>
 </div>`;
 
-				case 'user-discounts':
-					let _fixed = 0, limit, _expiry, once, percent = 0, min_quantity, trials = 10;
+                case 'user-discounts':
+                    let _fixed = 0,
+                        limit,
+                        _expiry,
+                        once,
+                        percent = 0,
+                        min_quantity,
+                        trials = 10;
 
-					while (percent == 0 && _fixed == 0 && trials) {
-						[_fixed, limit, _expiry, once, percent, min_quantity] = await contract(DATA.DISCOUNTS).tokenDiscounts(nft_id),
-							discount = '0%',
-							new_price = Big(DATA.server_price);
+                    while (percent == 0 && _fixed == 0 && trials) {
+                        ([_fixed, limit, _expiry, once, percent, min_quantity] = await contract(DATA.DISCOUNTS).tokenDiscounts(nft_id)), (discount = '0%'), (new_price = Big(DATA.server_price));
 
-						if (percent > 0) {
-							discount = `${Number(percent) / 10}%`;
-							new_price = new_price.sub(new_price.mul(percent).div(1000));
-						} else if (_fixed > 0) {
-							discount = `$${_fixed}`;
-							new_price = new_price.sub(_fixed);
+                        if (percent > 0) {
+                            discount = `${Number(percent) / 10}%`;
+                            new_price = new_price.sub(new_price.mul(percent).div(1000));
+                        } else if (_fixed > 0) {
+                            discount = `$${_fixed}`;
+                            new_price = new_price.sub(_fixed);
 
-							if (new_price.lt(0)) {
-								new_price = 0;
-							}
-						} else {
-							await sleep(1);
-							--trials;
-						}
-					}
+                            if (new_price.lt(0)) {
+                                new_price = 0;
+                            }
+                        } else {
+                            await sleep(1);
+                            --trials;
+                        }
+                    }
 
-					return `<div class="card ${key}-${expiry}" data-pay-chain="${chain}" data-discount="${nft_id}" data-discounted="${new_price}">
+                    return `<div class="card ${key}-${expiry}" data-pay-chain="${chain}" data-discount="${nft_id}" data-discounted="${new_price}">
 	<img id="${lazy_get_nft_image(main_type, nft_id, undefined, `${key}-${expiry}`)}" onerror="error_img(this)">
 	<img id="${GetTokenImage(DATA.CHAIN_ASSETS)}" src="${DATA.ERROR_IMG}" class="icon-md">
 
@@ -738,8 +750,8 @@ const set_original_wallet_nft = async (type, nft_id, chain, order) => {
 	</div>
 </div>`;
 
-				case 'JBW':
-					return `<div class="card ${key}-${expiry}">
+                case 'JBW':
+                    return `<div class="card ${key}-${expiry}">
 	<img id="${lazy_get_nft_image(type, nft_id, undefined, `${key}-${expiry}`)}" onerror="error_img(this)">
 
 	<input type="checkbox" id="NFT__Whales__Whale${nft_id}-${order}" class="visually-hidden">
@@ -771,106 +783,106 @@ const set_original_wallet_nft = async (type, nft_id, chain, order) => {
 		</button>
 	</div>
 </div>`;
-			}
-		})()
-	};
+            }
+        })(),
+    };
 
-	return [`${key}-${expiry}`, DATA.nft_divs_cache[key].data];
+    return [`${key}-${expiry}`, DATA.nft_divs_cache[key].data];
 };
 
-function discount_click (event) {
-	let card = event.target,
-		trials = 5;
+function discount_click(event) {
+    let card = event.target,
+        trials = 5;
 
-	while (trials && !card.classList.contains('card')) {
-		card = card.parentNode;
-		--trials;
-	}
+    while (trials && !card.classList.contains('card')) {
+        card = card.parentNode;
+        --trials;
+    }
 
-	if (card.classList.contains('active')) {
-		card.classList.remove('active');
-		delete DATA.selected_discount;
-		elementify('zero-pool-price').innerHTML = `$${formatFiat(DATA.server_price)}`;
-	} else {
-		card.parentNode.querySelectorAll('.card').forEach(el => el.classList.remove('active'));
-		card.classList.add('active');
-		DATA.selected_discount = card.dataset.discount;
-		elementify('zero-pool-price').innerHTML = `$${formatFiat(card.dataset.discounted)}`;
-	}
+    if (card.classList.contains('active')) {
+        card.classList.remove('active');
+        delete DATA.selected_discount;
+        elementify('zero-pool-price').innerHTML = `$${formatFiat(DATA.server_price)}`;
+    } else {
+        card.parentNode.querySelectorAll('.card').forEach((el) => el.classList.remove('active'));
+        card.classList.add('active');
+        DATA.selected_discount = card.dataset.discount;
+        elementify('zero-pool-price').innerHTML = `$${formatFiat(card.dataset.discounted)}`;
+    }
 }
 
-function remove_artifact_card_from_user (event) {
-	let card = event.target,
-		trials = 5;
+function remove_artifact_card_from_user(event) {
+    let card = event.target,
+        trials = 5;
 
-	while (trials && !card.classList.contains('card')) {
-		card = card.parentNode;
-		--trials;
-	}
+    while (trials && !card.classList.contains('card')) {
+        card = card.parentNode;
+        --trials;
+    }
 
-	let highlightArtifactsCheckbox = elementify('NFT__Highlight__Artifacts');
+    let highlightArtifactsCheckbox = elementify('NFT__Highlight__Artifacts');
 
-	if (highlightArtifactsCheckbox.checked) {
-		card.remove();
-		highlightArtifactsCheckbox.checked = false;
-	}
-}
-
-function remove_artifact_card_from_artifact_part_1(event) {
-	DATA.artifact_card = labelBurnArtifact.parentElement.parentElement;
-}
-
-function remove_artifact_card_from_artifact_part_2(event) {
-	let highlightUsersCheckbox = elementify('NFT__Highlight__Users');
-
-	if (DATA.artifact_card && highlightUsersCheckbox.checked) {
-		DATA.artifact_card.remove();
-		highlightUsersCheckbox.checked = false;
-	}
+    if (highlightArtifactsCheckbox.checked) {
+        card.remove();
+        highlightArtifactsCheckbox.checked = false;
+    }
 }
 
 function remove_artifact_card_from_artifact_part_1(event) {
-	let labelBurnArtifact = event.target,
-		trials = 5;
-
-	while (trials && !labelBurnArtifact.dataset && !labelBurnArtifact.dataset.tooltip && labelBurnArtifact.dataset.tooltip !== 'Burn') {
-		labelBurnArtifact = labelBurnArtifact.parentNode;
-		--trials;
-	}
-
-	DATA.artifact_card = labelBurnArtifact.parentElement.parentElement;
+    DATA.artifact_card = labelBurnArtifact.parentElement.parentElement;
 }
 
 function remove_artifact_card_from_artifact_part_2(event) {
-	let highlightUsersCheckbox = elementify('NFT__Highlight__Users');
+    let highlightUsersCheckbox = elementify('NFT__Highlight__Users');
 
-	if (DATA.artifact_card && highlightUsersCheckbox.checked) {
-		DATA.artifact_card.remove();
-		highlightUsersCheckbox.checked = false;
-	}
+    if (DATA.artifact_card && highlightUsersCheckbox.checked) {
+        DATA.artifact_card.remove();
+        highlightUsersCheckbox.checked = false;
+    }
+}
+
+function remove_artifact_card_from_artifact_part_1(event) {
+    let labelBurnArtifact = event.target,
+        trials = 5;
+
+    while (trials && !labelBurnArtifact.dataset && !labelBurnArtifact.dataset.tooltip && labelBurnArtifact.dataset.tooltip !== 'Burn') {
+        labelBurnArtifact = labelBurnArtifact.parentNode;
+        --trials;
+    }
+
+    DATA.artifact_card = labelBurnArtifact.parentElement.parentElement;
+}
+
+function remove_artifact_card_from_artifact_part_2(event) {
+    let highlightUsersCheckbox = elementify('NFT__Highlight__Users');
+
+    if (DATA.artifact_card && highlightUsersCheckbox.checked) {
+        DATA.artifact_card.remove();
+        highlightUsersCheckbox.checked = false;
+    }
 }
 
 function nft_click_in_description(event) {
-	let footer,
-		trials = 5;
+    let footer,
+        trials = 5;
 
-	while (trials && !(footer || event.target).classList.contains('footer')) {
-		footer = (footer || event.target).parentNode;
-		--trials;
-	}
+    while (trials && !(footer || event.target).classList.contains('footer')) {
+        footer = (footer || event.target).parentNode;
+        --trials;
+    }
 
-	if (!footer) {
-		footer = event.target;
-	}
+    if (!footer) {
+        footer = event.target;
+    }
 
-	let nftPanel2 = document.querySelector('#Wallet__Panel4 .panel-2');
-	let nftPanel2Checkbox = elementify('NFT__Panel2__Checkbox');
+    let nftPanel2 = document.querySelector('#Wallet__Panel4 .panel-2');
+    let nftPanel2Checkbox = elementify('NFT__Panel2__Checkbox');
 
-	if (elementify('NFT__Highlight__Users').checked || elementify('NFT__Highlight__Artifacts').checked) {
-		return; /* bail if burn mode is on */
-	}
-	if (footer === event.target) {
-		nftPanel2.innerHTML = `<label for="NFT__Panel2__Checkbox" class="btn btn-has-icon">
+    if (elementify('NFT__Highlight__Users').checked || elementify('NFT__Highlight__Artifacts').checked) {
+        return; /* bail if burn mode is on */
+    }
+    if (footer === event.target) {
+        nftPanel2.innerHTML = `<label for="NFT__Panel2__Checkbox" class="btn btn-has-icon">
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md">
 		<circle fill="#292929" cx="8" cy="8" r="8"></circle>
 		<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM4.646 4.646A.5.5 0 015.354 4.646L8 7.293 10.646 4.646A.5.5 0 0111.354 5.354L8.707 8 11.354 10.646A.5.5 0 0110.646 11.354L8 8.707 5.354 11.354A.5.5 0 014.646 10.646L7.293 8 4.646 5.354A.5.5 0 014.646 4.646Z"/>
@@ -891,7 +903,9 @@ function nft_click_in_description(event) {
 	</ul>
 </div>
 
-<div class="box box-duration mt-12px text-white text-center"><a href="https://${DATA.BASE_URL}/?jbu=${footer.dataset.nft}" target="_blank" onclick="copyTextToClipboard('https://${DATA.BASE_URL}/?jbu=${footer.dataset.nft}', event, this)">${DATA.BASE_URL}/?jbu=${footer.dataset.nft}</a></div>
+<div class="box box-duration mt-12px text-white text-center"><a href="https://${DATA.BASE_URL}/?jbu=${footer.dataset.nft}" target="_blank" onclick="copyTextToClipboard('https://${DATA.BASE_URL}/?jbu=${
+            footer.dataset.nft
+        }', event, this)">${DATA.BASE_URL}/?jbu=${footer.dataset.nft}</a></div>
 
 <div class="box-sell mt-12px">
 	<input type="checkbox" id="NFTSellEnabled" class="visually-hidden">
@@ -911,8 +925,8 @@ function nft_click_in_description(event) {
 		</div>
 	</div>
 </div>`;
-		nftPanel2Checkbox.checked = nftPanel2Checkbox.checked ? false : true;
-	}
+        nftPanel2Checkbox.checked = nftPanel2Checkbox.checked ? false : true;
+    }
 }
 /*
 function burn_action_nft(event) {
@@ -956,158 +970,165 @@ const set_user_name = async () => {
 };
 
 const set_original_wallet_nfts = async () => {
-	let promises = [],
-		results = {},
-		type, i;
+    let promises = [],
+        results = {},
+        type,
+        i;
 
-	document.querySelectorAll('#Wallet__Panel3 .market .row-3 .cards .card').forEach(card => {
-		card.removeEventListener('click', discount_click);
-	});
+    document.querySelectorAll('#Wallet__Panel3 .market .row-3 .cards .card').forEach((card) => {
+        card.removeEventListener('click', discount_click);
+    });
 
-	document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-2 .cards .card').forEach(artifactCard => {
-		artifactCard.removeEventListener('click', remove_artifact_card_from_user);
-	});
+    document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-2 .cards .card').forEach((artifactCard) => {
+        artifactCard.removeEventListener('click', remove_artifact_card_from_user);
+    });
 
-	document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-2 label[data-tooltip="Burn"]').forEach(labelBurnArtifact => {
-		labelBurnArtifact.removeEventListener('click', remove_artifact_card_from_artifact_part_1);
-	});
+    document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-2 label[data-tooltip="Burn"]').forEach((labelBurnArtifact) => {
+        labelBurnArtifact.removeEventListener('click', remove_artifact_card_from_artifact_part_1);
+    });
 
-	document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-1 .cards .card').forEach(userCard => {
-		userCard.removeEventListener('click', remove_artifact_card_from_artifact_part_2);
-	});
+    document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-1 .cards .card').forEach((userCard) => {
+        userCard.removeEventListener('click', remove_artifact_card_from_artifact_part_2);
+    });
 
-	document.querySelectorAll('#Wallet__Panel4 .card .footer').forEach(footer => {
-		footer.removeEventListener('click', nft_click_in_description);
-	});
+    document.querySelectorAll('#Wallet__Panel4 .card .footer').forEach((footer) => {
+        footer.removeEventListener('click', nft_click_in_description);
+    });
 
-	/* document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-3 button[data-tooltip="Burn"]').forEach(burnButton => {
+    /* document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-3 button[data-tooltip="Burn"]').forEach(burnButton => {
 		burnButton.removeEventListener('click', burn_action_nft);
 	}); */
 
-	/* This is for cleanup, because we can't override types that are not in the map! */
-	for (type in DATA.NFT_TYPES_MAP) {
-		if (!DATA.conf.N[type]) {
-			DATA.conf.N[type] = [];
-		}
-	}
+    /* This is for cleanup, because we can't override types that are not in the map! */
+    for (type in DATA.NFT_TYPES_MAP) {
+        if (!DATA.conf.N[type]) {
+            DATA.conf.N[type] = [];
+        }
+    }
 
-	let current_nft_keys = {};
+    let current_nft_keys = {};
 
-	for (type in DATA.conf.N) {
-		if (!results[type]) {
-			results[type] = true;
-			/* elementify(`user-${type}s`).innerHTML = ''; */
-		}
+    for (type in DATA.conf.N) {
+        if (!results[type]) {
+            results[type] = true;
+            /* elementify(`user-${type}s`).innerHTML = ''; */
+        }
 
-		if (type === 'JBS' && !results['user-servers']) {
-			results['user-servers'] = true;
-			if (DATA.conf.N['JBS'].length) {
-				if (document.getElementById('no-nodes')) {
-					document.getElementById('no-nodes').remove();
-				}
-			} else {
-				elementify('user-servers').innerHTML = `<div class="item" id="no-nodes">You currently don't have any nodes</div>`;
-			}
-		}
+        if (type === 'JBS' && !results['user-servers']) {
+            results['user-servers'] = true;
+            if (DATA.conf.N['JBS'].length) {
+                if (document.getElementById('no-nodes')) {
+                    document.getElementById('no-nodes').remove();
+                }
+            } else {
+                elementify('user-servers').innerHTML = `<div class="item" id="no-nodes">You currently don't have any nodes</div>`;
+            }
+        }
 
-		if (type === 'JBD' && !results['user-discounts']) {
-			results['user-discounts'] = true;
-			if (DATA.conf.N['JBD'].length) {
-				if (document.getElementById('no-discounts')) {
-					document.getElementById('no-discounts').remove();
-				}
-			} else {
-				elementify('user-discounts').innerHTML = `<div id="no-discounts">You currently have no discounts</div>`;
-			}
-		}
+        if (type === 'JBD' && !results['user-discounts']) {
+            results['user-discounts'] = true;
+            if (DATA.conf.N['JBD'].length) {
+                if (document.getElementById('no-discounts')) {
+                    document.getElementById('no-discounts').remove();
+                }
+            } else {
+                elementify('user-discounts').innerHTML = `<div id="no-discounts">You currently have no discounts</div>`;
+            }
+        }
 
-		for (i = DATA.conf.N[type].length - 1; i >= 0; --i) {
-			promises.push((async (_type, _nft_id, _chain, _i) => {
-				let [key, tmp] = await set_original_wallet_nft(_type, _nft_id, _chain, _i);
-				current_nft_keys[key] = true;
-				if (tmp) {
-					elementify(`user-${_type}s`).insertAdjacentHTML('beforeend', tmp);
-				}
-			})(type, DATA.conf.N[type][i].id, DATA.conf.N[type][i].chain, i));
+        for (i = DATA.conf.N[type].length - 1; i >= 0; --i) {
+            promises.push(
+                (async (_type, _nft_id, _chain, _i) => {
+                    let [key, tmp] = await set_original_wallet_nft(_type, _nft_id, _chain, _i);
+                    current_nft_keys[key] = true;
+                    if (tmp) {
+                        elementify(`user-${_type}s`).insertAdjacentHTML('beforeend', tmp);
+                    }
+                })(type, DATA.conf.N[type][i].id, DATA.conf.N[type][i].chain, i)
+            );
 
-			if (type === 'JBS') {
-				promises.push((async (_type, _nft_id, _chain, _i) => {
-					let [key, tmp] = await set_original_wallet_nft('user-servers', _nft_id, _chain, _i);
-					current_nft_keys[key] = true;
-					if (tmp) {
-						elementify('user-servers').insertAdjacentHTML('beforeend', tmp);
-					}
-				})(type, DATA.conf.N['JBS'][i].id, DATA.conf.N['JBS'][i].chain, i));
-			}
+            if (type === 'JBS') {
+                promises.push(
+                    (async (_type, _nft_id, _chain, _i) => {
+                        let [key, tmp] = await set_original_wallet_nft('user-servers', _nft_id, _chain, _i);
+                        current_nft_keys[key] = true;
+                        if (tmp) {
+                            elementify('user-servers').insertAdjacentHTML('beforeend', tmp);
+                        }
+                    })(type, DATA.conf.N['JBS'][i].id, DATA.conf.N['JBS'][i].chain, i)
+                );
+            }
 
-			if (type === 'JBD') {
-				promises.push((async (_type, _nft_id, _chain, _i) => {
-					let [key, tmp] = await set_original_wallet_nft('user-discounts', _nft_id, _chain, _i);
-					current_nft_keys[key] = true;
-					if (tmp) {
-						elementify('user-discounts').insertAdjacentHTML('beforeend', tmp);
-					}
-				})(type, DATA.conf.N['JBD'][i].id, DATA.conf.N['JBD'][i].chain, i));
-			}
-		}
-	}
+            if (type === 'JBD') {
+                promises.push(
+                    (async (_type, _nft_id, _chain, _i) => {
+                        let [key, tmp] = await set_original_wallet_nft('user-discounts', _nft_id, _chain, _i);
+                        current_nft_keys[key] = true;
+                        if (tmp) {
+                            elementify('user-discounts').insertAdjacentHTML('beforeend', tmp);
+                        }
+                    })(type, DATA.conf.N['JBD'][i].id, DATA.conf.N['JBD'][i].chain, i)
+                );
+            }
+        }
+    }
 
-	await Promise.all(promises);
+    await Promise.all(promises);
 
-	for (let key in DATA.previous_nft_keys) {
-		if (!current_nft_keys[key] && document.getElementById(key)) {
-			document.getElementById(key).remove();
-		}
-	}
+    for (let key in DATA.previous_nft_keys) {
+        if (!current_nft_keys[key] && document.getElementById(key)) {
+            document.getElementById(key).remove();
+        }
+    }
 
-	let elements;
+    let elements;
 
-	for (type in { JBA: true, JBU: true, JBR: true, JBD: true, JBS: true, JBW: true, server: true, discount: true }) {
-		elements = elementify(`user-${type}s`).querySelectorAll('.card');
-		for (i = elements.length - 1; i >= 0; --i) {
-			if (!current_nft_keys[elements[i].getAttribute('class').split(' ')[1]]) {
-				elements[i].remove();
-			}
-		}
-	}
+    for (type in { JBA: true, JBU: true, JBR: true, JBD: true, JBS: true, JBW: true, server: true, discount: true }) {
+        elements = elementify(`user-${type}s`).querySelectorAll('.card');
+        for (i = elements.length - 1; i >= 0; --i) {
+            if (!current_nft_keys[elements[i].getAttribute('class').split(' ')[1]]) {
+                elements[i].remove();
+            }
+        }
+    }
 
-	DATA.previous_nft_keys = current_nft_keys;
+    DATA.previous_nft_keys = current_nft_keys;
 
-	setTimeout(() => {
-		/*** Panel 3 - Discount selector ***/
+    setTimeout(() => {
+        /*** Panel 3 - Discount selector ***/
 
-		document.querySelectorAll('#Wallet__Panel3 .market .row-3 .cards .card').forEach(card => {
-			card.addEventListener('click', discount_click);
-		});
+        document.querySelectorAll('#Wallet__Panel3 .market .row-3 .cards .card').forEach((card) => {
+            card.addEventListener('click', discount_click);
+        });
 
-		/*** Panel 4 - In burn mode make nft card disappear after select  ***/
+        /*** Panel 4 - In burn mode make nft card disappear after select  ***/
 
-		/* remove artifact card initiated from user */
+        /* remove artifact card initiated from user */
 
-		document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-2 .cards .card').forEach(artifactCard => {
-			artifactCard.addEventListener('click', remove_artifact_card_from_user);
-		});
+        document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-2 .cards .card').forEach((artifactCard) => {
+            artifactCard.addEventListener('click', remove_artifact_card_from_user);
+        });
 
-		/* remove artifact card initiated from artifact */
+        /* remove artifact card initiated from artifact */
 
-		document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-2 label[data-tooltip="Burn"]').forEach(labelBurnArtifact => {
-			labelBurnArtifact.addEventListener('click', remove_artifact_card_from_artifact_part_1);
-		});
+        document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-2 label[data-tooltip="Burn"]').forEach((labelBurnArtifact) => {
+            labelBurnArtifact.addEventListener('click', remove_artifact_card_from_artifact_part_1);
+        });
 
-		document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-1 .cards .card').forEach(userCard => {
-			userCard.addEventListener('click', remove_artifact_card_from_artifact_part_2);
-		});
+        document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-1 .cards .card').forEach((userCard) => {
+            userCard.addEventListener('click', remove_artifact_card_from_artifact_part_2);
+        });
 
-		/*** Panel 4 - On click of NFT image inside of card open NFT description ***/
+        /*** Panel 4 - On click of NFT image inside of card open NFT description ***/
 
-		document.querySelectorAll('#Wallet__Panel4 .card .footer').forEach(footer => {
-			footer.addEventListener('click', nft_click_in_description);
-		});
+        document.querySelectorAll('#Wallet__Panel4 .card .footer').forEach((footer) => {
+            footer.addEventListener('click', nft_click_in_description);
+        });
 
-		/*** Panel 4 - On click of Action Card "Burn" button add clock and put card to first position ***/
+        /*** Panel 4 - On click of Action Card "Burn" button add clock and put card to first position ***/
 
-		/* document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-3 button[data-tooltip="Burn"]').forEach(burnButton => {
+        /* document.querySelectorAll('#Wallet__Panel4 .panel-1 .row-3 button[data-tooltip="Burn"]').forEach(burnButton => {
 			burnButton.addEventListener('click', burn_action_nft);
 		}); */
-	}, 0);
+    }, 0);
 };

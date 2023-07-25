@@ -780,6 +780,13 @@ const ACTIONS = {
         }
     },
     deposit: async (action) => {
+        if (!DATA.conf.auth) help_err('No longed logged in!');
+        if (!DATA.deposit_slot) help_err('No valid deposit slot selected!');
+        if (![DATA.WPEG, DATA.IMAGINARY_PEG, DATA.ZERO].includes(DATA.deposit_slot)) help_err('Deposit slot (' + DATA.deposit_slot + ') cannot be [' + DATA.WPEG + ', ' + DATA.IMAGINARY_PEG + ',' + DATA.ZERO + ',]');
+        if (![DATA.WPEG, DATA.IMAGINARY_PEG, DATA.ZERO].includes(DATA.deposit_slot)) help_err('Deposit token (' + DATA.deposit_slot + ') cannot be [' + DATA.WPEG + ', ' + DATA.IMAGINARY_PEG + ',' + DATA.ZERO + ',]');
+        if (!DATA.deposit_amount.gt(0)) help_err('Deposit amount must be greater than 0 (' + DATA.deposit_amount + ').');
+        if (!DATA.deposit_token) help_err('Invalid deposit token (null).');
+
         if (
             DATA.conf.auth &&
             DATA.deposit_slot &&
@@ -920,7 +927,7 @@ const ACTIONS = {
                     c: DATA.selected_chain,
                     w: DATA.conf.wallet,
                     a: DATA.conf.auth,
-                    t: elementify('synagogue-name').value.trim() || `Synagogue #${DATA.conf.uid}`,
+                    t: elementify('synagogue-name').value.trim() || `Private Pool #${DATA.conf.uid}`,
                 },
             });
         }

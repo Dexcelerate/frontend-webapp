@@ -396,7 +396,7 @@ var DATA = {
     BASE_URL: 'dexcelerate.com',
     IP_API: 'https://redis-1.dexcelerate.com/',
     IPFS_IMG_CDN: 'https://ipfs.io/ipfs/',
-    DEX_IMG_CDN: 'https://dexcelerate.com/img/vendor/exchanges/',
+    DEX_IMG_CDN: 'https://img-proxy.dexcelerate.com/img/vendor/exchanges/',
     TOKEN_IMG_CDN: 'https://img-proxy.dexcelerate.com/https://dexcelerate.com/img/vendor/',
     TRUST_WALLET_CDN: 'https://img-proxy.dexcelerate.com/https://assets-cdn.trustwallet.com/blockchains/',
     view_uid: 0,

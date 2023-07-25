@@ -129,6 +129,8 @@ const set_current_position = async (pos, now) => {
         })(),
     ]);
 
+    await sleep(0.5);
+
     if (pos.token === DATA.token && DATA.slots[DATA.CHAIN].filter((v) => v.address === pos.slot && v.is_active && v.selected).length) {
         pos.enter_price = Big(pos.enter_price || 0);
         pos.peg = Big((Number(pos.peg) && pos.peg) || DATA.WPEG_PRICE);
@@ -141,6 +143,7 @@ const set_current_position = async (pos, now) => {
             term += `<br>BUY AT: $${formatFiatNumberNoSpaces(pos.buy_at)}`;
         }
         term += `<br>CURRENT PRICE: $${formatFiatNumberNoSpaces(DATA.token_price)}`;
+
         if (pos.enter_price.gt(0) && pos.status !== 'p') {
             term += `<br>ENTER PRICE:&nbsp;&nbsp;&nbsp;$${formatFiatNumberNoSpaces(pos.enter_price.mul(pos.peg))}`;
         }
@@ -311,6 +314,9 @@ const set_history_position = async (pos, now) => {
 };
 
 const set_current_positions = (positions) => {
+    console.log('=========================== set_current_positions =================================');
+    console.log('positions', positions);
+
     if (DATA.set_current_positions_timeout) {
         clearTimeout(DATA.set_current_positions_timeout);
     }
@@ -376,7 +382,7 @@ const set_current_positions = (positions) => {
         for (i in _positions) {
             _positions[i].have = _positions[i].balance.mul(_positions[i].price); /* .mul(DATA.WPEG_PRICE); */
 
-            /* console.log(JSON.stringify(_positions[i], null, 4)); */
+            console.log(JSON.stringify(_positions[i], null, 4));
 
             if (_positions[i].have.lt(0)) {
                 console.error('!! Negative balance:', i, ':', JSON.stringify(_positions[i], null, 4));
@@ -489,7 +495,7 @@ const get_user_token_balace_in_wpeg = async (tx) => {
                 await contract(tx.R)
                     .getAmountsOut(
                         await contract(tx.k)
-                            .balanceOf((DATA.selected_copy_slot != "0x0000000000000000000000000000000000000000" ? DATA.selected_copy_slot : DATA.selected_slot))
+                            .balanceOf(DATA.selected_copy_slot != '0x0000000000000000000000000000000000000000' ? DATA.selected_copy_slot : DATA.selected_slot)
                             .catch((_) => 0),
                         (tx._b && [...tx.known_tokens_order].reverse()) || tx.known_tokens_order
                     )
@@ -776,7 +782,7 @@ const add_wallets = async () => {
     }
     if (!DATA.copy_settings_ordered[DATA.CHAIN] || DATA.copy_settings_ordered[DATA.CHAIN].length === 0) {
         DATA.copy_settings_ordered[DATA.CHAIN] = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v));
-   }
+    }
 
     for (i = 0; i < DATA.copy_settings_ordered[DATA.CHAIN].length; ++i) {
         setting = DATA.copy_settings[DATA.selected_copy_slot][DATA.copy_settings_ordered[DATA.CHAIN][i]];
@@ -810,7 +816,9 @@ const add_wallets = async () => {
 			</svg>
 		</button>
 
-		<div class="name text-white text-truncated"><a href="https://bscscan.com/address/${DATA.copy_settings_ordered[DATA.CHAIN][i]}" target="_blank">${`${setting.title}`.trim() || DATA.copy_settings_ordered[DATA.CHAIN][i]}</a></div>
+		<div class="name text-white text-truncated"><a href="https://bscscan.com/address/${DATA.copy_settings_ordered[DATA.CHAIN][i]}" target="_blank">${
+            `${setting.title}`.trim() || DATA.copy_settings_ordered[DATA.CHAIN][i]
+        }</a></div>
 
 		<div class="amount ml-6px mr-6px" data-balance="${slot_wallet_balance || 0}">$${formatFiat(Big(slot_wallet_balance || 0).mul(DATA.WPEG_PRICE))}</div>
 
@@ -1066,8 +1074,9 @@ const load_wallet_slot = (slot, i) => {
 				<canvas id="Wallet__Slot${i}__Chart"></canvas>
 
 				<div class="meta">
-					<div class="title text-truncated slot-title-${DATA.CHAIN}-${slot.address}"><a href="https://bscscan.com/address/${slot.address}" target="_blank">${slot.title ? slot.title : `Slot ${i + 1}`}</a></div>
-
+                <div class="title text-truncated slot-title-${DATA.CHAIN}-${slot.address}"><a href="https://bscscan.com/address/${slot?.address}" target="_blank" title="${slot?.address}">${
+        slot?.title ? slot?.title : `Slot ${i + 1}`
+    }</a></div>
 					<div class="balance text-truncated slot-total-balance-${DATA.CHAIN}-${slot.address}" data-balance="${Big((Number(old_balance) && old_balance) || slot.total_balance)}">$${formatFiat(
         Big((Number(old_balance) && old_balance) || slot.total_balance).mul(DATA.WPEG_PRICE)
     )}</div>

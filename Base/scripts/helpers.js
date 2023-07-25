@@ -240,7 +240,7 @@ const save_settings = async (mode, is_rec, is_local) => {
         //store.set(`${DATA.CHAIN}_copy_address_transactions`, JSON.stringify(DATA.copy_address_transactions));
 
         if (DATA.selected_copy_wallet !== DATA.ZERO) {
-          //  DATA.copy_transactions[DATA.ZERO] = DATA.copy_transactions[DATA.selected_copy_wallet];
+            //  DATA.copy_transactions[DATA.ZERO] = DATA.copy_transactions[DATA.selected_copy_wallet];
         }
 
         if (!is_local && !is_rec) {
@@ -483,7 +483,7 @@ const lazy_get_nft_image = (type, nft_id, chain_id, id) => {
 
 const get_nft_image = async (type, nft_id, chain_id) => {
     if (!type || !nft_id) {
-        return `Base/graphics/raster/nfts/jb1.jpg`;
+        return `/img/favicon.png`;
     }
 
     if (!DATA.IMG_CACHE.nft[type]) {
@@ -547,7 +547,7 @@ const get_nft_image = async (type, nft_id, chain_id) => {
                 };
 
                 img.onerror = async function () {
-                    DATA.IMG_CACHE.nft[type][nft_id] = `Base/graphics/raster/nfts/jb1.jpg`;
+                    DATA.IMG_CACHE.nft[type][nft_id] = `/img/favicon.png`;
                     delete DATA.IMG_LOAD_CACHE.nft[type][nft_id];
                     resolve(DATA.IMG_CACHE.nft[type][nft_id]);
                 };
@@ -557,7 +557,7 @@ const get_nft_image = async (type, nft_id, chain_id) => {
         }
     }
 
-    DATA.IMG_CACHE.nft[type][nft_id] = `Base/graphics/raster/nfts/jb1.jpg`;
+    DATA.IMG_CACHE.nft[type][nft_id] = `/img/favicon.png`;
     delete DATA.IMG_LOAD_CACHE.nft[type][nft_id];
 
     return DATA.IMG_CACHE.nft[type][nft_id];

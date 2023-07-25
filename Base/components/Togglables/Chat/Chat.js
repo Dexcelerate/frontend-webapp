@@ -5,8 +5,7 @@
 /*** Inject HTML - Base ***/
 
 (() => {
-
-	const html = `
+    const html = `
 		<div id="Chat" class="togglable d-none">
 			<div class="container">
 				<input type="radio" name="chat_tab" id="Chat__Tab1" class="visually-hidden" autocomplete="off" checked>
@@ -58,8 +57,7 @@
 		</div>
 	`;
 
-	document.getElementById('Chat').outerHTML = html;
-
+    document.getElementById('Chat').outerHTML = html;
 })();
 
 /*** Inject HTML - Panel 1 ***/
@@ -93,58 +91,68 @@ const togglableProfile = htmlToElement(`<div id="ChatProfile" class="togglable">
 /*** Panel 1 - Chat user profile ***/
 
 const show_profile = (title, id) => {
-	let _body = togglableProfile.querySelector('.body');
+    let _body = togglableProfile.querySelector('.body');
 
-	if (DATA.conf.uid == id) {
-		(async () => {
-			_body.querySelector('img').src = await get_user_image(DATA.conf.JBU);
-		})();
-	} else {
-		_body.querySelector('img').src = DATA.ERROR_USER_IMG;
-		DATA.view_chat_uid = id;
-		DATA.view_chat_img = _body.querySelector('img');
-		handleAction('wuid');
-	}
+    if (DATA.conf.uid == id) {
+        (async () => {
+            _body.querySelector('img').src = await get_user_image(DATA.conf.JBU);
+        })();
+    } else {
+        _body.querySelector('img').src = DATA.ERROR_USER_IMG;
+        DATA.view_chat_uid = id;
+        DATA.view_chat_img = _body.querySelector('img');
+        handleAction('wuid');
+    }
 
-	togglableProfile.querySelector('.header button').addEventListener('click', event => {
-		togglableProfile.remove();
-	});
+    togglableProfile.querySelector('.header button').addEventListener('click', (event) => {
+        togglableProfile.remove();
+    });
 
-	togglableProfile.querySelector('.header .title').textContent = title;
+    togglableProfile.querySelector('.header .title').textContent = title;
 
-	_body.querySelector('.name').textContent = title;
-	_body.querySelector('.description').textContent = `Hello my name is ${title} and this is some demo placeholder text.`;
+    _body.querySelector('.name').textContent = title;
+    _body.querySelector('.description').textContent = `Hello my name is ${title} and this is some demo placeholder text.`;
 
-	if (DATA.conf.uid == id) {
-		_body.querySelector('.actions button[data-view-uid][data-action="view_profile"]').dataset.viewUid = id;
-		_body.querySelectorAll('.actions .mt-12px').forEach(el => { el.classList.add('d-none') });
-	} else {
-		_body.querySelector('.actions button[data-room]').dataset.room = `${Math.min(DATA.conf.uid, id)}:${Math.max(DATA.conf.uid, id)}`;
-		_body.querySelectorAll('.actions button[data-view-uid]').forEach(el => { el.dataset.viewUid = id });
-		_body.querySelectorAll('.actions .mt-12px').forEach(el => { el.classList.remove('d-none') });
-	}
+    if (DATA.conf.uid == id) {
+        _body.querySelector('.actions button[data-view-uid][data-action="view_profile"]').dataset.viewUid = id;
+        _body.querySelectorAll('.actions .mt-12px').forEach((el) => {
+            el.classList.add('d-none');
+        });
+    } else {
+        _body.querySelector('.actions button[data-room]').dataset.room = `${Math.min(DATA.conf.uid, id)}:${Math.max(DATA.conf.uid, id)}`;
+        _body.querySelectorAll('.actions button[data-view-uid]').forEach((el) => {
+            el.dataset.viewUid = id;
+        });
+        _body.querySelectorAll('.actions .mt-12px').forEach((el) => {
+            el.classList.remove('d-none');
+        });
+    }
 
-	let _follow = _body.querySelector('.actions button[data-action="follow"], .actions button[data-action="unfollow"]');
+    let _follow = _body.querySelector('.actions button[data-action="follow"], .actions button[data-action="unfollow"]');
 
-	if (DATA.conf.followings && DATA.conf.followings[id]) {
-		_follow.dataset.action = 'unfollow';
-		_follow.innerText = 'Unfollow';
-	} else {
-		_follow.dataset.action = 'follow';
-		_follow.innerText = 'Follow';
-	}
+    if (DATA.conf.followings && DATA.conf.followings[id]) {
+        _follow.dataset.action = 'unfollow';
+        _follow.innerText = 'Unfollow';
+    } else {
+        _follow.dataset.action = 'follow';
+        _follow.innerText = 'Follow';
+    }
 
-	elementify('Chat').appendChild(togglableProfile);
+    elementify('Chat').appendChild(togglableProfile);
 };
 
 const set_chat = (msg) => {
-	msg = msg.map(v => `<div class="message">
-	<button class="name" style="color: ${stringToColour(v.M || 'Anonymous')};" ${v.u && (' onclick="show_profile(\'' + v.M + '\', ' + v.u  + ')"') || ''}>${v.M || 'Anonymous'}</button>
+    msg = msg
+        .map(
+            (v) => `<div class="message">
+	<button class="name" style="color: ${stringToColour(v.M || 'Anonymous')};" ${(v.u && ' onclick="show_profile(\'' + v.M + "', " + v.u + ')"') || ''}>${v.M || 'Anonymous'}</button>
 	<div class="text">${v.d}</div>
 	<div class="time" data-timer="${(v.t = new Date(v.t)).getTime()}" data-tooltip="${v.t.toLocaleDateString()} ${v.t.toLocaleTimeString()}" data-tooltip-left>${timeDifference(Date.now(), v.t)}</div>
-</div>`).join('');
+</div>`
+        )
+        .join('');
 
-	document.getElementById('Chat__Panel1').outerHTML = `<div id="Chat__Panel1" class="panel">
+    document.getElementById('Chat__Panel1').outerHTML = `<div id="Chat__Panel1" class="panel">
 	<div class="container">
 		<div class="body">${msg}</div>
 
@@ -162,81 +170,75 @@ const set_chat = (msg) => {
 };
 
 const handle_chat = (msg) => {
-	DATA.chat.unshift(msg);
-	set_chat(DATA.chat);
+    DATA.chat.unshift(msg);
+    set_chat(DATA.chat);
 };
 
 /*** Inject HTML - Panel 2 ***/
 
 (() => {
-
-	set_chat(DATA.chat);
-
+    set_chat(DATA.chat);
 })();
 
 (() => {
+    /*** Panel 1 - Allow only text in chat text input ***/
 
-	/*** Panel 1 - Allow only text in chat text input ***/
+    const textInput = elementify('Chat__TextInput');
 
-	const textInput = elementify('Chat__TextInput');
+    /* https://stackoverflow.com/a/64001839 */
+    function insertTextAtSelection(div, txt) {
+        let sel = window.getSelection();
+        let text = div.textContent;
+        let before = Math.min(sel.focusOffset, sel.anchorOffset);
+        let after = Math.max(sel.focusOffset, sel.anchorOffset);
+        let afterStr = text.substring(after);
+        if (afterStr == '') afterStr = '\n';
+        div.textContent = text.substring(0, before) + txt + afterStr;
+        sel.removeAllRanges();
+        let range = document.createRange();
+        range.setStart(div.childNodes[0], before + txt.length);
+        range.setEnd(div.childNodes[0], before + txt.length);
+        sel.addRange(range);
+    }
 
-	/* https://stackoverflow.com/a/64001839 */
-	function insertTextAtSelection(div, txt) {
-		let sel = window.getSelection();
-		let text = div.textContent;
-		let before = Math.min(sel.focusOffset, sel.anchorOffset);
-		let after = Math.max(sel.focusOffset, sel.anchorOffset);
-		let afterStr = text.substring(after);
-		if (afterStr == '') afterStr = '\n';
-		div.textContent = text.substring(0, before) + txt + afterStr;
-		sel.removeAllRanges();
-		let range = document.createRange();
-		range.setStart(div.childNodes[0], before + txt.length);
-		range.setEnd(div.childNodes[0], before + txt.length);
-		sel.addRange(range);
-	}
+    textInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            event.stopPropagation();
+            insertTextAtSelection(textInput, '\n');
+        } else {
+            DATA.chat_message = event.target.value;
+        }
+    });
 
-	textInput.addEventListener('keydown', event => {
-		if (event.key === 'Enter') {
-			event.preventDefault();
-			event.stopPropagation();
-			insertTextAtSelection(textInput, '\n');
-		} else {
-			DATA.chat_message = event.target.value;
-		}
-	});
-
-	textInput.addEventListener('paste', event => {
-		event.preventDefault();
-		let text = (event.originalEvent || event).clipboardData.getData('text/plain');
-		insertTextAtSelection(textInput, text);
-		DATA.chat_message = event.target.value;
-	});
-
+    textInput.addEventListener('paste', (event) => {
+        event.preventDefault();
+        let text = (event.originalEvent || event).clipboardData.getData('text/plain');
+        insertTextAtSelection(textInput, text);
+        DATA.chat_message = event.target.value;
+    });
 })();
 
 /*** Inject HTML - Panel 2 ***/
 
 (() => {
-	const world = (Lang) => {
-		let [lang, lang_title] = Lang;
-		return `<label for="Chat__Tab1" class="btn btn-style btn-has-icon w-100 d-flex align-items-center justify-content-center" data-room="${lang}">
+    const world = (Lang) => {
+        let [lang, lang_title] = Lang;
+        return `<label for="Chat__Tab1" class="btn btn-style btn-has-icon w-100 d-flex align-items-center justify-content-center" data-room="${lang}">
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md" data-room="${lang}">
 		<path d="M0 8A8 8 0 1116 8 8 8 0 010 8ZM7.5 1.077C6.83 1.281 6.165 1.897 5.613 2.932A7.97 7.97 0 005.145 4H7.5V1.077ZM4.09 4A9.267 9.267 0 014.73 2.461 6.7 6.7 0 015.327 1.528 7.025 7.025 0 002.255 4H4.09ZM3.508 7.5C3.538 6.623 3.646 5.782 3.82 5H1.674A6.958 6.958 0 001.018 7.5H3.508ZM4.847 5A12.5 12.5 0 004.509 7.5H7.5V5H4.847ZM8.5 5V7.5H11.49A12.495 12.495 0 0011.153 5H8.5ZM4.51 8.5A12.5 12.5 0 004.847 11H7.5V8.5H4.51ZM8.5 8.5V11H11.153C11.34 10.235 11.459 9.392 11.491 8.5H8.5ZM5.145 12C5.283 12.386 5.44 12.744 5.613 13.068 6.165 14.103 6.831 14.718 7.5 14.923V12H5.145ZM5.327 14.472A6.696 6.696 0 014.73 13.539 9.268 9.268 0 014.09 12H2.255A7.024 7.024 0 005.327 14.472ZM3.82 11A13.652 13.652 0 013.508 8.5H1.018C1.08 9.39 1.309 10.233 1.674 11H3.82ZM10.673 14.472A7.024 7.024 0 0013.745 12H11.91A9.27 9.27 0 0111.27 13.539 6.688 6.688 0 0110.673 14.472ZM8.5 12V14.923C9.17 14.719 9.835 14.103 10.387 13.068 10.56 12.744 10.717 12.386 10.855 12H8.5ZM12.18 11H14.326C14.691 10.233 14.92 9.39 14.982 8.5H12.492A13.65 13.65 0 0112.18 11ZM14.982 7.5A6.959 6.959 0 0014.326 5H12.18C12.354 5.782 12.462 6.623 12.492 7.5H14.982ZM11.27 2.461C11.517 2.925 11.732 3.441 11.91 4H13.745A7.024 7.024 0 0010.673 1.528C10.891 1.812 11.091 2.126 11.27 2.461ZM10.855 4A7.966 7.966 0 0010.387 2.932C9.835 1.897 9.17 1.282 8.5 1.077V4H10.855Z" data-room="${lang}"/>
 	</svg>
 	<div data-room="${lang}">${lang_title}</div>
 </label>`;
-	};
+    };
 
-	document.getElementById('Chat__Panel2').outerHTML = `<div id="Chat__Panel2" class="panel">${DATA.LANGS.map(world).join('')}</div>`;
-
+    document.getElementById('Chat__Panel2').outerHTML = `<div id="Chat__Panel2" class="panel">${DATA.LANGS.map(world).join('')}</div>`;
 })();
 
 /*** Inject HTML - Panel 3 ***/
 
 (async () => {
-
-	const set_last_chat = (data) => `<label for="Chat__Tab5" class="btn" data-room="${data.r}">
+    const set_last_chat = (data) => `<label for="Chat__Tab5" class="btn" data-room="${data.r}">
 	<img id="${lazy_get_nft_image('JBU', data.j, DATA.CHAIN_ID, `p2p-chat-user-img-${data.j}`)}">
 
 	<div>
@@ -248,7 +250,7 @@ const handle_chat = (msg) => {
 	</div>
 </label>`;
 
-	const html = `
+    const html = `
 		<div id="Chat__Panel3" class="panel">
 			<div class="container">
 				<input type="radio" name="chat_panel3_tab" id="Chat__Panel3__Tab1" class="visually-hidden" autocomplete="off" checked>
@@ -260,7 +262,7 @@ const handle_chat = (msg) => {
 					</label>
 
 					<label for="Chat__Panel3__Tab2" class="btn btn-style w-100">
-						<div class="text-truncated">Synagogue</div>
+						<div class="text-truncated">Private Pool</div>
 					</label>
 				</div>
 
@@ -312,15 +314,13 @@ const handle_chat = (msg) => {
 		</div>
 	`;
 
-	document.getElementById('Chat__Panel3').outerHTML = html;
-
+    document.getElementById('Chat__Panel3').outerHTML = html;
 })();
 
 /*** Inject HTML - Panel 4 ***/
 
 (() => {
-
-	const html = `
+    const html = `
 		<div id="Chat__Panel4" class="panel">
 			<div class="container">
 				<div class="notification active">
@@ -476,15 +476,13 @@ const handle_chat = (msg) => {
 		</div>
 	`;
 
-	document.getElementById('Chat__Panel4').outerHTML = html;
-
+    document.getElementById('Chat__Panel4').outerHTML = html;
 })();
 
 /*** Inject HTML - Panel 5 ***/
 
 (() => {
-
-	const html = `
+    const html = `
 		<div id="Chat__Panel5" class="panel">
 			<div class="container">
 				<div class="body">
@@ -508,22 +506,19 @@ const handle_chat = (msg) => {
 		</div>
 	`;
 
-	document.getElementById('Chat__Panel5').outerHTML = html;
-
+    document.getElementById('Chat__Panel5').outerHTML = html;
 })();
 
 /*** Panel 4 - Mark notification as read or unread ***/
 
 (() => {
+    document.querySelectorAll('#Chat__Panel4 .notification').forEach((notification) => {
+        notification.querySelector('input[type="checkbox"]').addEventListener('change', (event) => {
+            notification.classList.toggle('active');
+        });
 
-	document.querySelectorAll('#Chat__Panel4 .notification').forEach(notification => {
-		notification.querySelector('input[type="checkbox"]').addEventListener('change', event => {
-			notification.classList.toggle('active');
-		});
-
-		notification.querySelector('button[data-tooltip="Delete"]').addEventListener('click', event => {
-			notification.remove();
-		})
-	});
-
+        notification.querySelector('button[data-tooltip="Delete"]').addEventListener('click', (event) => {
+            notification.remove();
+        });
+    });
 })();
