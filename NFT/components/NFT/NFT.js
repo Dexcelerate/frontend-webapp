@@ -5,7 +5,6 @@
 /*** Inject HTML ***/
 
 (() => {
-
     const html = `
         <div id="NFTPacks" class="card card-nft">
             <div class="container">
@@ -129,7 +128,7 @@
         <div id="NFTMarket" class="card card-nft">
             <div class="container">
                 <button class="btn card" data-togglable="ModalNFTMarket">
-                    <img src="Base/graphics/raster/nfts/jb1.jpg">
+                    <img src="/img/favicon.png">
 
                     <div class="footer">
                         <div class="name text-truncated text-white">Elite User</div>
@@ -139,7 +138,7 @@
                 </button>
 
                 <button class="btn card" data-togglable="ModalNFTMarket">
-                    <img src="Base/graphics/raster/nfts/jb2.jpg">
+                    <img src="/img/favicon.png">
 
                     <div class="footer">
                         <div class="name text-truncated text-white">Cool Artifact</div>
@@ -149,7 +148,7 @@
                 </button>
 
                 <button class="btn card" data-togglable="ModalNFTMarket">
-                    <img src="Base/graphics/raster/nfts/jb3.jpg">
+                    <img src="/img/favicon.png">
 
                     <div class="footer">
                         <div class="name text-truncated text-white">Dope Action Card</div>
@@ -159,7 +158,7 @@
                 </button>
 
                 <button class="btn card" data-togglable="ModalNFTMarket">
-                    <img src="Base/graphics/raster/nfts/jb4.jpg">
+                    <img src="/img/favicon.png">
 
                     <div class="footer">
                         <div class="name text-truncated text-white">Speedy Node</div>
@@ -169,7 +168,7 @@
                 </button>
 
                 <button class="btn card" data-togglable="ModalNFTMarket">
-                    <img src="Base/graphics/raster/nfts/jb1.jpg">
+                    <img src="/img/favicon.png">
 
                     <div class="footer">
                         <div class="name text-truncated text-white">Giga Whale</div>
@@ -179,7 +178,7 @@
                 </button>
 
                 <button class="btn card" data-togglable="ModalNFTMarket">
-                    <img src="Base/graphics/raster/nfts/jb3.jpg">
+                    <img src="/img/favicon.png">
 
                     <div class="footer">
                         <div class="name text-truncated text-white">Advanced User</div>
@@ -189,7 +188,7 @@
                 </button>
 
                 <button class="btn card" data-togglable="ModalNFTMarket">
-                    <img src="Base/graphics/raster/nfts/jb2.jpg">
+                    <img src="/img/favicon.png">
 
                     <div class="footer">
                         <div class="name text-truncated text-white">Example Action Card</div>
@@ -199,7 +198,7 @@
                 </button>
 
                 <button class="btn card" data-togglable="ModalNFTMarket">
-                    <img src="Base/graphics/raster/nfts/jb1.jpg">
+                    <img src="/img/favicon.png">
 
                     <div class="footer">
                         <div class="name text-truncated text-white">Swift Node</div>
@@ -209,7 +208,7 @@
                 </button>
 
                 <button class="btn card" data-togglable="ModalNFTMarket">
-                    <img src="Base/graphics/raster/nfts/jb2.jpg">
+                    <img src="/img/favicon.png">
 
                     <div class="footer">
                         <div class="name text-truncated text-white">Quality User</div>
@@ -219,7 +218,7 @@
                 </button>
 
                 <button class="btn card" data-togglable="ModalNFTMarket">
-                    <img src="Base/graphics/raster/nfts/jb3.jpg">
+                    <img src="/img/favicon.png">
 
                     <div class="footer">
                         <div class="name text-truncated text-white">Amazing Artifact</div>
@@ -229,7 +228,7 @@
                 </button>
 
                 <button class="btn card" data-togglable="ModalNFTMarket">
-                    <img src="Base/graphics/raster/nfts/jb4.jpg">
+                    <img src="/img/favicon.png">
 
                     <div class="footer">
                         <div class="name text-truncated text-white">Exceptional Action Card</div>
@@ -242,23 +241,19 @@
     `;
 
     elementify('Main').insertAdjacentHTML('beforeend', html);
-
 })();
-
 
 /*** NFT Market Filter Selector ***/
 
 (() => {
-
     const selector = elementify('NFTMarketFilter__Selector');
 
-    selector.querySelectorAll('ul .btn').forEach(button => {
-        button.addEventListener('click', event => {
+    selector.querySelectorAll('ul .btn').forEach((button) => {
+        button.addEventListener('click', (event) => {
             selector.querySelector('label > div').innerHTML = button.innerHTML;
             selector.querySelector('.btn.active').classList.remove('active');
             button.classList.add('active');
             selector.querySelector('input[type="checkbox"]').checked = false;
         });
     });
-
 })();
