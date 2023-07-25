@@ -453,7 +453,7 @@ const set_original_wallet_nft = async (type, nft_id, chain, order) => {
             switch (type) {
                 case 'JBU':
                     return `<div class="card ${key}-${expiry}">
-	<img id="${lazy_get_nft_image(type, nft_id, undefined, `${key}-${expiry}`)}" src="Base/graphics/raster/nfts/jb1.jpg">
+	<img id="${lazy_get_nft_image(type, nft_id, undefined, `${key}-${expiry}`)}" src="/img/favicon.png">
 
 	<input type="checkbox" id="NFT__Users__User${nft_id}-${order}" class="visually-hidden">
 
