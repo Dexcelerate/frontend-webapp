@@ -188,47 +188,107 @@ const PRE_ACTIONS = {
         return '-';
     },
     prepare_deposit: async (element) => {
+        //console.log('==============pre-action prepare_deposit =====================', element);
+
         DATA.deposit_prep[DATA.pay_slot] = DATA.pay_token;
+        //console.log('DATA.pay_token', DATA.pay_token);
 
         while (!element.classList.contains('currency')) {
             element = element.parentNode;
         }
+        //console.log('element after while loop??', element);
+
+        //console.log("element.querySelector('[data-balance]').dataset.balance", element.querySelector('[data-balance]').dataset.balance);
+
+        //console.log('(DATA.pay_token === DATA.IMAGINARY_PEG && Big(21000).mul(DATA.gas_price).div(DATA.ETHER)', DATA.pay_token === DATA.IMAGINARY_PEG && Big(21000).mul(DATA.gas_price).div(DATA.ETHER));
 
         let deposit_balance = Big(element.querySelector('[data-balance]').dataset.balance || 0).sub((DATA.pay_token === DATA.IMAGINARY_PEG && Big(21000).mul(DATA.gas_price).div(DATA.ETHER)) || 0);
+        //console.log('deposit_balance', deposit_balance);
 
         if (deposit_balance.lt(0)) {
+            //console.log('deposit_balance lt 0');
             deposit_balance = Big(0);
+            //console.log('deposit_balance', deposit_balance);
         }
 
         let range_element = document.getElementById(element.parentNode.parentNode.id.replace('Panel5', 'Panel2')).querySelector('input[type="range"]');
+        //console.log('range_element', range_element);
 
         range_element.max = deposit_balance.mul(DATA.WPEG_PRICE).toFixed(3);
+        //console.log('range_element.max', deposit_balance.mul(DATA.WPEG_PRICE).toFixed(3));
         range_element.value = 0;
 
         document.getElementById(element.parentNode.parentNode.id.replace('Panel5', 'Panel2')).querySelector('input[type="text"]').value = '0.00';
     },
     deposit: async (element) => {
+        var parentDivEl = element.closest('div');
+        var inputAmountEl = parentDivEl.getElementsByTagName('input')[0];
+        //console.log('inputAmountEl', inputAmountEl);
+        //console.log('inputAmountEl.value', inputAmountEl.value);
+
+        if (!parentDivEl || !inputAmountEl) {
+            help_error('Unknown error occurred trying to get the deposit value. This problem has been reported and will be looked into.');
+            console.error('sockets_handle_pre_action.js action(deposit) ', 'parentDivEl', parentDivEl, 'inputAmountEl', inputAmountEl);
+            return;
+        }
+
         DATA.deposit_slot = DATA.slots[DATA.CHAIN][element.dataset.slotIdx].address;
         DATA.deposit_token = DATA.deposit_prep[DATA.pay_slot]; /* In case there're more than 1 slot and the user started selected more than 1 deposits. */
-        DATA.deposit_amount = Big(document.getElementById(`slot-${element.dataset.slotIdx}-deposit-range`).value)
-            .mul(DATA.ETHER)
-            .div(DATA.WPEG_PRICE)
-            .round();
+        DATA.deposit_amount = Big(inputAmountEl.value).mul(DATA.ETHER).div(DATA.WPEG_PRICE).round();
+
+        /*console.log('DATA.deposit_slot', DATA.deposit_slot);
+        console.log('DATA.deposit_token', DATA.deposit_token);
+
+        console.log('===formula===');
+        console.log('inputAmountEl.value', inputAmountEl.value);
+        console.log('*');
+        console.log('DATA.ETHER', DATA.ETHER);
+        console.log('/');
+        console.log('DATA.WPEG_PRICE', DATA.WPEG_PRICE);
+        console.log('round()');
+
+        console.log('results======= deposit_amount', DATA.deposit_amount);
+        console.log('DATA.slots[DATA.CHAIN][element.dataset.slotIdx].address', DATA.slots[DATA.CHAIN][element.dataset.slotIdx].address);
+
+        //console.log('DATA.deposit_slot'.DATA.deposit_slot);
+        //console.log('DATA.deposit_token', DATA.deposit_token);
+        console.log('DAATA.deposit_amount', DATA.deposit_amount);*/
 
         if (DATA.deposit_token === DATA.IMAGINARY_PEG) {
+            //console.log('DATA.deposit_token === DATA.IMAGINARY_PEG === TRUE');
             try {
+                //console.log("try sendValue(DATA.DEPOSIT, 'deposit(address)', DATA.deposit_amount, DATA.deposit_slot)");
+                // console.log('DATA.DEPOSIT', DATA.DEPOSIT);
+
                 await sendValue(DATA.DEPOSIT, 'deposit(address)', DATA.deposit_amount, DATA.deposit_slot);
             } catch (e) {
+                console.log('error trying to run sendValue()');
                 console.error(e);
                 DATA.deposit_amount = Big(0);
             }
 
             return '-';
         } else if (DATA.deposit_token === DATA.WPEG) {
+            console.log('DATA.deposit_token === DATA.WPEG === TRUE');
+
             try {
+                //console.log('DATA.DEPOSIT', DATA.DEPOSIT);
+                // console.log('await contract(DATA.WPEG).allowance(DATA.conf.wallet, DATA.DEPOSIT))', await contract(DATA.WPEG).allowance(DATA.conf.wallet, DATA.DEPOSIT));
+
+                //console.log('if(DATA.deposit_amount.gt(await contract(DATA.WPEG).allowance(DATA.conf.wallet, DATA.DEPOSIT)))', DATA.deposit_amount.gt(await contract(DATA.WPEG).allowance(DATA.conf.wallet, DATA.DEPOSIT)));
+
                 if (DATA.deposit_amount.gt(await contract(DATA.WPEG).allowance(DATA.conf.wallet, DATA.DEPOSIT))) {
+                    // console.log('if(DATA.deposit_amount.gt(await contract(DATA.WPEG).allowance(DATA.conf.wallet, DATA.DEPOSIT))) IS TRUE');
+
+                    // console.log('DATA.deposit_amount', DATA.deposit_amount);
+
+                    //  console.log("calling send(DATA.WPEG, 'approve', DATA.DEPOSIT, _hex(DATA.deposit_amount))", '_hex(DATA.deposit_amount)', _hex(DATA.deposit_amount));
+
                     await send(DATA.WPEG, 'approve', DATA.DEPOSIT, _hex(DATA.deposit_amount));
                 }
+
+                //console.log('AFTER if if(DATA.deposit_amount.gt(await contract(DATA.WPEG).allowance(DATA.conf.wallet, DATA.DEPOSIT))) IS TRUE');
+                // console.log("calling send(DATA.DEPOSIT, 'deposit(address,uint256)', DATA.deposit_slot, _hex(DATA.deposit_amount)");
                 await send(DATA.DEPOSIT, 'deposit(address,uint256)', DATA.deposit_slot, _hex(DATA.deposit_amount));
             } catch (e) {
                 console.error(e);
@@ -237,9 +297,32 @@ const PRE_ACTIONS = {
 
             return '-';
         }
+        /*console.log('got to the bottom of the function');
+        console.log('formula ===');
+        console.log('DATA.deposit_amount', DATA.deposit_amount);
+        console.log('/');
+        console.log('DATA.conf.assets.find((v) => v.k === DATA.deposit_token).p', DATA.conf.assets.find((v) => v.k === DATA.deposit_token).p);
+        console.log('round()');
+        console.log('===');
+
+        console.log(
+            'DATA.deposit_amount = DATA.deposit_amount.div(DATA.conf.assets.find((v) => v.k === DATA.deposit_token).p).round() == DATA.deposit_amount',
+            DATA.deposit_amount.div(DATA.conf.assets.find((v) => v.k === DATA.deposit_token).p).round()
+        );*/
 
         DATA.deposit_amount = DATA.deposit_amount.div(DATA.conf.assets.find((v) => v.k === DATA.deposit_token).p).round();
+
+        //console.log('allowance = ', await contract(DATA.deposit_token).allowance(DATA.conf.wallet, DATA.DEPOSIT));
+
+        /*console.log(
+            'CHECKIGN IF DATA.deposit_amount.gt(await contract(DATA.deposit_token).allowance(DATA.conf.wallet, DATA.DEPOSIT)) IS TRUE ',
+            DATA.deposit_amount.gt(await contract(DATA.deposit_token).allowance(DATA.conf.wallet, DATA.DEPOSIT))
+        );*/
+
         if (DATA.deposit_amount.gt(await contract(DATA.deposit_token).allowance(DATA.conf.wallet, DATA.DEPOSIT))) {
+            //console.log('DATA.deposit_amount.gt(await contract(DATA.deposit_token).allowance(DATA.conf.wallet, DATA.DEPOSIT)) IS TRUE');
+            //console.log("RUNNING send(DATA.deposit_token, 'approve', DATA.DEPOSIT, _hex(DATA.deposit_amount))");
+            //console.log('_hex', _hex(DATA.deposit_amount));
             await send(DATA.deposit_token, 'approve', DATA.DEPOSIT, _hex(DATA.deposit_amount));
         }
     },
@@ -540,6 +623,7 @@ const PRE_ACTIONS = {
         return '-';
     },
     synagogize: async (element) => {
+        /* Create a synagogue */
         if (!DATA.conf.connected) {
             on_connect(() => {
                 _handleAction(element);
@@ -653,18 +737,16 @@ const PRE_ACTIONS = {
         await handleAction('user_slot_copies');
         await handleAction('copies');
 
-        if(DATA.copy_settings[DATA.selected_copy_slot]) {
-            DATA.copy_wallet =  Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v))[0];
-            DATA.selected_copy_wallet = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v))[0]
+        if (DATA.copy_settings[DATA.selected_copy_slot]) {
+            DATA.copy_wallet = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v))[0];
+            DATA.selected_copy_wallet = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v))[0];
 
             DATA.copy_settings_ordered[DATA.CHAIN] = Object.keys(DATA.copy_settings[DATA.selected_copy_slot]).filter((v) => ![DATA.ZERO, DATA.IMAGINARY_PEG].includes(v));
         }
-        
 
         return 'copies';
     },
     'set-first-wallet': async (element) => {
-
         /* Traverse up the elements parents until we get to the wallet element that contains the data attribute we need. */
         while (!element.classList.contains('wallet')) {
             element = element.parentNode;
@@ -688,24 +770,23 @@ const PRE_ACTIONS = {
         }
         //console.log("element", element);
         //lement = document.querySelectorAll(`.wallets [data-wallet='${DATA.selected_copy_wallet}']`)
-       // console.log("element", element);
+        // console.log("element", element);
 
-       // console.log("DATA.selected_copy_wallet", DATA.selected_copy_wallet)
-       // console.log("element.dataset.wallet", element.dataset.wallet)
-        console.log("DATA.copy_settings_ordered[DATA.CHAIN]", DATA.copy_settings_ordered[DATA.CHAIN]);
+        // console.log("DATA.selected_copy_wallet", DATA.selected_copy_wallet)
+        // console.log("element.dataset.wallet", element.dataset.wallet)
+        console.log('DATA.copy_settings_ordered[DATA.CHAIN]', DATA.copy_settings_ordered[DATA.CHAIN]);
         await sleep(0.1);
 
         DATA.copy_settings_ordered[DATA.CHAIN].sort((a) => {
-           //console.log("a", a);
+            //console.log("a", a);
             if (a === element.dataset.wallet) {
                 return -1;
             }
             //console.log("a return 0");
             return 0;
         });
-       console.log("DATA.copy_settings_ordered[DATA.CHAIN]", DATA.copy_settings_ordered[DATA.CHAIN]);
+        console.log('DATA.copy_settings_ordered[DATA.CHAIN]', DATA.copy_settings_ordered[DATA.CHAIN]);
 
-        
         load_slots();
         element.blur();
 

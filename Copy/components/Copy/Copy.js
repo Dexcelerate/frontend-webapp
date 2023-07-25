@@ -5,8 +5,7 @@
 /*** Inject HTML ***/
 
 (() => {
-
-	const html = `
+    const html = `
 		<div id="Copy" class="card card-copy">
 			<div class="container">
 				<div class="wallets"></div>
@@ -48,21 +47,20 @@
 		</div>
 	`;
 
-	elementify('Main').insertAdjacentHTML('beforeend', html);
-
+    elementify('Main').insertAdjacentHTML('beforeend', html);
 })();
 
 /*** Inject HTML - Slots ***/
 
 const load_slot = (slot, i) => {
-	let old = document.querySelector(`Copy__Slot${i} [slot-total-balance-${DATA.CHAIN}-${slot.address}]`),
-		old_balance = 0;
+    let old = document.querySelector(`Copy__Slot${i} [slot-total-balance-${DATA.CHAIN}-${slot.address}]`),
+        old_balance = 0;
 
-	if (old) {
-		old_balance = old.dataset.balance;
-	}
+    if (old) {
+        old_balance = old.dataset.balance;
+    }
 
-	return `<div id="Copy__Slot${i}" class="panelbox">
+    return `<div id="Copy__Slot${i}" class="panelbox">
 	<input type="radio" name="copy_slot_${i}tab" id="Copy__Slot${i}__Tab1" class="visually-hidden" autocomplete="off" checked>
 	<div id="Copy__Slot${i}__Panel1" class="panel panel-main">
 		<div class="body">
@@ -70,15 +68,21 @@ const load_slot = (slot, i) => {
 				<canvas id="Copy__Slot${i}__Chart"></canvas>
 
 				<div class="meta">
-					<div class="title text-truncated slot-title-${DATA.CHAIN}-${slot.address}"><a href="https://bscscan.com/address/${slot.address}" target="_blank" title="${slot.address}">${slot.title ? slot.title : `Slot ${i + 1}`}</a></div>
-					<div class="balance text-truncated slot-total-balance-${DATA.CHAIN}-${slot.address}" data-balance="${Big(Number(old_balance) && old_balance || slot.total_balance)}">$${formatFiat(Big(Number(old_balance) && old_balance || slot.total_balance).mul(DATA.WPEG_PRICE))}</div>
+					<div class="title text-truncated slot-title-${DATA.CHAIN}-${slot.address}"><a href="https://bscscan.com/address/${slot?.address}" target="_blank" title="${slot?.address}">${
+        slot?.title ? slot?.title : `Slot ${i + 1}`
+    }</a></div>
+					<div class="balance text-truncated slot-total-balance-${DATA.CHAIN}-${slot.address}" data-balance="${Big((Number(old_balance) && old_balance) || slot.total_balance)}">$${formatFiat(
+        Big((Number(old_balance) && old_balance) || slot.total_balance).mul(DATA.WPEG_PRICE)
+    )}</div>
 				</div>
 			</div>
 
 			<div class="actions">
-				<button class="btn btn-has-icon${slot.address === DATA.selected_copy_slot && ' active' || ''}" data-tooltip="List wallets" data-tooltip-top data-action="list-copy-slot" data-slot="${slot.address}">
+				<button class="btn btn-has-icon${(slot.address === DATA.selected_copy_slot && ' active') || ''}" data-tooltip="List wallets" data-tooltip-top data-action="list-copy-slot" data-slot="${slot.address}">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md" data-action="list-copy-slot" data-slot="${slot.address}">
-						<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM7 11.5A.5.5 0 017.5 11H8.5A.5.5 0 018.5 12H7.5A.5.5 0 017 11.5ZM5 8.5A.5.5 0 015.5 8H10.5A.5.5 0 0110.5 9H5.5A.5.5 0 015 8.5ZM3 5.5A.5.5 0 013.5 5H12.5A.5.5 0 0112.5 6H3.5A.5.5 0 013 5.5Z" data-action="list-copy-slot" data-slot="${slot.address}"></path>
+						<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM7 11.5A.5.5 0 017.5 11H8.5A.5.5 0 018.5 12H7.5A.5.5 0 017 11.5ZM5 8.5A.5.5 0 015.5 8H10.5A.5.5 0 0110.5 9H5.5A.5.5 0 015 8.5ZM3 5.5A.5.5 0 013.5 5H12.5A.5.5 0 0112.5 6H3.5A.5.5 0 013 5.5Z" data-action="list-copy-slot" data-slot="${
+                            slot.address
+                        }"></path>
 					</svg>
 				</button>
 
@@ -100,11 +104,17 @@ const load_slot = (slot, i) => {
 					</svg>
 				</label> -->
 
-				<label class="checkbox-svg ml-12px" data-tooltip="${slot.is_active ? 'Pause slot' : 'Enable slot'}" data-tooltip-alt="${slot.is_active ? 'Enable slot' : 'Pause slot'}" data-tooltip-top data-slot="${slot.address}" data-wallet="${DATA.ZERO}" data-action="toggle_copy_wallet_state">
+				<label class="checkbox-svg ml-12px" data-tooltip="${slot.is_active ? 'Pause slot' : 'Enable slot'}" data-tooltip-alt="${slot.is_active ? 'Enable slot' : 'Pause slot'}" data-tooltip-top data-slot="${
+        slot.address
+    }" data-wallet="${DATA.ZERO}" data-action="toggle_copy_wallet_state">
 					<input type="checkbox" class="slot-${slot.address} visually-hidden" autocomplete="off" ${slot.is_active ? 'checked' : ''}>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md" data-slot="${slot.address}" data-wallet="${DATA.ZERO}" data-action="toggle_copy_wallet_state">
-						<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM6.521 5.055A.5.5 0 017.041 5.093L10.541 7.593A.5.5 0 0110.541 8.407L7.041 10.907A.5.5 0 016.25 10.5V5.5A.5.5 0 016.521 5.055Z" data-slot="${slot.address}" data-wallet="${DATA.ZERO}" data-action="toggle_copy_wallet_state"/>
-						<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM6.5 5A.5.5 0 017 5.5V10.5A.5.5 0 016 10.5V5.5A.5.5 0 016.5 5ZM9.5 5A.5.5 0 0110 5.5V10.5A.5.5 0 019 10.5V5.5A.5.5 0 019.5 5Z" data-slot="${slot.address}" data-wallet="${DATA.ZERO}" data-action="toggle_copy_wallet_state"/>
+						<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM6.521 5.055A.5.5 0 017.041 5.093L10.541 7.593A.5.5 0 0110.541 8.407L7.041 10.907A.5.5 0 016.25 10.5V5.5A.5.5 0 016.521 5.055Z" data-slot="${
+                            slot.address
+                        }" data-wallet="${DATA.ZERO}" data-action="toggle_copy_wallet_state"/>
+						<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM6.5 5A.5.5 0 017 5.5V10.5A.5.5 0 016 10.5V5.5A.5.5 0 016.5 5ZM9.5 5A.5.5 0 0110 5.5V10.5A.5.5 0 019 10.5V5.5A.5.5 0 019.5 5Z" data-slot="${
+                            slot.address
+                        }" data-wallet="${DATA.ZERO}" data-action="toggle_copy_wallet_state"/>
 					</svg>
 				</label>
 			</div>
@@ -222,50 +232,54 @@ const load_slot = (slot, i) => {
 </div>`;
 };
 
-function range_input_in_transfer_panels (e) {
-	e.target.parentElement.parentElement.querySelector('input[type="text"]').value = DATA.displayInFiat ? formatFiat(e.target.value) : e.target.value;
+function range_input_in_transfer_panels(e) {
+    e.target.parentElement.parentElement.querySelector('input[type="text"]').value = DATA.displayInFiat ? formatFiat(e.target.value) : e.target.value;
 }
 
-function range_input_in_balance_panels (e) {
-	const nativeBalance = e.target.parentElement.parentElement.querySelector('.native');
-	const wrappedBalance = e.target.parentElement.parentElement.querySelector('.wrapped');
-	const n = Big(nativeBalance.dataset.nativeValue).mul(e.target.value || 0).div(100);
-	const w = Big(wrappedBalance.dataset.wrappedValue).mul(100 - Number(e.target.value || 0)).div(100);
-	nativeBalance.textContent = DATA.displayInFiat ? '$' + formatFiat(n.mul(DATA.WPEG_PRICE)) : Number(n).toFixed(5);
-	wrappedBalance.textContent = DATA.displayInFiat ? '$' + formatFiat(w.mul(DATA.WPEG_PRICE)) : Number(w).toFixed(5);
+function range_input_in_balance_panels(e) {
+    const nativeBalance = e.target.parentElement.parentElement.querySelector('.native');
+    const wrappedBalance = e.target.parentElement.parentElement.querySelector('.wrapped');
+    const n = Big(nativeBalance.dataset.nativeValue)
+        .mul(e.target.value || 0)
+        .div(100);
+    const w = Big(wrappedBalance.dataset.wrappedValue)
+        .mul(100 - Number(e.target.value || 0))
+        .div(100);
+    nativeBalance.textContent = DATA.displayInFiat ? '$' + formatFiat(n.mul(DATA.WPEG_PRICE)) : Number(n).toFixed(5);
+    wrappedBalance.textContent = DATA.displayInFiat ? '$' + formatFiat(w.mul(DATA.WPEG_PRICE)) : Number(w).toFixed(5);
 }
 
 const sorted_slots = () => {
-	let tmp = JSON.parse(JSON.stringify(DATA.slots[DATA.CHAIN] || (DATA.slots[DATA.CHAIN] = [])));
+    let tmp = JSON.parse(JSON.stringify(DATA.slots[DATA.CHAIN] || (DATA.slots[DATA.CHAIN] = [])));
 
-	tmp.sort((a, b) => {
-		a = new Date(a.created_at);
-		b = new Date(b.created_at);
+    tmp.sort((a, b) => {
+        a = new Date(a.created_at);
+        b = new Date(b.created_at);
 
-		if (a < b) {
-			return -1;
-		} else if (a > b) {
-			return 1;
-		}
+        if (a < b) {
+            return -1;
+        } else if (a > b) {
+            return 1;
+        }
 
-		return 0;
-	});
+        return 0;
+    });
 
-	return tmp;
+    return tmp;
 };
 
 const load_slots = async () => {
-	document.querySelectorAll('#Copy .slots .panel-transfer input[type="range"]').forEach(inputRange => {
-		inputRange.removeEventListener('input', range_input_in_transfer_panels);
-	});
+    document.querySelectorAll('#Copy .slots .panel-transfer input[type="range"]').forEach((inputRange) => {
+        inputRange.removeEventListener('input', range_input_in_transfer_panels);
+    });
 
-	/*** Range input in balance panels ***/
+    /*** Range input in balance panels ***/
 
-	document.querySelectorAll('#Copy .slots .panel-balance input[type="range"]').forEach(inputRange => {
-		inputRange.removeEventListener('input', range_input_in_balance_panels);
-	});
+    document.querySelectorAll('#Copy .slots .panel-balance input[type="range"]').forEach((inputRange) => {
+        inputRange.removeEventListener('input', range_input_in_balance_panels);
+    });
 
-	document.querySelector('#Copy .slots').innerHTML = `${sorted_slots().map(load_slot).join('')}
+    document.querySelector('#Copy .slots').innerHTML = `${sorted_slots().map(load_slot).join('')}
 
 <div id="Copy__Slot__Create" class="panelbox">
 	<input type="radio" name="Copy_slot_create_tab" id="Copy__Slot__Create__Tab1" class="visually-hidden" autocomplete="off" checked data-action="create-slot" data-chain="${DATA.CHAIN}">
@@ -291,45 +305,41 @@ const load_slots = async () => {
 	</div>
 </div>`;
 
-	/*** Range input in transfer panels ***/
+    /*** Range input in transfer panels ***/
 
-	document.querySelectorAll('#Copy .slots .panel-transfer input[type="range"]').forEach(inputRange => {
-		inputRange.addEventListener('input', range_input_in_transfer_panels);
-	});
+    document.querySelectorAll('#Copy .slots .panel-transfer input[type="range"]').forEach((inputRange) => {
+        inputRange.addEventListener('input', range_input_in_transfer_panels);
+    });
 
-	/*** Range input in balance panels ***/
+    /*** Range input in balance panels ***/
 
-	document.querySelectorAll('#Copy .slots .panel-balance input[type="range"]').forEach(inputRange => {
-		inputRange.addEventListener('input', range_input_in_balance_panels);
-	});
+    document.querySelectorAll('#Copy .slots .panel-balance input[type="range"]').forEach((inputRange) => {
+        inputRange.addEventListener('input', range_input_in_balance_panels);
+    });
 
-	DATA.slots[DATA.CHAIN].map((v, k)=> getChartConfig(`Copy__Slot${k}__Chart`, v.history));
+    DATA.slots[DATA.CHAIN].map((v, k) => getChartConfig(`Copy__Slot${k}__Chart`, v.history));
 };
 
 (() => {
-	if(DATA.selected_copy_slot === "0x0000000000000000000000000000000000000000") {
-		DATA.selected_copy_slot = DATA.selected_slot;
-	}
+    if (DATA.selected_copy_slot === '0x0000000000000000000000000000000000000000') {
+        DATA.selected_copy_slot = DATA.selected_slot;
+    }
 
-	load_slots();
-	load_wallet_slots();
-	set_wallet_assets();
-	set_wallet_chains_slots();
-	add_wallets();
+    load_slots();
+    load_wallet_slots();
+    set_wallet_assets();
+    set_wallet_chains_slots();
+    add_wallets();
 
-	setTimeout(function() { 
-		handleAction('user_slot_copies');
-		set_address_transactions();
+    setTimeout(function () {
+        handleAction('user_slot_copies');
+        set_address_transactions();
+    }, 500);
 
-	}, 500);
-
-	setInterval(() => {
-		if(DATA.selected_copy_slot === "0x0000000000000000000000000000000000000000") DATA.selected_copy_slot = DATA.selected_slot;
-		if (!DATA.blured && DATA.view === 'copy' && elementify('ModalCopyPositionSettings').classList.contains('d-none')) {
-			handleAction('copies');
-		}
-	}, 10000);
-
-
+    setInterval(() => {
+        if (DATA.selected_copy_slot === '0x0000000000000000000000000000000000000000') DATA.selected_copy_slot = DATA.selected_slot;
+        if (!DATA.blured && DATA.view === 'copy' && elementify('ModalCopyPositionSettings').classList.contains('d-none')) {
+            handleAction('copies');
+        }
+    }, 10000);
 })();
-

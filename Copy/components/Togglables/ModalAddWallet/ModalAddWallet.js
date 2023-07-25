@@ -5,8 +5,7 @@
 /*** Inject HTML ***/
 
 (() => {
-
-	const html = `
+    const html = `
 		<div id="ModalAddWallet" class="togglable modal d-none">
 			<div class="lightbox" data-togglable="ModalAddWallet"></div>
 
@@ -39,78 +38,77 @@
 		</div>
 	`;
 
-	elementify('Root').insertAdjacentHTML('beforeend', html);
-
+    elementify('Root').insertAdjacentHTML('beforeend', html);
 })();
 
 /*** Add wallet ***/
 
 (() => {
+    let inputName = document.querySelector('#ModalAddWallet__Body input[placeholder="Name"]'),
+        inputAddress = document.querySelector('#ModalAddWallet__Body input[placeholder="Address"]');
 
-	let inputName = document.querySelector('#ModalAddWallet__Body input[placeholder="Name"]'),
-		inputAddress = document.querySelector('#ModalAddWallet__Body input[placeholder="Address"]');
+    elementify('add-wallet').addEventListener('click', async (event) => {
+        let address = inputAddress.value.trim().split('#')[0].split('/').slice(-1)[0],
+            title = inputName.value.trim();
 
-	elementify('add-wallet').addEventListener('click', async (event) => {
-		let address = inputAddress.value.trim().split('#')[0].split('/').slice(-1)[0],
-			title = inputName.value.trim();
+        if (!address.startsWith('0x')) {
+            address = `0x${address}`;
+        }
 
-		if (!address.startsWith('0x')) {
-			address = `0x${address}`
-		}
+        try {
+            address = toChecksumAddress(address);
+        } catch (e) {
+            return help_err('Bad address (checksum check failed)');
+        }
 
-		try {
-			address = toChecksumAddress(address);
-		} catch(e) {
-			return help_err('Bad address (checksum check failed)');
-		}
+        if (!address || Number(address) < Number('0x10000')) {
+            return help_err('Bad address (null, not a number, or 0x10000)');
+        }
 
-		if (!address || Number(address) < Number('0x10000')) {
-			return help_err('Bad address (null, not a number, or 0x10000)');
-		}
+        if ((!DATA.selected_copy_slot || DATA.selected_copy_slot === DATA.ZERO) && DATA.conf.connected && DATA.slots[DATA.CHAIN].length) {
+            DATA.slot_copies_addresses = [(DATA.selected_copy_slot = DATA.slots[DATA.CHAIN][0].address)];
+            document.querySelectorAll('button[data-action="list-copy-slot"]').forEach((el) => el.classList.remove('active'));
+            document.querySelector(`button[data-action="list-copy-slot"][data-slot="${DATA.selected_slot}"]`).classList.add('active');
+        }
 
-		if ((!DATA.selected_copy_slot || DATA.selected_copy_slot === DATA.ZERO) && DATA.conf.connected && DATA.slots[DATA.CHAIN].length) {
-			DATA.slot_copies_addresses = [DATA.selected_copy_slot = DATA.slots[DATA.CHAIN][0].address];
-			document.querySelectorAll('button[data-action="list-copy-slot"]').forEach(el => el.classList.remove('active'));
-			document.querySelector(`button[data-action="list-copy-slot"][data-slot="${DATA.selected_slot}"]`).classList.add('active');
-		}
+        if (!DATA.copy_settings[DATA.selected_copy_slot]) {
+            DATA.copy_settings[DATA.selected_copy_slot] = {};
+        }
 
-		if (!DATA.copy_settings[DATA.selected_copy_slot]) {
-			DATA.copy_settings[DATA.selected_copy_slot] = {};
-		}
+        if (DATA.copy_settings[DATA.selected_copy_slot][address]) {
+            if (DATA.copy_settings[DATA.selected_copy_slot][address].title) {
+                return help_err(`Address already exists as "${DATA.copy_settings[DATA.selected_copy_slot][address].title}"`);
+            }
+            return help_err('Address already exists');
+        }
 
-		if (DATA.copy_settings[DATA.selected_copy_slot][address]) {
-			if (DATA.copy_settings[DATA.selected_copy_slot][address].title) {
-				return help_err(`Address already exists as "${DATA.copy_settings[DATA.selected_copy_slot][address].title}"`);
-			}
-			return help_err('Address already exists');
-		}
+        if (!title) {
+            return help_err('No name');
+        }
 
-		if (!title) {
-			return help_err('No name');
-		}
+        DATA.selected_copy_wallet = DATA.copy_wallet = address;
 
-		DATA.selected_copy_wallet = DATA.copy_wallet = address;
+        if (!DATA.copy_transactions[DATA.selected_slot]) {
+            DATA.copy_transactions[DATA.selected_slot] = {};
+        }
 
-		if (!DATA.copy_transactions[DATA.selected_slot]) {
-			DATA.copy_transactions[DATA.selected_slot] = {};
-		}
+        DATA.copy_transactions[DATA.selected_slot][address] = [];
 
-		DATA.copy_transactions[DATA.selected_slot][address] = [];
+        DATA.copy_settings[DATA.selected_copy_slot][address] = {
+            ...DATA.default_copy_settings,
+            title,
+            address: address,
+            balance: Big(0),
+            is_ca: '0x' !== (await provider[DATA.CHAIN_ID].getCode(address)),
+            kosher_strainer: [],
+            targets_percents: [],
+            targets_triggers: [],
+            buy_method_ids: [],
+            sell_method_ids: [],
+        };
 
-		DATA.copy_settings[DATA.selected_copy_slot][address] = {
-			...DATA.default_copy_settings,
-			title,
-			address: address,
-			balance: Big(0),
-			is_ca: '0x' !== await provider[DATA.CHAIN_ID].getCode(address),
-			kosher_strainer: [],
-			targets_percents: [],
-			targets_triggers: [],
-			buy_method_ids: [],
-			sell_method_ids: []
-		};
-
-		document.querySelector('#Copy .wallets').prepend(htmlToElement(`
+        document.querySelector('#Copy .wallets').prepend(
+            htmlToElement(`
 			<div class="wallet" data-slot="${DATA.selected_slot}" data-wallet="${address}">
 				<div class="header">
 					<button class="btn btn-has-icon btn-toggle" data-action="set-first-wallet">
@@ -142,8 +140,12 @@
 							<input type="checkbox" class="slot-${DATA.selected_slot} visually-hidden" autocomplete="off">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md" data-slot="${DATA.selected_slot}" data-wallet="${address}" data-action="toggle_copy_wallet_state">
 								<circle fill="#191919" cx="8" cy="8" r="8" data-slot="${DATA.selected_slot}" data-wallet="${address}" data-action="toggle_copy_wallet_state"></circle>
-								<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM6.521 5.055A.5.5 0 017.041 5.093L10.541 7.593A.5.5 0 0110.541 8.407L7.041 10.907A.5.5 0 016.25 10.5V5.5A.5.5 0 016.521 5.055Z" data-slot="${DATA.selected_slot}" data-wallet="${address}" data-action="toggle_copy_wallet_state"></path>
-								<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM6.5 5A.5.5 0 017 5.5V10.5A.5.5 0 016 10.5V5.5A.5.5 0 016.5 5ZM9.5 5A.5.5 0 0110 5.5V10.5A.5.5 0 019 10.5V5.5A.5.5 0 019.5 5Z" data-slot="${DATA.selected_slot}" data-wallet="${address}" data-action="toggle_copy_wallet_state"></path>
+								<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM6.521 5.055A.5.5 0 017.041 5.093L10.541 7.593A.5.5 0 0110.541 8.407L7.041 10.907A.5.5 0 016.25 10.5V5.5A.5.5 0 016.521 5.055Z" data-slot="${
+                                    DATA.selected_slot
+                                }" data-wallet="${address}" data-action="toggle_copy_wallet_state"></path>
+								<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM6.5 5A.5.5 0 017 5.5V10.5A.5.5 0 016 10.5V5.5A.5.5 0 016.5 5ZM9.5 5A.5.5 0 0110 5.5V10.5A.5.5 0 019 10.5V5.5A.5.5 0 019.5 5Z" data-slot="${
+                                    DATA.selected_slot
+                                }" data-wallet="${address}" data-action="toggle_copy_wallet_state"></path>
 							</svg>
 						</label>
 
@@ -157,16 +159,16 @@
 				</div>
 
 				<div class="body">
-					<div class="transaction">Spectating2...</div>
+					<div class="transaction">Spectating...</div>
 				</div>
 			</div>
-		`));
+		`)
+        );
 
-		handleAction('fcopy'); /* Fresh copy :) */
-		handleAction('slot_copies');
+        handleAction('fcopy'); /* Fresh copy :) */
+        handleAction('slot_copies');
 
-		inputName.value = '';
-		inputAddress.value = '';
-	});
-
+        inputName.value = '';
+        inputAddress.value = '';
+    });
 })();

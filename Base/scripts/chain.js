@@ -37,14 +37,28 @@ const init = async function () {
         },
     });
 
+    /* If localstorage says logged ins till  */
     if (store.get('logged')) {
         try {
             on_connect();
         } catch (e) {
+            console.log('if logged try on_connect() catch(e)');
+            console.error('e', e.message);
+
+            /* If error on connect then set terminal to connect message & try connecting again */
             DATA.CHAIN_ID = 56;
             set_chain();
             set_terminal_message('Please connect your wallet');
-            provider[DATA.CHAIN_ID] = new ethers.providers.JsonRpcProvider(DATA.RPC);
+            //provider[DATA.CHAIN_ID] = new ethers.providers.JsonRpcProvider(DATA.RPC);
+
+            try {
+                console.log('init try 1');
+                provider[DATA.CHAIN_ID] = new ethers.providers.JsonRpcProvider(DATA.RPC);
+            } catch (error) {
+                console.log('init fail 1');
+                console.log(error.message);
+                return init();
+            }
 
             if (DATA.token) {
                 (await set_token())(true);
@@ -58,7 +72,15 @@ const init = async function () {
         DATA.CHAIN_ID = 56;
         set_chain();
         set_terminal_message('Please connect your wallet');
-        provider[DATA.CHAIN_ID] = new ethers.providers.JsonRpcProvider(DATA.RPC);
+        //provider[DATA.CHAIN_ID] = new ethers.providers.JsonRpcProvider(DATA.RPC);
+        try {
+            console.log('init try 2');
+            provider[DATA.CHAIN_ID] = new ethers.providers.JsonRpcProvider(DATA.RPC);
+        } catch (error) {
+            console.log('init try 2');
+            console.log(error.message);
+            return init();
+        }
 
         if (DATA.token) {
             (await set_token())(true);
@@ -94,7 +116,7 @@ const change_network = async function (chain) {
 
         handleAction('nonce');
     } catch (switchError) {
-        /* console.log('!!', switchError); */
+        console.error('!!', switchError, 'chainId', _hex(curr_net.CHAIN_ID));
 
         /* This error code indicates that the chain has not been added to MetaMask. */
         if (switchError.code === 4902) {
@@ -118,6 +140,7 @@ const change_network = async function (chain) {
 
                 handleAction('nonce');
             } catch (e) {
+                console.error(`error switching to network ${curr_net.CHAIN_ID}`);
                 DATA.changing_network = false;
                 return true;
             }
@@ -507,13 +530,14 @@ const fetch_account_data = async function (last_operation) {
 const wallet_error = (callback) => {
     return (e) => {
         let err = `${(e && e.data && e.data.message) || e}`.toLowerCase();
+        console.log('err', err);
 
         if (typeof callback === 'function') {
             callback(e, err);
         }
 
         if (err.includes('user denied') || err.includes('user rejected')) {
-            return;
+            return help_err('User denied / rejected the request.');
         }
 
         if (err.includes('gas required exceeds allowance')) {
@@ -526,13 +550,25 @@ const wallet_error = (callback) => {
     };
 };
 
+function hex_to_ascii(str1) {
+    var hex = str1.toString();
+    var str = '';
+    for (var n = 0; n < hex.length; n += 2) {
+        str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+    }
+    return str;
+}
+
 const chain_error = (e) => {
-    console.warn(e);
+    //let reason = hex_to_ascii(code.substr(138))
+
+    console.error(e);
+
     DATA.conf = { connected: false, vault: Big(0), balance: Big(0) };
-    /* elementify('Root').classList.remove('has-connection'); */
-    /* if (typeof e === 'undefined') {
-	help_err('Your wallet is loged out!');
-	}  */
+    elementify('Root').classList.remove('has-connection');
+    if (typeof e === 'undefined') {
+        help_err('Your wallet is loged out!');
+    }
 
     elementify('login-logout-text').innerHTML = 'Login';
     elementify('ModalPositions__Panel1').innerHTML = '<div class="item">No active positions</div>';
@@ -547,13 +583,18 @@ const on_connect = async function (last_operation) {
     elementify('swap-buttons').classList.add('loading');
 
     try {
-        DATA.provider = await DATA.web3Modal.connect().catch((e) => false);
+        DATA.provider = await DATA.web3Modal.connect().catch((e) => {
+            console.error('error connecting to web3 provider', e);
+            return false;
+        });
     } catch (e) {
+        console.error('caught error connecting to web3 provider', e);
         DATA.loading = false;
         return;
     }
 
     if (!DATA.provider) {
+        console.error(`Could not connect to provider '${DATA.provider}'`);
         return chain_error();
     }
 
@@ -604,7 +645,11 @@ var get_provider = (chain, is_rpc) => {
     }
 
     if (typeof DATA.web3_helpers[chain] === 'undefined') {
-        DATA.web3_helpers[chain] = new ethers.providers.JsonRpcProvider(DATA.CHAINS[DATA.CHAIN_IDS_MAP[chain]].RPC);
+        try {
+            DATA.web3_helpers[chain] = new ethers.providers.JsonRpcProvider(DATA.CHAINS[DATA.CHAIN_IDS_MAP[chain]].RPC);
+        } catch (e) {
+            console.error(`Tried connecting to provider but failed: ${DATA.CHAINS[DATA.CHAIN_IDS_MAP[chain]].RPC}`, 'error', e.message);
+        }
     }
 
     return DATA.web3_helpers[chain];
@@ -614,7 +659,12 @@ var contract = (token, abi, chain, is_rpc) => {
     let _id = `${chain || DATA.CHAIN}-${token}`;
 
     /* if (typeof DATA.CONTRACTS[_id] === 'undefined') { */
-    DATA.CONTRACTS[_id] = new ethers.Contract(token, abi || DATA.ABI, get_provider(chain || DATA.CHAIN, is_rpc));
+    try {
+        DATA.CONTRACTS[_id] = new ethers.Contract(token, abi || DATA.ABI, get_provider(chain || DATA.CHAIN, is_rpc));
+    } catch (e) {
+        console.error(`Tried getting contract for: ${DATA.CONTRACTS[_id]} = ${(chain || DATA.CHAIN, is_rpc)}`, 'error', e.message);
+    }
+
     /* } */
 
     return DATA.CONTRACTS[_id];
@@ -690,7 +740,7 @@ const sendValueChain = (chain_id, token, func, value, ...args) => {
 
             return reject(transaction.hash);
         } catch (err) {
-            console.error(err);
+            console.error('error in sendValueChain', err.message);
             return reject(err);
         }
     });

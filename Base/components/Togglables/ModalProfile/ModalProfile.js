@@ -3,21 +3,28 @@
  */
 
 const get_synagogues = async () => {
-	return (await Promise.all(DATA.synagogues.map(async (v, k) => {
-		let used, limit;
+    return (
+        (
+            await Promise.all(
+                DATA.synagogues.map(async (v, k) => {
+                    let used, limit;
 
-		await Promise.all([
-			(async () => {
-				used = await contract(DATA.SUBSCRIPTION).PLAN_LEFT(v.pool).catch(e => v.used)
-			})(),
-			(async () => {
-				limit = await contract(DATA.SUBSCRIPTION).PLAN_LIMIT(v.pool).catch(e => v.limit)
-			})()
-		]);
+                    await Promise.all([
+                        (async () => {
+                            used = await contract(DATA.SUBSCRIPTION)
+                                .PLAN_LEFT(v.pool)
+                                .catch((e) => v.used);
+                        })(),
+                        (async () => {
+                            limit = await contract(DATA.SUBSCRIPTION)
+                                .PLAN_LIMIT(v.pool)
+                                .catch((e) => v.limit);
+                        })(),
+                    ]);
 
-		used = limit - used;
+                    used = limit - used;
 
-		return `<div class="item">
+                    return `<div class="item">
 	<div class="d-flex">
 		<div class="name text-truncated d-flex">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md fs-0">
@@ -74,15 +81,22 @@ const get_synagogues = async () => {
 
 	<button class="btn btn-style w-100 mt-12px text-bold" data-pool="${v.pool}" data-action="synagogized">BUY</button>
 </div>`;
-	}))).flat().join('') || '<div class="item"> No available synagouges yet </div>';
+                })
+            )
+        )
+            .flat()
+            .join('') || '<div class="item"> No available private pools yet </div>'
+    );
 };
 
-const set_synagogues = async () => { elementify('synagogues-body').innerHTML = await get_synagogues() };
+const set_synagogues = async () => {
+    elementify('synagogues-body').innerHTML = await get_synagogues();
+};
 
 const get_node = async (data) => {
-	let action = (!DATA.conf.pools || !DATA.conf.pools[data.id] || !(DATA.conf.pools[data.id].is_synagogue/*  || DATA.conf.pools[data.id].staked */)) && ' data-action="toggle-synagogue-node"' || '';
+    let action = ((!DATA.conf.pools || !DATA.conf.pools[data.id] || !(DATA.conf.pools[data.id].is_synagogue /*  || DATA.conf.pools[data.id].staked */)) && ' data-action="toggle-synagogue-node"') || '';
 
-	return `<label for="SynagogueCreatePanel3" class="card${(!action || (DATA.conf.pools && DATA.conf.pools[data.id] && DATA.conf.pools[data.id].staked)) && ' border-red' || ''}" data-nft="${data.id}"${action}>
+    return `<label for="SynagogueCreatePanel3" class="card${((!action || (DATA.conf.pools && DATA.conf.pools[data.id] && DATA.conf.pools[data.id].staked)) && ' border-red') || ''}" data-nft="${data.id}"${action}>
 	<img id="${lazy_get_nft_image('JBS', data.id, undefined, `jbs-${data.id}-synagogue-${data.expiry}`)}" data-nft="${data.id}"${action} onerror="error_user_img(this)">
 	<img id="${GetTokenImage(DATA.CHAINS[DATA.CHAIN_IDS_MAP[data.chain]].CHAIN_ASSETS, data.chain)}" src="${DATA.ERROR_IMG}" class="icon-md" data-nft="${data.id}"${action}>
 
@@ -93,48 +107,47 @@ const get_node = async (data) => {
 };
 
 const set_nodes = async () => {
-	if (!elementify('synagogue-pay-nodes')) {
-		return;
-	}
+    if (!elementify('synagogue-pay-nodes')) {
+        return;
+    }
 
-	if (!DATA.conf.N || !DATA.conf.N.JBS || !DATA.conf.N.JBS.length) {
-		return elementify('synagogue-pay-nodes').innerHTML = '<div class="item">You currently don\'t own any nodes</div>';
-	}
+    if (!DATA.conf.N || !DATA.conf.N.JBS || !DATA.conf.N.JBS.length) {
+        return (elementify('synagogue-pay-nodes').innerHTML = '<div class="item">You currently don\'t own any nodes</div>');
+    }
 
-	let promises = [];
+    let promises = [];
 
-	for (let i = 0; i < DATA.conf.N.JBS.length; ++i) {
-		promises.push(get_node(DATA.conf.N.JBS[i]));
-	}
+    for (let i = 0; i < DATA.conf.N.JBS.length; ++i) {
+        promises.push(get_node(DATA.conf.N.JBS[i]));
+    }
 
-	return elementify('synagogue-pay-nodes').innerHTML = (await Promise.all(promises)).flat().join('');
+    return (elementify('synagogue-pay-nodes').innerHTML = (await Promise.all(promises)).flat().join(''));
 };
 
 const get_global_top3 = () => {
-	return `<div class="item">
-	<div data-tooltip="${DATA.top3[1] && (DATA.top3[1].title || `User #$${DATA.top3[1].uid}`) || 'User'}" data-tooltip-bottom>
-		<img ${DATA.top3[1] && `id="${lazy_get_nft_image('JBU', DATA.top3[1].nft, undefined, `jbu-global-top3-0`)}"` || `src="${DATA.ERROR_USER_IMG}"`} onerror="error_img(this)">
+    return `<div class="item">
+	<div data-tooltip="${(DATA.top3[1] && (DATA.top3[1].title || `User #$${DATA.top3[1].uid}`)) || 'User'}" data-tooltip-bottom>
+		<img ${(DATA.top3[1] && `id="${lazy_get_nft_image('JBU', DATA.top3[1].nft, undefined, `jbu-global-top3-0`)}"`) || `src="${DATA.ERROR_USER_IMG}"`} onerror="error_img(this)">
 	</div>
 </div>
 
 <div class="item">
-	<div data-tooltip="${DATA.top3[0] && (DATA.top3[0].title || `User #$${DATA.top3[0].uid}`) || 'User'}" data-tooltip-bottom>
-		<img ${DATA.top3[0] && `id="${lazy_get_nft_image('JBU', DATA.top3[0].nft, undefined, `jbu-global-top3-1`)}"` || `src="${DATA.ERROR_USER_IMG}"`} onerror="error_img(this)">
+	<div data-tooltip="${(DATA.top3[0] && (DATA.top3[0].title || `User #$${DATA.top3[0].uid}`)) || 'User'}" data-tooltip-bottom>
+		<img ${(DATA.top3[0] && `id="${lazy_get_nft_image('JBU', DATA.top3[0].nft, undefined, `jbu-global-top3-1`)}"`) || `src="${DATA.ERROR_USER_IMG}"`} onerror="error_img(this)">
 	</div>
 </div>
 
 <div class="item">
-	<div data-tooltip="${DATA.top3[2] && (DATA.top3[2].title || `User #$${DATA.top3[2].uid}`) || 'User'}" data-tooltip-bottom>
-		<img ${DATA.top3[2] && `id="${lazy_get_nft_image('JBU', DATA.top3[2].nft, undefined, `jbu-global-top3-2`)}"` || `src="${DATA.ERROR_USER_IMG}"`} onerror="error_img(this)">
+	<div data-tooltip="${(DATA.top3[2] && (DATA.top3[2].title || `User #$${DATA.top3[2].uid}`)) || 'User'}" data-tooltip-bottom>
+		<img ${(DATA.top3[2] && `id="${lazy_get_nft_image('JBU', DATA.top3[2].nft, undefined, `jbu-global-top3-2`)}"`) || `src="${DATA.ERROR_USER_IMG}"`} onerror="error_img(this)">
 	</div>
 </div>`;
-}
+};
 
 /*** Inject HTML ***/
 
 (async () => {
-
-	const html = `<div id="ModalProfile" class="togglable modal d-none">
+    const html = `<div id="ModalProfile" class="togglable modal d-none">
 	<div class="lightbox" data-togglable="ModalProfile"></div>
 
 	<div class="container">
@@ -165,7 +178,7 @@ const get_global_top3 = () => {
 							<div class="item">
 							<a href="https://bscscan.com/token/0xd1878a51d5b9ff76cb7c5527627b905db6f4287e?a=${DATA.conf.N.JBU[0].id ?? footer.dataset.nft}" target="_blank"><img src="${DATA.ERROR_USER_IMG}" onerror="error_user_img(this)" data-user-image="true" data-action="mint"></a>
 
-								<div class="text-truncated text-name" data-username="true">${DATA.view_user.title || (DATA.view_user.uid && ('User #' + DATA.view_user.uid)) || 'Guest'}</div>
+								<div class="text-truncated text-name" data-username="true">${DATA.view_user.title || (DATA.view_user.uid && 'User #' + DATA.view_user.uid) || 'Guest'}</div>
 							</div>
 						</div>
 					</div>
@@ -177,7 +190,7 @@ const get_global_top3 = () => {
 
 						<div class="body">
 							<div class="item">
-								<div class="text-truncated text-style-2">LVL<span id="main-user-chain-level">${get_level(DATA.view_rank && DATA.view_rank[DATA.CHAIN] && DATA.view_rank[DATA.CHAIN].weger || 0)}</div>
+								<div class="text-truncated text-style-2">LVL<span id="main-user-chain-level">${get_level((DATA.view_rank && DATA.view_rank[DATA.CHAIN] && DATA.view_rank[DATA.CHAIN].weger) || 0)}</div>
 								<div class="text-truncated text-style-1">VIP PROFILE</div>
 							</div>
 						</div>
@@ -379,7 +392,7 @@ const get_global_top3 = () => {
 									<div class="text-truncated text-style-1">CURRENT BALANCE</div>
 								</div>
 
-								<div class="item mt-4px px-12px${DATA.conf.uid !== DATA.view_uid && ' d-none' || ''}" id="claim-container">
+								<div class="item mt-4px px-12px${(DATA.conf.uid !== DATA.view_uid && ' d-none') || ''}" id="claim-container">
 									<button class="btn btn-style text-white text-bold w-100" data-action="claim">WITHDRAW</button>
 								</div>
 							</div>
@@ -396,7 +409,7 @@ const get_global_top3 = () => {
 
 			<div class="row-5 row-is-section">
 				<div class="header">
-					<div>Synagogue Create</div>
+					<div>Private Pool Create</div>
 				</div>
 
 				<div class="body">
@@ -419,7 +432,7 @@ const get_global_top3 = () => {
 
 					<div class="panel panel-3">
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Synagogue name" id="synagogue-name">
+							<input type="text" class="form-control" placeholder="Private Pool name" id="synagogue-name">
 						</div>
 
 						<div class="input-group">
@@ -437,7 +450,7 @@ const get_global_top3 = () => {
 								</svg>
 							</label>
 
-							<button class="btn btn-style w-100 ml-12px" data-action="synagogize">Create Synagogue</button>
+							<button class="btn btn-style w-100 ml-12px" data-action="synagogize">Create Private Pool</button>
 						</div>
 					</div>
 				</div>
@@ -445,7 +458,7 @@ const get_global_top3 = () => {
 
 			<div class="row-6 row-is-section">
 				<div class="header">
-					<div>Synagogue</div>
+					<div>Private Pool</div>
 				</div>
 
 				<div class="body"></div>
@@ -455,21 +468,18 @@ const get_global_top3 = () => {
 	</div>
 </div>`;
 
-	elementify('Root').insertAdjacentHTML('beforeend', html);
-
+    elementify('Root').insertAdjacentHTML('beforeend', html);
 })();
 
 (() => {
-
-	set_nodes();
-	getChartConfig('ModalProfile__Statistics__Chart', DATA.view_rank_chart_history || [], 'rgba(134, 220, 46, 1)', 'rgba(134, 220, 46, 0.5)');
-
+    set_nodes();
+    getChartConfig('ModalProfile__Statistics__Chart', DATA.view_rank_chart_history || [], 'rgba(134, 220, 46, 1)', 'rgba(134, 220, 46, 0.5)');
 })();
 
 /* On BUY button click check if a currency is selected and inject next html feed view */
 
 const set_synagogue_transaction = async (now, tx) => {
-	return `<div class="item">
+    return `<div class="item">
 	<div class="d-flex">
 		<div class="name text-truncated d-flex">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md fs-0">
@@ -490,14 +500,14 @@ const set_synagogue_transaction = async (now, tx) => {
 		</div>
 	</div>
 
-	<div class="d-flex mt-12px text-${tx.direction < 0 && 'green' || 'red'}">
+	<div class="d-flex mt-12px text-${(tx.direction < 0 && 'green') || 'red'}">
 		<div class="trade text-truncated d-flex">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md fs-0">
 				<circle fill="#191919" cx="8" cy="8" r="8"></circle>
 				<path d="M8 15A7 7 0 118 1 7 7 0 018 15ZM8 16A8 8 0 108 0 8 8 0 008 16ZM6.271 5.055A.5.5 0 016.791 5.093L10.291 7.593A.5.5 0 0110.291 8.407L6.791 10.907A.5.5 0 016 10.5V5.5A.5.5 0 016.271 5.055Z"></path>
 			</svg>
 
-			<div class="text-truncated ml-4px" data-token="${tx.token}" data-action="token">${formatFiatNumber(Big(tx.amount).abs().div(get_decimals_power(tx.decimals)))} ${tx.symbol || await get_symbol(tx.token)}</div>
+			<div class="text-truncated ml-4px" data-token="${tx.token}" data-action="token">${formatFiatNumber(Big(tx.amount).abs().div(get_decimals_power(tx.decimals)))} ${tx.symbol || (await get_symbol(tx.token))}</div>
 		</div>
 
 		<div class="value d-flex">
@@ -513,23 +523,23 @@ const set_synagogue_transaction = async (now, tx) => {
 };
 
 const set_synagogue_top = (i) => {
-	let user = DATA.conf.top_3 && DATA.conf.top_3.length && DATA.conf.top_3[i] || { title: 'User', jbu: 0, nft: 0 };
+    let user = (DATA.conf.top_3 && DATA.conf.top_3.length && DATA.conf.top_3[i]) || { title: 'User', jbu: 0, nft: 0 };
 
-	return `<div class="item">
+    return `<div class="item">
 	<div data-tooltip="${user.title || `User #${user.uid}`}" data-tooltip-bottom>
-		<img ${user.nft && `id="${lazy_get_nft_image('JBU', user.nft, undefined, `jbu-top3-${i}-synagogue`)}"` || `src="${DATA.ERROR_USER_IMG}"`} onerror="error_img(this)">
+		<img ${(user.nft && `id="${lazy_get_nft_image('JBU', user.nft, undefined, `jbu-top3-${i}-synagogue`)}"`) || `src="${DATA.ERROR_USER_IMG}"`} onerror="error_img(this)">
 	</div>
-</div>`
+</div>`;
 };
 
 const set_non_synagogue = async () => {
-	document.querySelector('#ModalProfile__Body .row-6 .body').innerHTML = `<div class="feed" id="synagogues-body">${await get_synagogues()}</div>`;
+    document.querySelector('#ModalProfile__Body .row-6 .body').innerHTML = `<div class="feed" id="synagogues-body">${await get_synagogues()}</div>`;
 };
 
 const set_synagogue_transactions = async () => {
-	let now = Date.now();
+    let now = Date.now();
 
-	document.querySelector('#ModalProfile__Body .row-6 .body').innerHTML = `<div class="boxes">
+    document.querySelector('#ModalProfile__Body .row-6 .body').innerHTML = `<div class="boxes">
 	<div class="box">
 		<div class="body">
 			<div class="item">
@@ -548,7 +558,7 @@ const set_synagogue_transactions = async () => {
 	</div>
 </div>
 
-<div class="text-truncated mb-12px ml-12px">Synagogue Transactions</div>
+<div class="text-truncated mb-12px ml-12px">Private Pool Transactions</div>
 
-<div class="feed">${(await Promise.all((DATA.conf.synagogue_last_txs || []).map(async (v) => await set_synagogue_transaction(now, v)))).flat().join('')  || '<div class="item">No transactions</div>'}</div>`;
+<div class="feed">${(await Promise.all((DATA.conf.synagogue_last_txs || []).map(async (v) => await set_synagogue_transaction(now, v)))).flat().join('') || '<div class="item">No transactions</div>'}</div>`;
 };

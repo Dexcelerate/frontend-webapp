@@ -20,7 +20,7 @@ Environment=PG_PORT=5342
 Environment=PG_USER=jewbot
 Environment=PG_PASS=kjer2wiakjuckaslasd
 Environment=PG_DB=Chain
-ExecStart=/usr/local/bin/geth --datadir /geth/data/bsc --config /geth/data/bsc/config.toml --diffsync=true --syncmode full --tries-verify-mode=none --diffblock=5000 --cache 18000 --http --rpc.txfeecap=0 --ws --ws.addr="0.0.0.0" --ws.origins web-server-0.jewbot.trade,bsc-node-1.dexcelerate.com
+ExecStart=/usr/local/bin/geth --datadir /geth/data/bsc --config /geth/data/bsc/config.toml --diffsync=true --syncmode full --tries-verify-mode=none --diffblock=5000 --cache 18000 --http --rpc.txfeecap=0 --ws --ws.addr="0.0.0.0" --ws.origins web-server-0.dexcelerate.com,bsc-node-1.dexcelerate.com
 WorkingDirectory=/geth/data/bsc
 User=digitalnomad91
 Restart=always
