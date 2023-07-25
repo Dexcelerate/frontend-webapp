@@ -393,6 +393,7 @@ var DATA = {
     ETHER_BASE: 18,
     MAX_VAL: 2 ** 64,
     allowed_chains: ['BSC', 'FANTOM', 'GANACHE'],
+    BASE_URL: 'dexcelerate.com',
     IP_API: 'https://redis-1.dexcelerate.com/',
     IPFS_IMG_CDN: 'https://ipfs.io/ipfs/',
     DEX_IMG_CDN: 'https://img-proxy.dexcelerate.com/img/vendor/exchanges/',
