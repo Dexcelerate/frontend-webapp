@@ -66,7 +66,7 @@ const init = async function () {
 
             setTimeout(async () => {
                 elementify('zero-pool-price').innerHTML = `$${formatFiat((DATA.server_price = await contract(DATA.SUBSCRIPTION).PLAN(DATA.ZERO)))}`;
-            }, 0);
+            }, 2500);
         }
     } else {
         DATA.CHAIN_ID = 56;
@@ -88,7 +88,7 @@ const init = async function () {
 
         setTimeout(async () => {
             elementify('zero-pool-price').innerHTML = `$${formatFiat((DATA.server_price = await contract(DATA.SUBSCRIPTION).PLAN(DATA.ZERO)))}`;
-        }, 0);
+        }, 2500);
     }
 
     DATA.loading = false;
@@ -160,7 +160,7 @@ const _update_price = async () => {
     let i = 0;
     while (true) {
         await Promise.all([update_price(i), update_balances(), update_slot_balances()]);
-        await sleep(4);
+        await sleep(5);
         ++i;
     }
 };
@@ -207,6 +207,8 @@ const update_slot_balances = async () => {
 };
 
 const update_balances = async () => {
+    console.log("update_balances");
+    
     if (!provider[DATA.CHAIN_ID]) {
         return false;
     }

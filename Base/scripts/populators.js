@@ -1327,6 +1327,8 @@ const set_wallet_asset = async (is_origin, token, amounts, chain) => {
 </div>`;
 };
 
+
+/* Renders the slot asset table list */
 const set_wallet_assets = async (is_origin, title) => {
     if (typeof is_origin === 'undefined') {
         is_origin = !~DATA.wallet_slots_pagination_idx;
@@ -1844,8 +1846,12 @@ const set_wallet_chains_slots = async () => {
 
 /*** Inject HTML - Panel 3 ***/
 
+
+/* Render asset deposit dropdown lists (slot depost, boost server, synagoguge payment, etc...) */
 const set_original_wallet_asset = async (data, i) => {
     let bl = Big(data.bl).mul(data.p || 0),
+
+
         slot_deposit = `<div class="currency">
 	<div class="text-truncated" data-pay-slot="SLOT_PLACEHOLDER" data-pay-slot-idx="SLOT_IDX_PLACEHOLDER" data-action="prepare_deposit" data-pay-token="${data.k}">${await get_symbol(
             data.k
@@ -1860,6 +1866,7 @@ const set_original_wallet_asset = async (data, i) => {
 		</svg>
 	</label>
 </div>`;
+
 
     if (data.k === DATA.IMAGINARY_PEG) {
         return ['', '', slot_deposit, '', async (_i) => ''];

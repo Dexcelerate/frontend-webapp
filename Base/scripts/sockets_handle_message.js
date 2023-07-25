@@ -878,7 +878,8 @@ const MESSAGES = {
         }
 
         handle_consts(data.d);
-
+        console.log("data", data);
+        
         DATA.conf.assets = [
             ...data.d.Y.filter(
                 (v) =>

@@ -576,7 +576,7 @@ var DATA = {
     rooms: ['en'],
     displayInFiat: JSON.parse(store.get('displayInFiat') || 'true'),
     hideZeroBalances: false,
-    server_price: '999.00',
+    server_price: '1.00',
     img_cache: {},
     IMG_CACHE: {
         token: {},

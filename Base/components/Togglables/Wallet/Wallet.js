@@ -177,7 +177,7 @@ const update_range = (el, id) => {
 		</button>
 
 		<button class="btn-count btn btn-style btn-has-icon">
-			<div class="number" data-servers-chain="${chain_id}" data-count-number="0">0</div>
+			<div class="number" data-servers-chain="${chain_id}" data-count-number="0">0 == 1</div>
 
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="icon-md">
 				<path d="M4.646 4.646A.5.5 0 015.354 4.646L8 7.293 10.646 4.646A.5.5 0 0111.354 5.354L8.707 8 11.354 10.646A.5.5 0 0110.646 11.354L8 8.707 5.354 11.354A.5.5 0 014.646 10.646L7.293 8 4.646 5.354A.5.5 0 014.646 4.646Z"></path>
@@ -501,7 +501,7 @@ const set_original_wallet_nft = async (type, nft_id, chain, order) => {
                     return `<div class="card ${key}-${expiry}">
 	<img id="${lazy_get_nft_image(main_type, nft_id, undefined, `${key}-${expiry}`)}" onerror="error_img(this)">
 	<img id="${GetTokenImage(DATA.CHAINS[DATA.CHAIN_IDS_MAP[DATA.conf.pools[nft_id].chain]].CHAIN_ASSETS)}" src="${DATA.ERROR_IMG}" class="icon-md">
-
+</a>
 	<div class="footer" data-nft="${nft_id}">
 		<div class="text-white" data-reverse-timer="${expiry}">${timeDifference(expiry, Date.now())} left</div>
 		${
@@ -890,7 +890,7 @@ function nft_click_in_description(event) {
 </label>
 
 <div class="box box-nft">
-	<img src="${footer.parentElement.querySelector('img').src}" onerror="error_img=(this)" class="icon-xxl">
+	<a href="https://bscscan.com/token/0xd1878a51d5b9ff76cb7c5527627b905db6f4287e?a=${footer.dataset.nft}" target="_blank"><img src="${footer.parentElement.querySelector('img').src}" onerror="error_img=(this)" class="icon-xxl"></a>
 </div>
 
 <div class="box box-name mt-12px text-white text-center">Name of the NFT</div>
