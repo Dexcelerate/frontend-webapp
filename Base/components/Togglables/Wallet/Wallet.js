@@ -943,7 +943,7 @@ function burn_action_nft(event) {
  */
 const set_user_name = async () => {
 	document.querySelectorAll('[data-username]').forEach(el => {
-		el.innerText = DATA.view_user.title || ((DATA.view_user.uid || DATA.conf.N.JBU[0].id) && `User #${DATA.conf.N.JBU[0].id ?? DATA.view_user.uid}`) || 'Guest';
+		el.innerText = DATA.view_user.title || ((DATA.view_user.uid || (DATA.conf.N?.JBU?.length && DATA.conf.N.JBU[0].id)) && `User #${(DATA.conf.N?.JBU?.length && DATA.conf.N.JBU[0].id) ?? DATA.view_user.uid}`) || 'Guest';
 	});
 
 	document.querySelectorAll('[data-user-image]').forEach(async (el) => {
