@@ -891,7 +891,7 @@ function nft_click_in_description(event) {
 	</ul>
 </div>
 
-<div class="box box-duration mt-12px text-white text-center"><a href="https://jewbot.trade/?jbu=${footer.dataset.nft}" target="_blank" onclick="copyTextToClipboard('https://jewbot.trade/?jbu=${footer.dataset.nft}', event, this)">jewbot.trade/?jbu=${footer.dataset.nft}</a></div>
+<div class="box box-duration mt-12px text-white text-center"><a href="https://${DATA.BASE_URL}/?jbu=${footer.dataset.nft}" target="_blank" onclick="copyTextToClipboard('https://${DATA.BASE_URL}/?jbu=${footer.dataset.nft}', event, this)">${DATA.BASE_URL}/?jbu=${footer.dataset.nft}</a></div>
 
 <div class="box-sell mt-12px">
 	<input type="checkbox" id="NFTSellEnabled" class="visually-hidden">
