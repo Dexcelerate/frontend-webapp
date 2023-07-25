@@ -1,19 +1,31 @@
 {
   "editor.formatOnSave": true,
-  "printWidth": 220,
-  "tabWidth": 4,
+  "printWidth": 120,
+  "tabWidth": 2,
   "overrides": [
     {
-      "files": "*.test.js",
+      "files": "*.sql",
       "options": {
+        "editor.formatOnSave": false,
         "semi": true
       }
     },
     {
       "files": ["*.js"],
       "options": {
-        "formatOnSave": true,
-        "tabWidth": 4,
+        "arrowParens": "avoid",
+        "bracketSpacing": true,
+        "htmlWhitespaceSensitivity": "css",
+        "insertPragma": false,
+        "jsxBracketSameLine": false,
+        "jsxSingleQuote": true,
+        "printWidth": 120,
+        "proseWrap": "always",
+        "quoteProps": "as-needed",
+        "requirePragma": false,
+        "trailingComma": "all",
+        "useTabs": false,
+        "tabWidth": 2,
         "singleQuote": true,
         "semi": true
       }
