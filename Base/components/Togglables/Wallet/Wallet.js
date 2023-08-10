@@ -903,9 +903,9 @@ function nft_click_in_description(event) {
 	</ul>
 </div>
 
-<div class="box box-duration mt-12px text-white text-center"><a href="https://dexcelerate.com/?jbu=${footer.dataset.nft}" target="_blank" onclick="copyTextToClipboard('https://dexcelerate.com/?jbu=${
+<div class="box box-duration mt-12px text-white text-center"><a href="https://${DATA.BASE_URL}/?jbu=${footer.dataset.nft}" target="_blank" onclick="copyTextToClipboard('https://${DATA.BASE_URL}/?jbu=${
             footer.dataset.nft
-        }', event, this)">dexcelerate.com/?jbu=${footer.dataset.nft}</a></div>
+        }', event, this)">${DATA.BASE_URL}/?jbu=${footer.dataset.nft}</a></div>
 
 <div class="box-sell mt-12px">
 	<input type="checkbox" id="NFTSellEnabled" class="visually-hidden">
@@ -956,17 +956,17 @@ function burn_action_nft(event) {
 }
  */
 const set_user_name = async () => {
-    document.querySelectorAll('[data-username]').forEach((el) => {
-        el.innerText = DATA.view_user.title || (DATA.view_user.uid && `User #${DATA.view_user.uid}`) || 'Guest';
-    });
+	document.querySelectorAll('[data-username]').forEach(el => {
+		el.innerText = DATA.view_user.title || ((DATA.view_user.uid || (DATA.conf.N?.JBU?.length && DATA.conf.N.JBU[0].id)) && `User #${(DATA.conf.N?.JBU?.length && DATA.conf.N.JBU[0].id) ?? DATA.view_user.uid}`) || 'Guest';
+	});
 
-    document.querySelectorAll('[data-user-image]').forEach(async (el) => {
-        if (DATA.view_user.JBU || DATA.conf.JBU) {
-            el.src = await get_user_image(DATA.view_user.JBU || DATA.conf.JBU);
-        } else {
-            el.src = DATA.ERROR_USER_IMG;
-        }
-    });
+	document.querySelectorAll('[data-user-image]').forEach(async (el) => {
+		if (DATA.view_user.JBU || DATA.conf.JBU) {
+			el.src = await get_user_image(DATA.view_user.JBU || DATA.conf.JBU);
+		} else {
+			el.src = DATA.ERROR_USER_IMG;
+		}
+	});
 };
 
 const set_original_wallet_nfts = async () => {
